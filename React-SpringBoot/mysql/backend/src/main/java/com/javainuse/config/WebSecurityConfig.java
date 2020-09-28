@@ -1,4 +1,4 @@
-package com.techgeeknext.config;
+package com.javainuse.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -51,15 +51,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		// We don't need CSRF for this example
-		httpSecurity.csrf().disable() //rest api이므로 csrf 보안이 필요없으므로 disable처리.
-				.httpBasic().disable() // rest api 이므로 기본설정 사용안함. 기본설정은 비인증시 로그인폼 화면으로 리다이렉트 된다.
-				.authorizeRequests().antMatchers("/authenticate", "/register").permitAll(). // 가입 및 인증 주소는 누구나 접근가능
+		httpSecurity.csrf().disable()
+				.httpBasic().disable()
+				// dont authenticate this particular request
+				.authorizeRequests().antMatchers("/authenticate", "/register").permitAll().
 				// all other requests need to be authenticated
-						anyRequest().authenticated().and().
+				anyRequest().authenticated().and().
 				// make sure we use stateless session; session won't be used to
 				// store user's state.
-						exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS); // jwt token으로 인증할것이므로 세션필요없으므로 생성안함.
+				exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 		// Add a filter to validate the tokens with every request
 		httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
