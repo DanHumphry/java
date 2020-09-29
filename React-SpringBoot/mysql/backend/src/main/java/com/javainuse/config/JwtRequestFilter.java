@@ -30,13 +30,21 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	private JwtUserDetailsService jwtUserDetailsService;
 
 	@Autowired
-	private JwtTokenUtil jwtTokenUtil;
+	private final JwtTokenUtil jwtTokenUtil;
+
+	public JwtRequestFilter(JwtTokenUtil jwtTokenUtil) {
+		this.jwtTokenUtil = jwtTokenUtil;
+	}
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws ServletException, IOException {
 
 		final String requestTokenHeader = request.getHeader("Authorization");
+
+//		System.out.println(request);
+//		System.out.println(request.getHeader("Authorization"));
+//		System.out.println(requestTokenHeader);
 
 		String username = null;
 		String jwtToken = null;
@@ -59,7 +67,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
 		// Once we get the token validate it.
 		//SecurityContextHolder > 접근 주체(Authentication)와 인증정보(GrantedAuthority)를 담는곳
-		//username이 존재하지만 사용자정보를 가져왔을 때 null값인 경우
+		// 즉 if > username이 존재하지만 사용자정보를 가져왔을 때 null값인 경우
 		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
 			//새로운 토큰을 다시 userDetails에 담는다.

@@ -34,9 +34,17 @@ public class JwtUserDetailsService implements UserDetailsService {
 	}
 	
 	public DAOUser save(UserDTO user) {
+		verifyduplicatedUser(user.getUsername());
 		DAOUser newUser = new DAOUser();
 		newUser.setUsername(user.getUsername());
 		newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
 		return userDao.save(newUser);
+	}
+
+	private void verifyduplicatedUser(String username){
+		if(userDao.findByUsername(username) != null) {
+			System.out.println(userDao.findByUsername(username));
+			throw new IllegalArgumentException("중복된 유저입니다.");
+		}
 	}
 }

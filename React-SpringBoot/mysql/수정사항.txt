@@ -1,0 +1,3 @@
+문제 1.  request.getHeader("Authorization")가 null값  >> 해결 
+문제 2.  서버를 종료했다가 다시 키면 db에 저장된 값 초기화 >>해결
+문제 3.  서버에 id값 말고도 username부분 중복안되게 설정안되있음. >> 해결
