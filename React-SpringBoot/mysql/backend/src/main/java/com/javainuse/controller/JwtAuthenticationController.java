@@ -36,6 +36,11 @@ public class JwtAuthenticationController {
 	private JwtUserDetailsService userDetailsService;
 
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+	//@RequestBody 와 @ResponseBody 모두 java에서 받을 때 java object(json)로 변환해주는 어노테이션
+	//@RequestBody 어노테이션이란?
+	//HTTP 요청의 body 내용을 자바 객체로 매핑하는 역할을 합니다.
+	//@ResponseBody 어노테이션이란?
+	//자바 객체를 HTTP 요청의 body 내용으로 매핑하는 역할을 합니다.
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
 		authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
@@ -46,6 +51,7 @@ public class JwtAuthenticationController {
 		final String token = jwtTokenUtil.generateToken(userDetails);
 
 		return ResponseEntity.ok(new JwtResponse(token));
+		//JwtResponse에 토큰을 저장하도록 return 즉 token을 생성하는 과정
 	}
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -53,12 +59,15 @@ public class JwtAuthenticationController {
 		return ResponseEntity.ok(userDetailsService.save(user));
 	}
 
+	//위에서 getUsername, getPassword를 받아서 인증
 	private void authenticate(String username, String password) throws Exception {
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 		} catch (DisabledException e) {
+			//사용자 비활성화 예외
 			throw new Exception("USER_DISABLED", e);
 		} catch (BadCredentialsException e) {
+			//잘못된 자격증명
 			throw new Exception("INVALID_CREDENTIALS", e);
 		}
 	}
