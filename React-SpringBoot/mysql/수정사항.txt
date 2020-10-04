@@ -1,3 +1,7 @@
 문제 1.  request.getHeader("Authorization")가 null값  >> 해결 
 문제 2.  서버를 종료했다가 다시 키면 db에 저장된 값 초기화 >>해결
 문제 3.  서버에 id값 말고도 username부분 중복안되게 설정안되있음. >> 해결
+문제 4. validate,current,refresh의 과정이 authenticate안에 들어가있어서 따로 frontend에서 validate
+하는 과정이 없어서 useEffect로 user의 정보를 항상 업데이트 해서 로그인 유지를 하려고하니 구조를 어찌 잡아야할 지 몰랐음
+해결 >> localStorage에 저장하는 값을 기존의 token이 아니라 token을 포함한 유저정보를 저장시키고 useEffect에서 
+localStorage.getItem()으로 user정보 업데이트 !
