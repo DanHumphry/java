@@ -42,10 +42,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
 		final String requestTokenHeader = request.getHeader("Authorization");
 
-//		System.out.println(request);
-//		System.out.println(request.getHeader("Authorization"));
-//		System.out.println(requestTokenHeader);
-
 		String username = null;
 		String jwtToken = null;
 		//startswith은 대상 문자열이 특정 문자 또는 문자열로 시작하는지 체크하는함수

@@ -41,6 +41,7 @@ public class JwtAuthenticationController {
 	//HTTP 요청의 body 내용을 자바 객체로 매핑하는 역할을 합니다.
 	//@ResponseBody 어노테이션이란?
 	//자바 객체를 HTTP 요청의 body 내용으로 매핑하는 역할을 합니다.
+	//ResponseEntity는 Client의 요청에 대한 응답을 한번 더 감싸는 역할
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
 		authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
@@ -49,8 +50,9 @@ public class JwtAuthenticationController {
 				.loadUserByUsername(authenticationRequest.getUsername());
 
 		final String token = jwtTokenUtil.generateToken(userDetails);
+		final String username = authenticationRequest.getUsername();
 
-		return ResponseEntity.ok(new JwtResponse(token));
+		return ResponseEntity.ok(new JwtResponse(token, username));
 		//JwtResponse에 토큰을 저장하도록 return 즉 token을 생성하는 과정
 	}
 	

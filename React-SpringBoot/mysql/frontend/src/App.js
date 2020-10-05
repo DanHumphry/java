@@ -1,51 +1,52 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Route } from 'react-router-dom';
+import { useHistory } from 'react-router'
 import './App.css'
+import Sign from './components/Sign';
+import Chat from './components/Chat';
+import Profile from './components/Profile';
 
 function App() {
+  const history = useHistory()
+  let [user, setUser] = useState();
+  let [isAuthenticated, setisAuthenticated] = useState(localStorage.getItem('user') ? true : false)
+
+  const userHasAuthenticated = (userData) => { 
+    setisAuthenticated(true)
+    localStorage.setItem('user', userData);
+  }
+  
+  const handleLogout = () => {
+    setisAuthenticated(false)
+    setUser("")
+    localStorage.removeItem('user');
+    history.push('/')
+  }
+    
+  useEffect(()=>{
+    const test = JSON.parse(localStorage.getItem('user'));
+    if(isAuthenticated){
+      setUser(test.username)
+      history.push('/chat')
+    }
+    else{
+      history.push('/')
+    }
+  },[isAuthenticated])
 
   return (
     <>
-      <section className="container">
-        <article className="half">
-          <h1>Azure</h1>
-			      <div class="tabs">
-				          <span class="tab signin active"><a href="#signin">Sign in</a></span>
-				          <span class="tab signup"><a href="#signup">Sign up</a></span>
-			      </div>
-            <div className="content">
-              <div className="signin-cont cont">
-                <form action="#" method="post" enctype="multipart/form-data">
-                  <input type="email" name="email" id="email" class="inpt" required="required" placeholder="Your email"/>
-                  <label for="email">Your email</label>
-                  <input type="password" name="password" id="password" class="inpt" required="required" placeholder="Your password"/>
-                  <label for="password">Your password</label>
-                  <input type="checkbox" id="remember" class="checkbox" checked/>
-                  <label for="remember">Remember me</label>
-                  <div class="submit-wrap">
-                    <input type="submit" value="Sign in" class="submit"/>
-                    <a href="/" class="more">Forgot your password?</a>
-                  </div>
-                </form>
-              </div>
+    <Route exact path="/">
+      <Sign userHasAuthenticated={userHasAuthenticated} history={history}/>
+    </Route>
+      
+    <Route exact path="/chat">
+      <Chat handleLogout={handleLogout} user={user}/>
+    </Route>
 
-              <div class="signup-cont cont">
-                <form action="#" method="post" enctype="multipart/form-data">
-						      <input type="email" name="email" id="name" class="inpt" required="required" placeholder="Your name"/>
-						      <label for="name">Your name</label>
-                              <input type="email" name="email" id="email" class="inpt" required="required" placeholder="Your email"/>
-						      <label for="email">Your email</label>
-						      <input type="password" name="password" id="password" class="inpt" required="required" placeholder="Your password"/>
-                		<label for="password">Your password</label>
-						      <div class="submit-wrap">
-							      <input type="submit" value="Sign up" class="submit"/>
-							      <a href="/" class="more">Terms and conditions</a>
-						      </div>
-        				</form>
-              </div>
-            </div>
-        </article>
-        <div class="half bg"></div>
-      </section>
+    <Route exact path="/profile">
+      <Profile handleLogout={handleLogout} user={user}/>
+    </Route>
     </>
   );
 }

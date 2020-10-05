@@ -43,7 +43,6 @@ public class JwtUserDetailsService implements UserDetailsService {
 
 	private void verifyduplicatedUser(String username){
 		if(userDao.findByUsername(username) != null) {
-			System.out.println(userDao.findByUsername(username));
 			throw new IllegalArgumentException("중복된 유저입니다.");
 		}
 	}
