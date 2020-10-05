@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/index_header.css">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+    <header>
+        <div class="header-area">
+            <div class="header-main">
+                <div class="header-login">
+                    <a href="index.html">
+                        <h3>Good Bee</h3>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="back-container2">
+            <div class="back-img2">
+                <div class="main-container">
+                    <div class="main-padding">
+                        <div class="main-section">
+                            <section class="container">
+                                <article class="modal">
+                                    <a href="index.html"><div class="exit-wrapper">
+                                        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" tabindex="1" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
+                                        </svg>
+                                    </div></a>
+                                    <div class="tabs">
+                                      <span class="tab signin active"><a href="#signin">로그인</a></span>
+                                      <span class="tab signup"><a href="#signup">회원가입</a></span>
+                                    </div>
+                                    <div class="content">
+                                        <section class="signin-cont cont">
+                                            <form>
+                                                <input id="id" type="text" class="inpt" placeholder="Your Id" style="margin-bottom: 25px;"/>
+                                                <input id="pw" type="password" class="inpt" placeholder="Your Password" style="margin-bottom: 25px;"/>
+                                                <h4>forget your Id ?
+                                                    <br/><a href="#">클릭</a>
+                                                </h4>
+                                                <div class="submit-wrap">
+                                                    <input type="submit" value="로그인" class="submit"/>
+                                                </div>
+                                            </form>
+                                        </section>
+                                        <section class="signup-cont cont">
+                                            <form>
+                                                <input type="text" class="inpt" placeholder="Your Id"/>
+                                                <input type="email" class="inpt" placeholder="Your Email"/>
+                                                <input type="text" class="inpt" placeholder="Your Name"/>
+                                                <input type="password" class="inpt" placeholder="Your Password"/>
+                                                <div class="submit-wrap">
+                                                    <input type="submit" value="회원가입" class="submit"/>
+                                                </div>
+                                            </form>
+                                        </section>
+                                    </div>
+                                </article>
+                              </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript">
+        $('.tabs .tab').click(function () {
+            if ($(this).hasClass('signin')) {
+                $('.tabs .tab').removeClass('active');
+                $(this).addClass('active');
+                $('.cont').hide();
+                $('.signin-cont').show();
+            }
+            if ($(this).hasClass('signup')) {
+                $('.tabs .tab').removeClass('active');
+                $(this).addClass('active');
+                $('.cont').hide();
+                $('.signup-cont').show();
+            }
+        });
+        $('.container .bg').mousemove(function (e) {
+            var amountMovedX = (e.pageX * -1 / 30);
+            var amountMovedY = (e.pageY * -1 / 9);
+            $(this).css('background-position', amountMovedX + 'px ' + amountMovedY + 'px');
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+</body>
+</html>

@@ -1,11 +1,12 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="css/login.css">
-    <link rel="stylesheet" href="css/index.css">
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="css/login.css">
+<link rel="stylesheet" href="css/index.css">
 </head>
 <body>
     <header>
@@ -14,21 +15,21 @@
                 <div class="header-container">
                     <div class="menu-wrapper">
                         <div class="logo">
-                            <a href="index.html">
+                            <a href="index.jsp">
                                 <h3>Logo</h3>
                             </a>
                         </div>
                         <div class="main-menu">
                             <nav>
                                 <ul>
-                                    <li><a href="map.html"><h4>위치</h4></a></li>
-                                    <li><a href="review.html"><h4>후기</h4></a></li>
-                                    <li><a href="free.html"><h4>잡담</h4></a></li>
+                                    <li><a href="map.jsp"><h4>위치</h4></a></li>
+                                    <li><a href="review.jsp"><h4>후기</h4></a></li>
+                                    <li><a href="free.jsp"><h4>잡담</h4></a></li>
                                 </ul>
                             </nav>
                         </div>
                         <div class="login">
-                            <a href="login.html">
+                            <a href="index.jsp">
                                 <h4>
                                 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                     viewBox="0 0 28.9 28.9" style="enable-background:new 0 0 28.9 28.9;" xml:space="preserve">
@@ -60,7 +61,7 @@
                         <div class="main-section">
                             <section class="container">
                                 <article class="modal">
-                                    <a href="index.html"><div class="exit-wrapper">
+                                    <a href="index.jsp"><div class="exit-wrapper">
                                         <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" tabindex="1" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
                                         </svg>
@@ -72,8 +73,8 @@
                                     <div class="content">
                                         <section class="signin-cont cont">
                                             <form>
-                                                <input type="email" class="inpt" placeholder="Your email"/>
-                                                <input type="password" class="inpt" placeholder="Your password"/>
+                                                <input id="id" type="text" class="inpt" placeholder="Your email"/>
+                                                <input id="password" type="password" class="inpt" placeholder="Your password"/>
                                                 <section class="social-box">
                                                     <h4>소셜 계정으로 로그인</h4>
                                                     <div class="googlebox">
@@ -97,10 +98,10 @@
                                         </section>
                                         <section class="signup-cont cont">
                                             <form>
-                                                <input type="text" class="inpt" placeholder="Your Id"/>
-                                                <input type="email" class="inpt" placeholder="Your Email"/>
-                                                <input type="text" class="inpt" placeholder="Your Name"/>
-                                                <input type="password" class="inpt" placeholder="Your Password"/>
+                                            	<input id="id" type="text" class="inpt" placeholder="Your Id"/>
+                                                <input id="pw" type="password" class="inpt" placeholder="Your password"/>
+                                                <input id="email" type="email" class="inpt" placeholder="Your email"/>
+                                                <input id="name" type="text" class="inpt" placeholder="Your Name"/>
                                                 <section class="social-box">
                                                     <h4>소셜 계정으로 회원가입</h4>
                                                     <div class="googlebox">
