@@ -53,7 +53,7 @@ a{
   body .container .tabs {
     width: 100%;
     margin-bottom: 35px;
-    border-bottom: 1px solid rgb(155, 153, 153);
+    border-bottom: 1px solid #8bd6f1;
   }
   body .container .tabs .tab {
     display: inline-block;
@@ -61,7 +61,7 @@ a{
     padding: 20px 15px 10px;
     cursor: pointer;
     letter-spacing: 0;
-    border-bottom: 1px solid rgb(155, 153, 153);
+    border-bottom: 1px solid #8bd6f1;
     -moz-user-select: -moz-none;
     -ms-user-select: none;
     -webkit-user-select: none;
@@ -78,10 +78,11 @@ a{
   }
   body .container .tabs .tab.active a, body .container .tabs .tab:hover a {
     color: black;
+    font-weight: bold;
   }
   body .container .tabs .tab.active {
-    border-bottom: 1px solid #263238;
-    color: black;
+    border-bottom: 1px solid #02057c;
+    color: #02057c;
   }
   body .container .content form {
     position: relative;
@@ -147,7 +148,7 @@ a{
     -moz-border-radius: 2px;
     -webkit-border-radius: 2px;
     border-radius: 2px;
-    background-color: rgb(72, 147, 177);
+    background-color: #8bd6f1;
   }
   body .container .content input.submit:hover {
     background-color: #354750;
@@ -239,7 +240,7 @@ a{
       -webkit-box-pack: end;
       justify-content: flex-end;
       font-size: 1.5rem;
-      color: rgb(72, 147, 177);
+      color: #8bd6f1;
   }
   .exit-wrapper svg{
       cursor: pointer;
@@ -256,6 +257,6 @@ a{
     margin-top: 33px;
   }
   .signin-cont form h4 a{
-    color:rgb(72, 147, 177);
+    color:#8bd6f1;
   }
   /* 수정사항*/

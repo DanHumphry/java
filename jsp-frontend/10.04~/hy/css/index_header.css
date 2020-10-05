@@ -1,10 +1,11 @@
 /* header css*/
 .header-area{
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
     left: 0;
-    background-color: rgb(72, 147, 177);
+    background-color: #8bd6f1;
+    
 }
 .header-main{
     width: 100%;
