@@ -78,7 +78,7 @@
     vertical-align: middle;
     font-size: 13px;
     max-height: 60px;
-    overflow: scroll;
+    /* overflow: scroll; */
 }
 .board-list table tbody tr td{
     word-break: break-all;

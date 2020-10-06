@@ -78,7 +78,7 @@ article > div.post-title > textarea {
 .post-textarea{
     display: block;
     width: 90%;
-    height: 581px;
+    height: 321px;
     font-size: 20px;
     border: none;
     outline: 0 none;
@@ -101,7 +101,6 @@ article > div.post-title > textarea {
     padding: 0px 1.125rem;
     height: 2.5rem;
     font-size: 1.125rem;
-    margin-right: 5px;
     width: 100%;
 }
 .img-up input[type="file"] {
@@ -138,3 +137,23 @@ footer.post-comment{
     transform: translateY(-50%);
 }
 /* footer */
+
+.img-preview{
+    width: 100%;
+    height: 200px;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    flex-direction: column;
+}
+.img-preview img{
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+.img-preview svg{
+    position: absolute;
+}
