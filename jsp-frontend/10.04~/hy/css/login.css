@@ -15,8 +15,21 @@ a{
   body .container {
     position: relative;
     overflow: hidden;
-    width: 300px;
-    height: 460px;
+    width: 360px;
+    height: 530px;
+    margin: 160px auto 0;
+    background: rgba(255, 255, 255, 0.767);
+    -moz-box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 30px;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 30px;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 12px 0px;
+    animation: 0.4s ease-in-out 0s 1 normal forwards running slide;
+  }
+
+  body .container2 {
+    position: relative;
+    overflow: hidden;
+    width: 360px;
+    height: 530px;
     margin: 160px auto 0;
     background: rgba(255, 255, 255, 0.767);
     -moz-box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 30px;
@@ -98,17 +111,39 @@ a{
   body .container .content label:not([for='remember']) {
     display: none;
   }
-  body .container .content input.inpt {
+  .otherinput input.inpt2{
     font-size: 14px;
     display: block;
-    width: 100%;
-    height: 39px;
-    margin-bottom: 12px;
+    width: 270px;
+    height: 33px;
+    margin-bottom: 16px;
     padding: 10px 10px;
     color: rgb(155, 153, 153);
     border: 2px solid rgb(155, 153, 153);
     background: transparent;
     border-radius: 2px;
+  }
+  body .container .content input.inpt {
+    font-size: 14px;
+    display: block;
+    width: 200px;
+    height: 33px;
+    margin-bottom: 30px;
+    padding: 10px 10px;
+    color: rgb(155, 153, 153);
+    border: 2px solid rgb(155, 153, 153);
+    background: transparent;
+    border-radius: 2px;
+  }
+  .checkBlock{
+    display: flex;
+  }
+  .checkButton{
+    height: 33px;
+    margin-left: 5px;
+    background-color: #8bd6f1;
+    border: 0;
+    color: #fff;
   }
   body .container .content input.inpt::-webkit-input-placeholder {
     font-size: 14px;

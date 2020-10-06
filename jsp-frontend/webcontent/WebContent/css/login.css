@@ -1,11 +1,12 @@
 a{
   text-decoration: none;
 }
+
 a:hover{
   color: black;
 }
 ol, ul, li {
-	list-style: none;
+  list-style: none;
 }
 body {
   font-family: 'Lato', sans-serif;
@@ -14,8 +15,8 @@ body {
 body .container {
   position: relative;
   overflow: hidden;
-  width: 360px;
-  height: 560px;
+  width: 300px;
+  height: 460px;
   margin: 160px auto 0;
   background: rgba(255, 255, 255, 0.767);
   -moz-box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 30px;
@@ -27,15 +28,15 @@ body .container {
   0% {
     opacity: 0;
     transform: translateY(400px) scale(0.75);
-}
-75% {
+  }
+  75% {
     opacity: 1;
     transform: translateY(-16px) scale(1);
-}
-100% {
+  }
+  100% {
     opacity: 1;
     transform: translateY(0px);
-}
+  }
 }
 body .container .modal {
   padding: 40px 40px 0;
@@ -52,7 +53,7 @@ body .container h1 {
 body .container .tabs {
   width: 100%;
   margin-bottom: 35px;
-  border-bottom: 1px solid rgb(155, 153, 153);
+  border-bottom: 1px solid #8bd6f1;
 }
 body .container .tabs .tab {
   display: inline-block;
@@ -60,7 +61,7 @@ body .container .tabs .tab {
   padding: 20px 15px 10px;
   cursor: pointer;
   letter-spacing: 0;
-  border-bottom: 1px solid rgb(155, 153, 153);
+  border-bottom: 1px solid #8bd6f1;
   -moz-user-select: -moz-none;
   -ms-user-select: none;
   -webkit-user-select: none;
@@ -77,14 +78,14 @@ body .container .tabs .tab a {
 }
 body .container .tabs .tab.active a, body .container .tabs .tab:hover a {
   color: black;
+  font-weight: bold;
 }
 body .container .tabs .tab.active {
-  border-bottom: 1px solid #263238;
-  color: black;
+  border-bottom: 1px solid #02057c;
+  color: #02057c;
 }
 body .container .content form {
   position: relative;
-  height: 300px;
 }
 body .container .content label {
   font-size: 12px;
@@ -104,33 +105,33 @@ body .container .content input.inpt {
   height: 39px;
   margin-bottom: 12px;
   padding: 10px 10px;
-  color: rgb(31, 30, 30);
-  border: 2px solid rgb(31, 30, 30);
+  color: rgb(155, 153, 153);
+  border: 2px solid rgb(155, 153, 153);
   background: transparent;
   border-radius: 2px;
 }
 body .container .content input.inpt::-webkit-input-placeholder {
   font-size: 14px;
-  color:rgb(31, 30, 30);
+  color:rgb(155, 153, 153);
   font-family: 'Lato', sans-serif;
 }
 body .container .content input.inpt:-moz-placeholder {
   font-size: 14px;
-  color:rgb(31, 30, 30);
+  color:rgb(155, 153, 153);
   font-family: 'Lato', sans-serif;
 }
 body .container .content input.inpt::-moz-placeholder {
   font-size: 14px;
-  color: rgb(31, 30, 30);
+  color: rgb(155, 153, 153);
   font-family: 'Lato', sans-serif;
 }
 body .container .content input.inpt:-ms-input-placeholder {
   font-size: 14px;
-  color: rgb(31, 30, 30);
+  color: rgb(155, 153, 153);
   font-family: 'Lato', sans-serif;
 }
 body .container .content input.inpt:focus {
-  border-color: rgb(31, 30, 30);
+  border-color: rgb(155, 153, 153);
 }
 body .container .content input.submit {
   font-size: 12px;
@@ -141,12 +142,13 @@ body .container .content input.submit {
   cursor: pointer;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: rgb(31, 30, 30);
-  border: 2px solid rgb(31, 30, 30);
+  color: #fff;
+  border: 2px solid #fff;
   background: transparent;
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
   border-radius: 2px;
+  background-color: #8bd6f1;
 }
 body .container .content input.submit:hover {
   background-color: #354750;
@@ -234,67 +236,27 @@ body .container .content .signup-cont {
   text-decoration: none;
 }
 .exit-wrapper {
-    display: flex;
-    -webkit-box-pack: end;
-    justify-content: flex-end;
-    font-size: 1.5rem;
-    color: rgb(31, 30, 30);
+  display: flex;
+  -webkit-box-pack: end;
+  justify-content: flex-end;
+  font-size: 1.5rem;
+  color: #8bd6f1;
 }
 .exit-wrapper svg{
-    cursor: pointer;
-}
-
-
-/*social box css*/
-.social-box h4{
-  color: rgb(31, 30, 30);
-  text-align: center;
-  margin-top: 28px;
-  margin-bottom: 12px;
-}
-.googlebox {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.googlebox button {
-  border: 0;
-  background-color: transparent;
   cursor: pointer;
-  outline: none;
-}
-.googlebox .google-login {
-  width: 30px;
-  height: 30px;
-  margin-top: 25px;
-  margin-bottom: 5px;
-}
-/*social box css*/
-
-
-
-@media all and (max-width: 380px) {
-    body .container{
-        width: 330px;
-        height: 520px;
-    }
-}
-@media all and (min-width: 1024px) {
-    body .container{
-        width: 450px;
-        height: 600px;
-        padding: 0px 10px 0px 10px;
-    }
 }
 
 
-/*수정사항*/
+/* 수정사항*/
+.inpt-login {
+  margin-bottom: 25px;
+}
 .signin-cont form h4{
-  color:rgb(31, 30, 30);
+  color:rgb(155, 153, 153);
   text-align: center;
   margin-top: 33px;
 }
 .signin-cont form h4 a{
-  color:rgb(31, 30, 30);
+  color:#8bd6f1;
 }
-/*수정사항*/
+/* 수정사항*/
