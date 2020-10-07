@@ -1,0 +1,29 @@
+.detail-title{
+    border-bottom: 2px solid gray;
+    max-height: 64px;
+    overflow: scroll;
+    color: #fff;
+}
+.detail-dec{
+    height: 420px;
+    border-bottom: 2px solid gray;
+    overflow: scroll;
+    color: #fff;
+}
+.detaile-button-block{
+    margin-top: 30px;
+}
+.detaile-button-block button{
+    background-color: rgb(141, 44, 44);
+    border: 0;
+    width: 60px;
+    height: 23px;
+    color: #fff;
+    border-radius: 1rem;
+}
+.user-info{
+    text-align: right;
+    margin-right: 10%;
+    color: honeydew;
+    border-bottom: 2px solid gray;
+}

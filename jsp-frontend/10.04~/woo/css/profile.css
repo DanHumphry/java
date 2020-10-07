@@ -1,0 +1,94 @@
+body .container {
+    position: relative;
+    overflow: hidden;
+    margin: 45px auto 0;
+    -moz-box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 30px;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 12px 0px;
+}
+.checkBlock{
+    display: flex;
+}
+.checkButton{
+    height: 33px;
+    margin-left: 5px;
+    background-color: gray;
+    border: 0;
+    color: #fff;
+}
+.auto-margin{
+    width: 90%;
+    height: 100%;
+    margin: 20px 20px 20px 20px;
+}
+.profile-title{
+    margin-top: 20px;
+    text-align: center;
+}
+
+.profile-body input{
+    width: 181px;
+    height: 32px;
+    margin-bottom: 28px;
+    display: block;
+    background-color: gray;
+    border: 0;
+}
+.profile-body input:focus{
+    outline: none;
+}
+.profile-footer button{
+    margin: 0;
+    padding: 0 10px;
+    height: 30px;
+    width: 75px;
+    font-size: 18px;
+    color: white !important;
+    background: gray !important;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    text-align: center;
+}
+.profile-footer{
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    margin-top: 40px;
+}
+
+body .container .tabs {
+    width: 100%;
+    margin-bottom: 35px;
+    border-bottom: 1px solid gray;
+}
+body .container .tabs .tab {
+    display: inline-block;
+    margin-bottom: -1px;
+    padding: 20px 15px 10px;
+    cursor: pointer;
+    letter-spacing: 0;
+    border-bottom: 1px solid gray;
+    -moz-user-select: -moz-none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    transition: all 0.1s ease-in-out;
+    color: #fff;
+}
+body .container .tabs .tab a {
+  font-size: 11px;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: rgb(155, 153, 153);
+  transition: all 0.1s ease-in-out;
+}
+body .container .tabs .tab.active a, body .container .tabs .tab:hover a {
+  color: black;
+  font-weight: bold;
+}
+body .container .tabs .tab.active {
+  border-bottom: 1px solid black;
+  color: black;
+}

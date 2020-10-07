@@ -1,5 +1,87 @@
-.join-container{
-    width: 100%;
-    height: 100%;
-    background: rgba(128, 128, 128, 0.185);
+div{
+    display: block;
 }
+/* join */
+
+.back-container2 form{
+    padding: 30px;
+}
+.back-container2 input{
+    width: auto;
+    height: 19px;
+    margin-top: 50px;
+    padding: 10px;
+}
+.back-container2 input:focus{
+    outline: none;
+}
+.join-button{
+    text-align: center;
+}
+.join-button button{
+    background-color: gray;
+    border: 0;
+    height: 43px;
+    width: 88px;
+    margin-top: 50px;
+}
+.confirm-button{
+    background-color: gray;
+    border: 0;
+    height: 43px;
+    width: 20%;
+    min-width: 54px;
+}
+.section1{
+    display: block;
+    text-align: center;
+}
+.section1 p{
+    position: absolute;
+    color: red;
+}
+.section2{
+    display: block;
+    text-align: center;
+}
+#o{
+    color: green;
+}
+.exit-wrapper {
+    display: flex;
+    -webkit-box-pack: end;
+    justify-content: flex-end;
+    font-size: 1.5rem;
+    color: black;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+.exit-wrapper svg{
+    cursor: pointer;
+}
+@media all and (max-width: 900px) {
+    .back-container2 input{
+        max-width: 230px;
+    }
+    .confirm-button{
+        max-width: 22%;
+    }
+    .section1 p{
+        margin-left: 70px;
+    }
+}
+@media all and (max-width: 650px) {
+    .back-container2 input{
+        max-width: 170px;
+    }
+    .section1 p{
+        margin-left: 40px;
+    }
+}
+
+@media all and (max-width: 425px) {
+    .back-container2 input{
+        max-width: 125px;
+    }
+}
+/* join */

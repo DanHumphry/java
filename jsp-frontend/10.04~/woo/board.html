@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/background.css">
+    <link rel="stylesheet" href="css/borad.css">
+    <link rel="stylesheet" href="css/nav.css">
+</head>
+<body>
+    <div class="mobile-back"></div>
+    <div class="bg_banner_image"></div>
+    <div class="mobile-back"></div>
+
+    <div class="back-container1">
+        <div class="back-container2">
+            <nav class="main-nav">
+                <div class="menu-nav">
+                    <div class="half-menu1">
+                        <div class="half-block">
+                            <div class="half-center">
+                                <a href="#" style="color: #fff;">자유게시판</a>
+                                <a href="today.html">오늘의 쇠질</a>
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <a href="profile.html"><button>내 정보</button></a>
+                        </div>
+                    </div>
+                    <div class="half-menu2">
+                        <div class="half-block">
+                            <div class="half-center">
+                                <a href="#">근육맛집</a>
+                                <a href="#">수련장</a>
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <a href="#"><button>로그아웃</button></a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="main-body">
+                <div class="tr-border">
+                    <div class="tr-sq"></div>
+                    <div class="tr-title">
+                        <a href="board-detail.html">
+                            <h3>출석체크</h3>
+                        </a>
+                    </div>
+                    <div class="tr-info">
+                        <div class="user-info">
+                            <p>root</p>
+                        </div>
+                        <div class="user-info">
+                            <p>2020-10-07</p>
+                        </div>
+                    </div>
+                    <!-- 각각 h3, p, p 에 정보가 들어가면됨 -->
+                </div>
+            </div>
+            <div class="pagination">
+                <ul>
+                    <li class="active"><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <div class="footer-button">
+                    <a href="board-write.html">
+                        <button class="write-button">글쓰기</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        $(function(){
+         var sBtn = $(".pagination ul > li"); 
+         sBtn.find("a").click(function(){ 
+          sBtn.removeClass("active"); 
+          $(this).parent().addClass("active");
+         })
+        })
+    </script>
+</body>
+</html>

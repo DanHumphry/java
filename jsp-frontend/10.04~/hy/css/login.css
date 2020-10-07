@@ -128,12 +128,16 @@ a{
     display: block;
     width: 200px;
     height: 33px;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
     padding: 10px 10px;
     color: rgb(155, 153, 153);
     border: 2px solid rgb(155, 153, 153);
     background: transparent;
     border-radius: 2px;
+  }
+  .content p{
+    color: red;
+    margin: 0;
   }
   .checkBlock{
     display: flex;

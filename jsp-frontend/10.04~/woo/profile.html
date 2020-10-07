@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/background.css">
+    <link rel="stylesheet" href="css/nav.css">
+    <link rel="stylesheet" href="css/profile.css">
+</head>
+<body>
+    <div class="mobile-back"></div>
+    <div class="bg_banner_image"></div>
+    <div class="mobile-back"></div>
+
+    <div class="back-container1">
+        <div class="back-container2">
+            <nav class="main-nav">
+                <div class="menu-nav">
+                    <div class="half-menu1">
+                        <div class="half-block">
+                            <div class="half-center">
+                                <a href="board.html">자유게시판</a>
+                                <a href="today.html">오늘의 쇠질</a>
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <a href="#"><button style="color: black;">내 정보</button></a>
+                        </div>
+                    </div>
+                    <div class="half-menu2">
+                        <div class="half-block">
+                            <div class="half-center">
+                                <a href="#">근육맛집</a>
+                                <a href="#">수련장</a>
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <a href="#"><button>로그아웃</button></a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <section class="container">
+                <div class="auto-margin">
+                    <div class="profile-title">
+                        <h2>회원정보 수정</h2>
+                    </div>
+                    <div class="tabs">
+                        <span class="tab signin active"><a href="#">내 정보</a></span>
+                        <span class="tab signup"><a href="profile-pwd.html">비밀번호 변경</a></span>
+                    </div>
+                    <div class="profile-body">
+                        <form>
+                            아이디
+                            <div class="checkBlock">
+                                <input name="id" id="id" type="text" minlength="4" maxlength="30"/>
+                                <button class="checkButton">중복확인</button>
+                            </div>
+                            닉네임
+                            <div class="checkBlock">
+                                <input name="nickname" id="nickname" type="text" minlength="4" maxlength="30"/>
+                                <button class="checkButton">중복확인</button>
+                            </div>
+                            이메일
+                            <div class="checkBlock">
+                                <input id="email" name="email" type="email"/>
+                                <button class="checkButton">중복확인</button>
+                            </div>
+                            <div class="profile-footer">
+                                <div>
+                                    <button>탈퇴</button>
+                                </div>
+                                <div>
+                                    <button>수정</button>
+                                    <button id="go-back">나가기</button>
+                                </div>
+                                <!-- 나가기 버튼 안되는데 나중에 수정 -->
+                            </div>
+                        </form>
+                        
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>
