@@ -6,6 +6,7 @@
 body{
     margin: 0;
     padding: 0;
+    overflow: hidden;
 }
 a{
     text-decoration: none;
@@ -97,6 +98,7 @@ div{
     margin: 7.5% 10% 10% 7.5% ;
     background: rgba(63, 63, 62, 0.226);
     animation: 0.25s ease 0s 1 normal forwards running back;
+    overflow: hidden;
 }
 @keyframes back{
     0% {

@@ -1,6 +1,34 @@
-국비학원 정보공유 커뮤니티
+ HttpServletResponse를 통해 리다이렉트 하는 방식은 현재 어플리케이션 
+이외에 다른 자원의 경로를 요청할 수 있는 반면
+ RequestDispatcher는 현재 처리중인 서블릿이 속해 있는 웹 어플리케이션 
+범위 내에서만 요청을 제어할 수 있습니다.
+
+        //request는 웹이 전송한 요청정보 response 웹브라우저에 보내는 응답정보
+        //RequestURI == request가 담은 URI ex) project경로/index.jsp
+        //contextPath == reqeust가 담은 path ex) index.jsp를 제외한 project경로
+        //command에는 project경로를 제외한 request가 날아온 파일(index.jsp)만 남게되어
+        //command를 비교해서 알맞은 action을 넣어주고 forward에는 해당action의 request와 response를 전달
+        //담긴 forword가 null값이 아닐때
+        //forward.isRedirect()값이 true인 것은 forward에 값이 담기는 과정에서 setPath가 이루어졌다면 forward.isRedirect()는 true
+        //true라면 response.sendRedirect(forward.getPath())
+        //forward.getPath()에 결과값인 URL로 요청을 재전송(sendRedirect의 기능)한다.
+        //false라면 dispatcher를 이용한 제어이동
 
 
-로그인 , 게시판crud,  (1단계)
-+ 댓글 + 파일첨부,  (2단계)
-+ 지도 + 채팅  (3단계)
+        //join.do로 시작시 위의 과정을 거치고 redirect로 joinProc.do로 이동하고 action에는 MemberJoinProcAction를 담는다.
+        // MemberJoinProcAction는 회원가입 시 id,email값 유효성 검사와 pwd, pwd확인 일치여부, memberVo에 값 set, serveice를 호출한다.
+        //service는 joinMember(set된 memberVo)를 통해 dao를 호출하는데 이 때 dao에 이미 set된 값이 있다면 return되는 isSucess 값을 통해
+        //회원가입 실패라는 최종적 결과를 화면에 출력하며 메인페이지로 이동하며 종료된다. 만약 set된 값이 없는 신규유저라면 회원가입 완료 후 메인페이지 이동.
+
+        //login또한 redirect로 loginProc.do 이동 MemberLoginProcAction으로 이동하는데 이때 view에서 입력한 값들을 먼저 받아오고 해당 id값을
+        //serveice의 getMember()에 넣어 id정보와 일치하는 멤버데이터를 가져오는데 dao.getMember에 접근, 해당id의 비밀번호를 가져온다.
+        //가져온 비밀번호를 다시 MemberLoginProcAction으로 이동해서 비교, 일치하면 로그인상태로 변경하며 loginManager를 통해  해당 id의 세션을 등록.
+
+
+
+
+1. 글쓰기 제목 textarea에서 > input으로 전체 화면 아니라 container에 
+담겨있는 상태면 좋겠음.(t스토리 글쓰기 같은)
+2. nav 태그에 글자 등 css (space between)
+3. schoolInfo-write에서 카테고리 추가 , schoolInfo에는 잘보이게 왼쪽에
+카테고리 넣어주고, detail에는 카테고리 결과까지 받아올곳 수정
