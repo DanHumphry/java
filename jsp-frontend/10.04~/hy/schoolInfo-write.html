@@ -15,23 +15,39 @@
 
     <section class="container-section">
         <article class="write-container">
-        <div class="post-title">
-            <textarea name="title" id="title" placeholder="제목을 입력하세요"></textarea>
-        </div>
-        <div class="file-">
-            <button class="upButton">
-                <label htmlFor="file" class="img-up">
-                    <input type="file" id="file" accept=".jpg, .png, .jpeg, .gif"></input>이미지 업로드
-                </label>
-            </button>
-        </div>
-        <div class="post-contents">
-            <textarea name="content" it="content" class="post-textarea" placeholder="내용을 입력하세요"></textarea>
-        </div>
-        <footer class="post-comment">
-            <a class="exit-btn transparent-btn" href="schoolInfo.html">✔ 나가기</a>
-            <button class="transparent-btn">발행</button>
-        </footer>
+            <div class="write-border">
+                <form action="/schoolRegister.do" method="post" onsubmit="return checkData()">
+                    <div class="write-select-section">
+                        <div class="write-select">
+                            <select name="choose_region" id="choose_region" class="list-sort">
+                                <option value="1">서울/수도권</option>
+                                <option value="2">부산/대구/경상도</option>
+                                <option value="3">광주/전라도</option>
+                                <option value="4">충청도</option>
+                                <option value="5">강원도</option>
+                                <option value="6">제주도</option>
+                            </select>
+                            <div class="file-">
+                                <button class="upButton">
+                                    <label htmlFor="file" class="img-up">
+                                        <input type="file" id="file" accept=".jpg, .png, .jpeg, .gif"/>이미지 업로드
+                                    </label>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-title">
+                        <input type="text" name="title" id="title" placeholder="제목을 입력하세요"/>
+                    </div>
+                    <div class="post-contents">
+                        <textarea name="content" id="content" class="post-textarea" placeholder="내용을 입력하세요"></textarea>
+                    </div>
+                    <div class="post-comment">
+                        <a class="exit-btn transparent-btn" href="/schBoard.do">✔ 나가기</a>
+                        <button class="transparent-btn">등록</button>
+                    </div>
+                </form>
+            </div>
         </article>
     </section>
 </body>
