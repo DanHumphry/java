@@ -7,7 +7,7 @@ onClick="check_name_text();  일경우에는 에러멘트 발생후 에러에 �
 즉 폼으로 데이타가 전송이 됨
 
 @@중요한것
-  문제점 1. 회원가입 onclick과 submit 우선순위에서 submit이 항상 먼저 실행되서 onclick이 실행이 안되는듯함
+
 
 @@수정사항
    1. 이메일 중복확인 기능
