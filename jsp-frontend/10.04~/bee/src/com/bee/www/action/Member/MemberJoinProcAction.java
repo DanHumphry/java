@@ -26,17 +26,18 @@ public class MemberJoinProcAction implements Action {
         String email = request.getParameter("email");
         String nick = request.getParameter("nick");
 
-        //값 비어있는지,형식(정규식) 검사
-//        if (id == null || id.equals("") || !RegExp.checkString(MEMBER_ID, id)
-//                || pwd == null || pwd.equals("") || !RegExp.checkString(MEMBER_PWD, pwd)
-//                || nick == null || nick.equals("") || !RegExp.checkString(MEMBER_NICK, nick)
-//                || email == null || email.equals("") || !RegExp.checkString(MEMBER_EMAIL, email)) {
-//            response.setContentType("text/html;charset=UTF-8");
-//            PrintWriter out = response.getWriter();
-//            out.println("<script>alert('잘못된 접근입니다');location.href='/';</script>");
-//            out.close();
-//            return null;
-//        }
+//        값 비어있는지,형식(정규식) 검사
+        if (id == null || id.equals("") || !RegExp.checkString(MEMBER_ID, id)
+                || pwd == null || pwd.equals("") || !RegExp.checkString(MEMBER_PWD, pwd)
+                || nick == null || nick.equals("")
+//                || !RegExp.checkString(MEMBER_NICK, nick)
+                || email == null || email.equals("") || !RegExp.checkString(MEMBER_EMAIL, email)) {
+            response.setContentType("text/html;charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('잘못된 접근입니다');location.href='/';</script>");
+            out.close();
+            return null;
+        }
 
         //pwd,pwd확인 일치하는지 검사
         if (!pwd.equals(pwd_confirm)) {

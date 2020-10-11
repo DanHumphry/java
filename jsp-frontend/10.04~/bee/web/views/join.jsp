@@ -15,6 +15,7 @@
             crossorigin="anonymous"></script>
     <script>
         var result = 1;
+        var result2 = 1;
 
         function checkId() {
             var id = $('#id').val();
@@ -95,12 +96,12 @@
                     console.log("서버 통신 성공");
 
                     if (data.count == 0) {      //0 email미중복
-                        result = 0;
-                        console.log("success if result = "+result);
+                        result2 = 0;
+                        console.log("success if result = "+result2);
                         $('#email_check').html('사용 가능한 이메일').css('color', 'blue');
                     } else {                    //1 중복
-                        result = 1;
-                        console.log("success else result = "+result);
+                        result2 = 1;
+                        console.log("success else result = "+result2);
                         $('#email_check').html('사용 불가능한 이메일').css('color', 'red');
                         $('#email').val('');
                         $('#email').focus();
@@ -109,11 +110,11 @@
             });
         }
 
-        // $('#id').keyup(function (){
-        //     result = 1;  //id 칸에 다시 입력할 때 count 1로 초기화
-        //     console.log("keyup result = "+result);
-        //     $('#id_check').html('20자 이내의 아이디 입력').css('color', '#9aa8d0');
-        // });
+        $('#id').keyup(function (){
+            result = 1;  //id 칸에 다시 입력할 때 count 1로 초기화
+            console.log("keyup result = "+result);
+            $('#id_check').html('20자 이내의 아이디 입력').css('color', '#9aa8d0');
+        });
 
         //form submit시
         function joinSubmit() {
@@ -123,10 +124,24 @@
             var email = $('#email').val();
             var nick = $('#nick').val();
 
-            if(count==1){
+            if(result==1 && result2==1){
+                alert('아이디와 이메일을 중복체크 하세요');
+                if($('#id').val()==''){
+                    $('#id').focus();
+                }
+                return false;
+            }
+            if(result==1){
                 alert('아이디 중복체크 하세요');
                 if($('#id').val()==''){
                     $('#id').focus();
+                }
+                return false;
+            }
+            if(result2==1){
+                alert('이메일 중복체크 하세요');
+                if($('#email').val()==''){
+                    $('#email').focus();
                 }
                 return false;
             }
@@ -181,13 +196,13 @@
                 return false;
 
             }
-            var regExpNick = new RegExp("^[a-z가-힣]{4,20}$", "g");
-            if (regExpNick.exec(nick) == null) {
-                alert("잘못된 닉네임 형식입니다.");
-                $('#nick').val("");
-                $('#nick').focus();
-                return false;
-            }
+            // var regExpNick = new RegExp("^[a-z가-힣]{4,20}$", "g");
+            // if (regExpNick.exec(nick) == null) {
+            //     alert("잘못된 닉네임 형식입니다.");
+            //     $('#nick').val("");
+            //     $('#nick').focus();
+            //     return false;
+            // }
             var regExpEmail = new RegExp("^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$", "g");
             if (regExpEmail.exec(email) == null) {
                 alert("잘못된 이메일 형식입니다.");
@@ -219,7 +234,7 @@
                     <div class="main-section">
                         <section class="container">
                             <article class="modal">
-                                <a href="index.jsp"><div class="exit-wrapper">
+                                <a href="/"><div class="exit-wrapper">
                                     <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" tabindex="1" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
                                     </svg>
@@ -230,7 +245,7 @@
                                 </div>
                                 <div class="content">
                                     <section class="signin-cont cont">
-                                        <form name="joinForm" id="joinForm" onsubmit="joinSubmit(); return false"
+                                        <form name="joinForm" id="joinForm" onsubmit="return joinSubmit();"
                                               action="/joinProc.do" method="post">
                                             <p id="id_check">중복확인 해주세요.</p>
                                             <!-- <p>가능한 아이디입니다.</p> -->
@@ -256,8 +271,7 @@
                                                        placeholder="닉네임 입력"/>
                                             </div>
                                             <div class="submit-wrap">
-                                                <input type="submit" value="회원가입" class="submit"
-                                                       onclick="joinSubmit()"/>
+                                                <input type="submit" value="회원가입" class="submit"/>
                                             </div>
                                         </form>
                                     </section>

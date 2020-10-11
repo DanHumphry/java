@@ -60,7 +60,7 @@
                     </svg>
                     <img id="image_section" alt=""/>
                 </div>
-                <textarea name="content" id="content" class="post-textarea"
+                <textarea name="content" id="content" class="post-textarea2"
                           placeholder="내용을 입력하세요"></textarea>
             </div>
             <footer class="post-comment">

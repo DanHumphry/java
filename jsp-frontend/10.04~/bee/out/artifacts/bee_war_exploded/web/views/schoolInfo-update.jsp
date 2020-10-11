@@ -30,7 +30,7 @@
             <textarea name="content" it="content" class="post-textarea" placeholder="내용을 입력하세요"></textarea>
         </div>
         <footer class="post-comment">
-            <a class="exit-btn transparent-btn" href="schoolInfo.html">✔ 나가기</a>
+            <a class="exit-btn transparent-btn" href="schoolInfo.jsp">✔ 나가기</a>
             <button class="transparent-btn">발행</button>
         </footer>
     </article>

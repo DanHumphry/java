@@ -19,6 +19,7 @@ public class MemberCheckEmailAction implements Action {
         //0이면 미중복 1이면 중복
         request.setAttribute("count", service.emailCheck(email));
 
+        //checkId.jsp재사용
         ActionForward forward = new ActionForward();
         forward.setPath("/views/AjaxCheckId.jsp");
         return forward;
