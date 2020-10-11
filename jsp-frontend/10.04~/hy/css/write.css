@@ -78,7 +78,18 @@ article > div.post-title > textarea {
 }
 .post-textarea{
     display: block;
-    height: 430px;
+    height: 480px;
+    font-size: 20px;
+    border: none;
+    outline: 0 none;
+    resize: none;
+    border-width: 1px;
+    width: 854px;
+    margin: 0 auto;
+}
+.post-textarea2{
+    display: block;
+    height: 310px;
     font-size: 20px;
     border: none;
     outline: 0 none;
@@ -154,6 +165,7 @@ article > div.post-title > textarea {
     -webkit-box-align: center;
     align-items: center;
     flex-direction: column;
+    margin-bottom: 10px;
 }
 .img-preview img{
     height: 100%;
@@ -163,6 +175,11 @@ article > div.post-title > textarea {
 }
 .img-preview svg{
     position: absolute;
+}
+.file-{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 17px;
 }
 /* preview */
 
@@ -201,4 +218,28 @@ article > div.post-title > textarea {
 }
 .write-border form{
     margin-top: 45px;
+}
+
+@media all and (max-width: 860px) {
+    .write-select{
+        width: 320px;
+    }
+    .img-preview img{
+        width: 320px;
+    }
+    .post-comment{
+        width: 320px;
+    }
+    .post-textarea{
+        width: 320px;
+    }
+    .post-textarea2{
+        width: 320px;
+    }
+    .post-title{
+        width: 320px;
+    }
+    .write-border{
+        width: 320px;
+    }
 }

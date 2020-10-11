@@ -46,7 +46,7 @@
     }
 }
 
-@media all and (min-width: 425px) {
+@media all and (min-width: 470px) {
     .header-filter input{
         width: auto;
     }

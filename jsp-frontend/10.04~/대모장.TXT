@@ -25,11 +25,9 @@
         //가져온 비밀번호를 다시 MemberLoginProcAction으로 이동해서 비교, 일치하면 로그인상태로 변경하며 loginManager를 통해  해당 id의 세션을 등록.
 
 
-
-
-1. 글쓰기 제목 textarea에서 > input으로 전체 화면 아니라 container에 
-담겨있는 상태면 좋겠음.(t스토리 글쓰기 같은)
-2. nav 태그에 글자 등 css (space between) >> 해결
-3. schoolInfo-write에서 카테고리 추가 , schoolInfo에는 잘보이게 왼쪽에 수정해서
-카테고리 넣어주고, detail에는 카테고리 결과까지 받아올곳 수정
+onclick안에 return 문 넣는 이유
+onClick="return check_name_text(); 일경우에는 에러멘트 발생후 다음 이벤트가 동작하지 않습니다.
+즉 폼으로 전송이 안됨
+onClick="check_name_text();  일경우에는 에러멘트 발생후 에러에 다음 return값에 상관없이 동작합니다.
+즉 폼으로 데이타가 전송이 됨
 
