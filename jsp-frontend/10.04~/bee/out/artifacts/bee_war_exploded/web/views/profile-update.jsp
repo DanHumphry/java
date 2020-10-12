@@ -43,22 +43,22 @@
             <span class="tab signup active"><a href="/profileUpdate.do">비밀번호 변경</a></span>
         </div>
         <div class="profile-body">
-<%--            <form>--%>
-                아이디
-                <div class="checkBlock">
-                    <input name="id" id="id" type="text" minlength="4" maxlength="30"/>
-                    <button class="checkButton">중복확인</button>
-                </div>
-                비밀번호
-                <input name="pwd" id="pwd" type="password" minlength="4" maxlength="30"/>
-                비밀번호 확인
-                <input name="pwd_confirm" id="pwd_confirm" minlength="4" maxlength="30" type="password"/>
-                <div class="profile-footer">
-                    <a><button>수정</button></a>
-                    <button id="go-back">나가기</button>
-                    <!-- 나가기 버튼 안되는데 나중에 수정 -->
-                </div>
-<%--            </form>--%>
+            <%--            <form>--%>
+            아이디
+            <div class="checkBlock">
+                <input name="id" id="id" type="text" minlength="4" maxlength="30"/>
+                <button class="checkButton">중복확인</button>
+            </div>
+            비밀번호
+            <input name="pwd" id="pwd" type="password" minlength="4" maxlength="30"/>
+            비밀번호 확인
+            <input name="pwd_confirm" id="pwd_confirm" minlength="4" maxlength="30" type="password"/>
+            <div class="profile-footer">
+                <a><button>수정</button></a>
+                <button id="go-back">나가기</button>
+                <!-- 나가기 버튼 안되는데 나중에 수정 -->
+            </div>
+            <%--            </form>--%>
 
         </div>
     </div>

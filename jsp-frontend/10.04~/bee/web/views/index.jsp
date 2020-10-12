@@ -62,9 +62,8 @@
     <section class="nav-section">
         <nav>
             <ul>
-                <li><a href="/schBoard.do">학원정보</a></li>
-                <li><a href="/reviews.do">학원후기</a></li>
-                <li><a href="/freeBoard.do">자유게시판</a></li>
+                <li><a href="/attendance.do">출석체크</a></li>
+                <li><a href="/board.do">게시판</a></li>
             </ul>
         </nav>
     </section>
@@ -102,44 +101,6 @@
 
         </div>
     </div>
-</div>
-
-<div class="trend-section">
-    <main class="trend-main">
-        <div class="main-section">
-            <div class="article">
-                <div class="arcticle-img">
-                    <img src="../images/2.png" alt=""></img>
-                </div>
-                <div class="article-content">
-                    <h4>서울IT직업전문학교</h4>
-                    <div class="desc-wrapper">
-                        <p>2006년 국내 최초로 쇼핑몰창업교육을 실행한 서울IT직업전문학교는
-                            고용노동부 직업훈련의 제약과 어려움에도 불구하고,
-                            끊임없는 혁신과 도전정신으로 전자상거래, 게임콘텐츠, 웹툰만화, 빅데이터 분야 등
-                            서울지역 IT 정보기술 교육의 새로운 장을 열어가고 있습니다.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="article">
-                <div class="arcticle-img">
-                    <img src="../images/1.png" alt=""></img>
-                </div>
-                <div class="article-content">
-                    <h4>서울직업전문학교</h4>
-                    <div class="desc-wrapper">
-                        <p>세계 속의 미래산업을 이끌어 갈
-                            스페셜리스트 인재 양성에
-                            최선을 다하고 있습니다.
-                            급변하는 세계와 환경에 적합한 기술력과 교육프로그램을 개발하였으며
-                            학생들의 글로벌 경험과 지식을 위해 외국학교 및 기관들과 협력하고 있습니다.
-                            실패를 두려워하지 않기에 미래가 있다!</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
 </div>
 
 <script type="text/javascript">
