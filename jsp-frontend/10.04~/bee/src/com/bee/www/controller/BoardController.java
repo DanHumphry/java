@@ -1,8 +1,16 @@
 package com.bee.www.controller;
 
 import com.bee.www.action.Member.*;
-import com.bee.www.action.attendance.AttendanceAction;
-import com.bee.www.action.board.BoardAction;
+import com.bee.www.action.freeboard.FreeBoardAction;
+import com.bee.www.action.freeboard.FreeBoardWriteAction;
+import com.bee.www.action.freeboard.FreeDetailAction;
+import com.bee.www.action.freeboard.FreeRegisterAction;
+import com.bee.www.action.review.ReviewsAction;
+import com.bee.www.action.review.ReviewsRegisterAction;
+import com.bee.www.action.schoolinfo.SchoolDetailAction;
+import com.bee.www.action.schoolinfo.SchoolInfoAction;
+import com.bee.www.action.schoolinfo.SchoolRegisterAction;
+import com.bee.www.action.schoolinfo.SchoolWriteAction;
 import com.bee.www.common.Action;
 import com.bee.www.common.ActionForward;
 
@@ -79,6 +87,76 @@ public class BoardController extends HttpServlet {
             }catch (Exception e){
                 e.printStackTrace();
             }
+        }else if(command.equals("/schBoard.do")){
+            action = new SchoolInfoAction();
+            try{
+                forward = action.execute(request,response);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }else if(command.equals("/schBoardWrite.do")){
+            action = new SchoolWriteAction();
+            try{
+                forward = action.execute(request,response);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }else if(command.equals("/schoolRegister.do")){
+            action = new SchoolRegisterAction();
+            try{
+                forward = action.execute(request,response);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }else if(command.equals("/schDetail.do")){
+            action = new SchoolDetailAction();
+            try{
+                forward = action.execute(request,response);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }else if(command.equals("/freeBoard.do")){
+            action = new FreeBoardAction();
+            try{
+                forward = action.execute(request,response);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }else if(command.equals("/freeBoardWrite.do")){
+            action = new FreeBoardWriteAction();
+            try{
+                forward = action.execute(request,response);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }else if(command.equals("/freeRegister.do")){
+            action = new FreeRegisterAction();
+            try{
+                forward = action.execute(request,response);
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else if(command.equals("/freeDetail.do")) {
+            action = new FreeDetailAction();
+            try{
+                forward = action.execute(request,response);
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if(command.equals("/reviews.do")){
+            action = new ReviewsAction();
+            try{
+                forward = action.execute(request,response);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        } else if(command.equals("/reviewsRegister.do")){
+            action = new ReviewsRegisterAction();
+            try{
+                forward = action.execute(request,response);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }else if(command.equals("/profile.do")){
             action = new ProfileAction();
             try{
@@ -88,20 +166,6 @@ public class BoardController extends HttpServlet {
             }
         }else if(command.equals("/profileUpdate.do")){
             action = new ProfileUpdateAction();
-            try{
-                forward = action.execute(request,response);
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }else if(command.equals("/attendance.do")){
-            action = new AttendanceAction();
-            try{
-                forward = action.execute(request,response);
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }else if(command.equals("/board.do")){
-            action = new BoardAction();
             try{
                 forward = action.execute(request,response);
             }catch (Exception e){

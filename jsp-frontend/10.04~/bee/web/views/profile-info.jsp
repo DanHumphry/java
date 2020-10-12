@@ -48,23 +48,23 @@
             <span class="tab signup"><a href="/profileUpdate.do">비밀번호 변경</a></span>
         </div>
         <div class="profile-body">
-            <%--            <form>--%>
-            아이디
-            <div class="checkBlock">
-                <input name="id" id="id" type="text" minlength="4" maxlength="30"/>
-                <button class="checkButton">중복확인</button>
-            </div>
-            이메일
-            <div class="checkBlock">
-                <input id="email" name="email" type="email"/>
-                <button class="checkButton">중복확인</button>
-            </div>
-            <div class="profile-footer">
-                <button>수정</button>
-                <button id="go-back">나가기</button>
-                <!-- 나가기 버튼 안되는데 나중에 수정 -->
-            </div>
-            <%--            </form>--%>
+<%--            <form>--%>
+                아이디
+                <div class="checkBlock">
+                    <input name="id" id="id" type="text" minlength="4" maxlength="30"/>
+                    <button class="checkButton">중복확인</button>
+                </div>
+                이메일
+                <div class="checkBlock">
+                    <input id="email" name="email" type="email"/>
+                    <button class="checkButton">중복확인</button>
+                </div>
+                <div class="profile-footer">
+                    <button>수정</button>
+                    <button id="go-back">나가기</button>
+                    <!-- 나가기 버튼 안되는데 나중에 수정 -->
+                </div>
+<%--            </form>--%>
 
         </div>
     </div>

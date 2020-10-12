@@ -260,7 +260,7 @@
                                             <div class="checkBlock">
                                                 <input id="email" name="email" type="email" class="inpt" placeholder="이메일 입력"/>
                                                 <button class="checkButton" type="button" value="Email중복확인"
-                                                        name="confirmEmail" id="confirmEmail" onClick="checkEmail()">중복확인</button>
+                                                name="confirmEmail" id="confirmEmail" onClick="checkEmail()">중복확인</button>
                                             </div>
                                             <div class="otherinput">
                                                 <input name="pwd" id="pwd" minlength="4" maxlength="30" type="password" class="inpt2"

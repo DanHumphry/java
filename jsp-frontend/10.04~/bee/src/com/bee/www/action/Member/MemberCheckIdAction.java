@@ -15,14 +15,14 @@ public class MemberCheckIdAction implements Action {
 
         String id = request.getParameter("id"); //join.jsp에서 id받아옴
 
-        //id 유효성 검사
-//        if(id==null||id.equals("")||!RegExp.checkString(MEMBER_ID,id)){
-//            response.setContentType("text/html;charset=UTF-8");
-//            PrintWriter out = response.getWriter();
-//            out.println("<script>alert('잘못된 접근입니다');history.back();</script>");
-//            out.close();
-//            return null;
-//        }
+  /*      //id 유효성 검사
+        if(id==null||id.equals("")||!RegExp.checkString(MEMBER_ID,id)){
+            response.setContentType("text/html;charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('잘못된 접근입니다');history.back();</script>");
+            out.close();
+            return null;
+        }*/
 
         BoardService service = new BoardService();
         //0이면 미중복 1이면 중복

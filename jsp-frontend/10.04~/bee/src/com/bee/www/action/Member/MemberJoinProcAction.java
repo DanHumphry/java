@@ -26,7 +26,7 @@ public class MemberJoinProcAction implements Action {
         String email = request.getParameter("email");
         String nick = request.getParameter("nick");
 
-        //값 비어있는지,형식(정규식) 검사
+//        값 비어있는지,형식(정규식) 검사
         if (id == null || id.equals("") || !RegExp.checkString(MEMBER_ID, id)
                 || pwd == null || pwd.equals("") || !RegExp.checkString(MEMBER_PWD, pwd)
                 || nick == null || nick.equals("")

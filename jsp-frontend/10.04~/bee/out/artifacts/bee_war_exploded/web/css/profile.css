@@ -78,17 +78,17 @@ body .container .tabs .tab {
     color: #fff;
 }
 body .container .tabs .tab a {
-    font-size: 11px;
-    text-decoration: none;
-    text-transform: uppercase;
-    color: rgb(155, 153, 153);
-    transition: all 0.1s ease-in-out;
+  font-size: 11px;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: rgb(155, 153, 153);
+  transition: all 0.1s ease-in-out;
 }
 body .container .tabs .tab.active a, body .container .tabs .tab:hover a {
-    color: black;
-    font-weight: bold;
+  color: black;
+  font-weight: bold;
 }
 body .container .tabs .tab.active {
-    border-bottom: 1px solid #02057c;
-    color: #02057c;
+  border-bottom: 1px solid #02057c;
+  color: #02057c;
 }
