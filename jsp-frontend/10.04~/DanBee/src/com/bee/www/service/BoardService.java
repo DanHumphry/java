@@ -1,9 +1,11 @@
 package com.bee.www.service;
 
 import com.bee.www.dao.BoardDAO;
+import com.bee.www.vo.AttendanceVo;
 import com.bee.www.vo.MemberVo;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
 import static com.bee.www.common.JdbcUtil.*;
 
@@ -71,7 +73,6 @@ public class BoardService {
         close(con);
         return isSucess;
     }
-
     //아이디 중복검사 메소드
     public int idCheck(String id){
         BoardDAO dao = BoardDAO.getInstance();
@@ -88,5 +89,72 @@ public class BoardService {
         int count=dao.checkEmail(email); //dao호출
         close(con);
         return count;
+    }
+
+    public int getMemberSequence(String id){
+        BoardDAO dao = BoardDAO.getInstance();
+        Connection con = getConnection();
+        dao.setConnection(con);
+
+        int sq = dao.getMemberSequence(id);
+        close(con);
+        return sq;
+    }
+    public boolean insertReviews(AttendanceVo vo) {
+        //세팅
+        BoardDAO dao = BoardDAO.getInstance();
+        Connection con = getConnection();
+        dao.setConnection(con);
+        //그냥 count넘겨도 되지만 boolean으로 함
+        boolean isSucess = false;
+
+        int count = dao.insertReviews(vo);
+        if (count > 0) {    //성공
+            commit(con);
+            isSucess = true;
+        } else {          //실패
+            rollback(con);
+        }
+        close(con);
+        return isSucess;
+    }
+    public ArrayList<AttendanceVo> getReviewsList(){
+        BoardDAO dao = BoardDAO.getInstance();
+        Connection con = getConnection();
+        dao.setConnection(con);
+
+        ArrayList<AttendanceVo> list = dao.getReviewsList();
+        close(con);
+
+        return list;
+    }
+    public boolean insertArticle(AttendanceVo vo) {
+        //세팅
+        BoardDAO dao = BoardDAO.getInstance();
+        Connection con = getConnection();
+        dao.setConnection(con);
+        //그냥 count넘겨도 되지만 boolean으로 함
+        boolean isSucess = false;
+
+        int count = dao.insertArticle(vo);
+        if (count > 0) {    //성공
+            commit(con);
+            isSucess = true;
+        } else {          //실패
+            rollback(con);
+        }
+        close(con);
+        return isSucess;
+    }
+
+    public ArrayList<AttendanceVo> getArticleList(){
+        BoardDAO dao = BoardDAO.getInstance();
+        Connection con = getConnection();
+        dao.setConnection(con);
+
+        ArrayList<AttendanceVo> list = dao.getArticleList();
+        close(con);
+
+        return list;
     }
 }

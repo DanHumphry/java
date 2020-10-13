@@ -2,7 +2,10 @@ package com.bee.www.controller;
 
 import com.bee.www.action.Member.*;
 import com.bee.www.action.attendance.AttendanceAction;
+import com.bee.www.action.attendance.AttendanceRegisterAction;
 import com.bee.www.action.board.BoardAction;
+import com.bee.www.action.board.BoardRegisterAction;
+import com.bee.www.action.board.BoardWriteAction;
 import com.bee.www.common.Action;
 import com.bee.www.common.ActionForward;
 
@@ -100,8 +103,29 @@ public class BoardController extends HttpServlet {
             }catch (Exception e){
                 e.printStackTrace();
             }
+        }else if(command.equals("/attendanceRegister.do")){
+            action = new AttendanceRegisterAction();
+            try{
+                forward = action.execute(request,response);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }else if(command.equals("/board.do")){
             action = new BoardAction();
+            try{
+                forward = action.execute(request,response);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }else if(command.equals("/boardWrite.do")){
+            action = new BoardWriteAction();
+            try{
+                forward = action.execute(request,response);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }else if(command.equals("/boardRegister.do")){
+            action = new BoardRegisterAction();
             try{
                 forward = action.execute(request,response);
             }catch (Exception e){
