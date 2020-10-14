@@ -216,19 +216,19 @@ public class BoardDAO {
         ArrayList<AttendanceVo> list = new ArrayList<>();
 
         try{
-            pstmt = con.prepareStatement("select b.b_sq, m.nickname, " +
+            pstmt = con.prepareStatement("select b.sq, m.nickname, " +
                     "b.title,b.content," +
-                    "b.hit,b.writeDate " +
+                    "b.like,b.writeDate " +
                     "from board b inner join member m on b.m_sq = m.sq"+
-                    " order by b_sq desc");
+                    " order by sq desc");
             rs=pstmt.executeQuery();
             while(rs.next()){
                 AttendanceVo vo = new AttendanceVo();
-                vo.setB_sq(rs.getInt("b_sq"));
+                vo.setB_sq(rs.getInt("sq"));
                 vo.setNickname(rs.getString("nickname"));
                 vo.setTitle(rs.getString("title"));
                 vo.setContent(rs.getString("content"));
-                vo.setLike(10);
+                vo.setLike(rs.getInt("like"));
                 vo.setWriteDate(rs.getString("writeDate"));
                 list.add(vo);
             }
@@ -239,5 +239,92 @@ public class BoardDAO {
             close(pstmt);
         }
         return list;
+    }
+    public AttendanceVo getArticleDetail(int num){
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        AttendanceVo vo = null;
+        //데이터 담기
+        try{
+            //현재 로그인된 id에 해당하는 고유번호 조회
+            pstmt = con.prepareStatement("select b.sq, b.m_sq, m.id, " +
+                    "b.title, b.content, " +
+                    "b.like, b.writeDate, m.nickname " +
+                    "from board b inner join member m on b.m_sq = m.sq " +
+                    "where b.sq=? ");
+            pstmt.setInt(1,num);
+            rs=pstmt.executeQuery();
+            while(rs.next()){
+                vo = new AttendanceVo();   //글 조회 돼야 인스턴스 생성
+                vo.setB_sq(rs.getInt("sq"));
+                vo.setId(rs.getString("id"));
+                vo.setTitle(rs.getString("title"));
+                vo.setContent(rs.getString("content"));
+                vo.setLike(rs.getInt("like"));
+                vo.setWriteDate(rs.getString("writeDate"));
+                vo.setNickname(rs.getString("nickname"));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(rs);
+            close(pstmt);
+        }
+        return vo;
+    }
+    public String getWriterId(int num){
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        String id = null;
+
+        try {
+            pstmt=con.prepareStatement("select m.id " +
+                    "from board b " +
+                    "inner join member m on b.m_sq = m.sq " +
+                    "where b.sq=?");
+            pstmt.setInt(1,num);
+            rs=pstmt.executeQuery();
+            while(rs.next()){
+                id=rs.getString("id");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(rs);
+            close(pstmt);
+        }
+        return id;
+    }
+    public int updateArticle(AttendanceVo vo){
+        PreparedStatement pstmt = null;
+        int count = 0;
+        try{
+            //현재 로그인된 id에 해당하는 고유번호 조회
+            pstmt = con.prepareStatement("update board set title=?, content=? where sq=?");
+            pstmt.setString(1,vo.getTitle());
+            pstmt.setString(2,vo.getContent());
+            pstmt.setInt(3,vo.getB_sq());
+            count=pstmt.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(pstmt);
+        }
+        return count;
+    }
+    public int deleteArticle(int num){
+        PreparedStatement pstmt = null;
+        int count = 0;
+        try{
+            //현재 로그인된 id에 해당하는 고유번호 조회
+            pstmt = con.prepareStatement("delete from board where sq=?");
+            pstmt.setInt(1,num);
+            count=pstmt.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(pstmt);
+        }
+        return count;
     }
 }

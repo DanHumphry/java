@@ -1,5 +1,9 @@
+<%@ page import="com.bee.www.vo.AttendanceVo" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
+<%
+    AttendanceVo vo = (AttendanceVo) request.getAttribute("vo");
+%>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -36,20 +40,25 @@
 
 <section class="container-section">
     <article class="write-container">
-        <form action="/boardRegister.do" method="post" onsubmit="return checkData()">
+        <form action="/board-updateProc.do?num=<%=vo.getB_sq()%>" method="post" onsubmit="return checkData()">
             <div class="post-title">
-                <input type="text" name="title" id="title" placeholder="제목을 입력하세요"/>
+                <input type="text" name="title" id="title" placeholder="제목을 입력하세요" value="<%=vo.getTitle()%>"/>
             </div>
             <div class="post-contents">
                 <textarea name="content" id="content" class="post-textarea2"
-                          placeholder="내용을 입력하세요"></textarea>
+                          placeholder="내용을 입력하세요"><%=vo.getContent()%></textarea>
             </div>
             <footer class="post-comment">
-                <a class="exit-btn transparent-btn" href="/board.do">✔ 나가기</a>
+                <a id="go-back" name="go-back" class="exit-btn transparent-btn">✔ 나가기</a>
                 <button class="transparent-btn">등록</button>
             </footer>
         </form>
     </article>
 </section>
+<script text="text/javascript">
+    document.getElementById('go-back').addEventListener('click', () => {
+        window.history.back();
+    });
+</script>
 </body>
 </html>

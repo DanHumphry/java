@@ -76,6 +76,9 @@ article > div.post-title > textarea {
     box-shadow: rgba(0, 0, 0, 0.016) 0px 0px 8px;
     height: 100%;
 }
+.write-container form{
+    margin-top: 30px;
+}
 .post-textarea{
     display: block;
     height: 480px;
@@ -89,7 +92,7 @@ article > div.post-title > textarea {
 }
 .post-textarea2{
     display: block;
-    height: 310px;
+    height: 520px;
     font-size: 20px;
     border: none;
     outline: 0 none;

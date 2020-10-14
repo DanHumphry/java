@@ -17,7 +17,7 @@
     <link rel="stylesheet" type="text/css" href="/css/schoolInfo.css">
     <script>
         function showDetail(num){
-            location.href="/schDetail.do?num="+num;
+            location.href="/board-detail.do?num="+num;
         }
     </script>
 </head>
@@ -68,7 +68,7 @@
         <nav>
             <ul>
                 <li><a href="/attendance.do">출석체크</a></li>
-                <li><a href="/board.do">게시판</a></li>
+                <li><a href="/board.do" style="color: rgb(12, 167, 179);">게시판</a></li>
             </ul>
         </nav>
     </section>

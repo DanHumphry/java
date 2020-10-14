@@ -157,4 +157,58 @@ public class BoardService {
 
         return list;
     }
+    public AttendanceVo getArticleDetail(int num) {
+        BoardDAO dao = BoardDAO.getInstance();
+        Connection con = getConnection();
+        dao.setConnection(con);
+
+        AttendanceVo vo = dao.getArticleDetail(num);
+        close(con);
+
+        return vo;
+    }
+    public String getWriterId(int num) {
+        BoardDAO dao = BoardDAO.getInstance();
+        Connection con = getConnection();
+        dao.setConnection(con);
+
+        String id = dao.getWriterId(num); //dao에서 구함
+
+        close(con);
+        return id;
+    }
+    public boolean updateArticle(AttendanceVo vo) {
+        //세팅
+        BoardDAO dao = BoardDAO.getInstance();
+        Connection con = getConnection();
+        dao.setConnection(con);
+        boolean isSucess = false;
+
+        int count = dao.updateArticle(vo);
+        if (count > 0) {    //성공
+            commit(con);
+            isSucess = true;
+        } else {          //실패
+            rollback(con);
+        }
+        close(con);
+        return isSucess;
+    }
+    public boolean deleteArticle(int num) {
+        //세팅
+        BoardDAO dao = BoardDAO.getInstance();
+        Connection con = getConnection();
+        dao.setConnection(con);
+        boolean isSucess = false;
+
+        int count = dao.deleteArticle(num);
+        if (count > 0) {    //성공
+            commit(con);
+            isSucess = true;
+        } else {          //실패
+            rollback(con);
+        }
+        close(con);
+        return isSucess;
+    }
 }

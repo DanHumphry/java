@@ -63,7 +63,7 @@
     <section class="nav-section">
         <nav>
             <ul>
-                <li><a href="/attendance.do">출석체크</a></li>
+                <li><a href="/attendance.do" style="color: rgb(12, 167, 179);">출석체크</a></li>
                 <li><a href="/board.do">게시판</a></li>
             </ul>
         </nav>

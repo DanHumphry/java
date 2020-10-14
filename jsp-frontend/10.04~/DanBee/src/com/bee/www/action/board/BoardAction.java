@@ -17,6 +17,7 @@ public class BoardAction implements Action {
 
         ArrayList<AttendanceVo> articleList = service.getArticleList();
         request.setAttribute("list",articleList);
+
         ActionForward forward = new ActionForward();
         forward.setPath("/views/board.jsp");
         return forward;

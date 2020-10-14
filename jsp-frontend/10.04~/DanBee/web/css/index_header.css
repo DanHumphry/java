@@ -40,6 +40,11 @@
     color: #fff;
     margin: 10px;
 }
+@media all and (max-width: 340px) {
+    .header-login{
+        display: block;
+    }
+}
 @media all and (max-width: 425px) {
     .header-login a{
         margin: 2px;

@@ -3,9 +3,7 @@ package com.bee.www.controller;
 import com.bee.www.action.Member.*;
 import com.bee.www.action.attendance.AttendanceAction;
 import com.bee.www.action.attendance.AttendanceRegisterAction;
-import com.bee.www.action.board.BoardAction;
-import com.bee.www.action.board.BoardRegisterAction;
-import com.bee.www.action.board.BoardWriteAction;
+import com.bee.www.action.board.*;
 import com.bee.www.common.Action;
 import com.bee.www.common.ActionForward;
 
@@ -126,6 +124,34 @@ public class BoardController extends HttpServlet {
             }
         }else if(command.equals("/boardRegister.do")){
             action = new BoardRegisterAction();
+            try{
+                forward = action.execute(request,response);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }else if(command.equals("/board-detail.do")){
+            action = new BoardDetailAction();
+            try{
+                forward = action.execute(request,response);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }else if(command.equals("/board-update.do")){
+            action = new BoardUpdateAction();
+            try{
+                forward = action.execute(request,response);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }else if(command.equals("/board-updateProc.do")){
+            action = new BoardDetailProcAction();
+            try{
+                forward = action.execute(request,response);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }else if(command.equals("/board-delete.do")){
+            action = new BoardDeleteAction();
             try{
                 forward = action.execute(request,response);
             }catch (Exception e){
