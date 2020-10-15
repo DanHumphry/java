@@ -80,20 +80,6 @@ public class BoardController extends HttpServlet {
             }catch (Exception e){
                 e.printStackTrace();
             }
-        }else if(command.equals("/profile.do")){
-            action = new ProfileAction();
-            try{
-                forward = action.execute(request,response);
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }else if(command.equals("/profileUpdate.do")){
-            action = new ProfileUpdateAction();
-            try{
-                forward = action.execute(request,response);
-            }catch (Exception e){
-                e.printStackTrace();
-            }
         }else if(command.equals("/attendance.do")){
             action = new AttendanceAction();
             try{
@@ -152,6 +138,27 @@ public class BoardController extends HttpServlet {
             }
         }else if(command.equals("/board-delete.do")){
             action = new BoardDeleteAction();
+            try{
+                forward = action.execute(request,response);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }else if(command.equals("/profile.do")){
+            action = new ProfileAction();
+            try{
+                forward = action.execute(request,response);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }else if(command.equals("/profileUpdate.do")){
+            action = new ProfileUpdateAction();
+            try{
+                forward = action.execute(request,response);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }else if(command.equals("/profileImgUpdate.do")){
+            action = new ProfileUpdateAction();
             try{
                 forward = action.execute(request,response);
             }catch (Exception e){

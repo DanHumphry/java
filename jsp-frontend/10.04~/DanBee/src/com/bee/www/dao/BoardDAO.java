@@ -50,14 +50,14 @@ public class BoardDAO {
         }
         return count;
     }
-    //로그인할 때 입력한 아이디에 해당하는 비번 갖고오기
+
     public MemberVo getMember(String id){
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         MemberVo vo = null;
 
         try{
-            pstmt=con.prepareStatement("select sq,id,pwd from member where binary(id)=?");
+            pstmt=con.prepareStatement("select sq,id,pwd,nickname,image from member where binary(id)=?");
             pstmt.setString(1,id);
             rs=pstmt.executeQuery();
             while (rs.next()){
@@ -65,6 +65,8 @@ public class BoardDAO {
                 vo.setMem_sq(rs.getInt("sq"));
                 vo.setId(rs.getString("id"));
                 vo.setPwd(rs.getString("pwd"));
+                vo.setNickname(rs.getString("nickname"));
+                vo.setImage(rs.getString("image"));
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -319,6 +321,22 @@ public class BoardDAO {
             //현재 로그인된 id에 해당하는 고유번호 조회
             pstmt = con.prepareStatement("delete from board where sq=?");
             pstmt.setInt(1,num);
+            count=pstmt.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(pstmt);
+        }
+        return count;
+    }
+    public int profileUpdate(MemberVo vo){
+        PreparedStatement pstmt = null;
+        int count = 0;
+        try{
+            //현재 로그인된 id에 해당하는 고유번호 조회
+            pstmt = con.prepareStatement("update member set nickname=? where id=?");
+            pstmt.setString(1,vo.getNickname());
+            pstmt.setString(2,vo.getId());
             count=pstmt.executeUpdate();
         }catch (Exception e){
             e.printStackTrace();

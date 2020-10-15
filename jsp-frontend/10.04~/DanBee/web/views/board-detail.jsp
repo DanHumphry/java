@@ -41,7 +41,7 @@
                     <h3>로그인</h3></a>
                 <% } //로그아웃 상태
                 else { %>
-                <a href="/profile.do">
+                <a href="/profile.do?id=<%=id%>">
                     <h3 class="join">회원정보</h3>
                 </a>
                 <a href="/logout.do">
@@ -139,6 +139,40 @@
         <button onclick="location.href='/board.do'">목록</button>
     </div>
     <% } %>
+</div>
+<div class="commnet-container">
+    <div class="comment-count">
+        <h4>Comments 0</h4>
+    </div>
+    <table>
+        <tbody>
+        <tr class="left-section">
+            <td class="left-info-nick">닉네임</td>
+            <td class="left-info-date">2020-10-14</td>
+        </tr>
+        <tr class="right-section">
+            <td class="right-info"><a href="#">답변</a></td>
+            <td class="right-info"><a href="#">수정</a></td>
+            <td class="right-info"><a href="#">삭제</a></td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td class="comment-content">Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                Quibusdam similique quam, deserunt vero voluptate minus odit temporibus excepturi,
+                animi ab itaque ipsa blanditiis veritatis, rerum necessitatibus illo inventore tempore alias!</td>
+        </tr>
+        </tfoot>
+
+    </table>
+    <div>
+        <div class="comment-txt">
+            <textarea placeholder="여러분의 소중한 댓글을 입력해주세요."></textarea>
+        </div>
+        <div class="comment-button">
+            <button>댓글달기</button>
+        </div>
+    </div>
 </div>
 </body>
 </html>

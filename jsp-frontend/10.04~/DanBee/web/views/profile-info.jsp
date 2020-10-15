@@ -1,8 +1,10 @@
 <%@ page import="com.bee.www.common.LoginManager" %>
+<%@ page import="com.bee.www.vo.MemberVo" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     LoginManager lm = LoginManager.getInstance();
     String id = lm.getMemberId(session);
+    MemberVo vo = (MemberVo) request.getAttribute("vo");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,57 +27,118 @@
                 <input type="text" placeholder="검색할 내용.."/>
             </div>
             <div class="header-login">
-                <a href="#">
+                <%
+                    //로그인 상태
+                    if(id==null){
+                %>
+                <a href="/join.do">
+                    <h3 class="join">회원가입</h3>
+                </a>
+                <a href="/login.do">
+                    <h3>로그인</h3></a>
+                <% } //로그아웃 상태
+                else { %>
+                <a href="/profile.do?id=<%=id%>">
                     <h3 class="join">회원정보</h3>
                 </a>
                 <a href="/logout.do">
                     <h3>로그아웃</h3>
                 </a>
+                <% }  %>
             </div>
-
         </div>
     </div>
 </header>
 
+<section class="Chat-container">
+    <div class="all-margin">
+        <form action="profileImgUpdate.do" method="post">
+            <div class="img-section">
+                <div class="img-area">
+                    <img id="image_section" src="<%=vo.getImage()%>" alt=""/>
+                    <button class="up-button" type="button">
+                        <label for="imgFile" class="img-up">
+                            <input type="file" id="imgFile" name="imgFile" accept=".jpg, .png, .jpeg, .gif"/>업로드
+                        </label>
+                    </button>
+                    <button class="del-button" onclick="delImg()">제거</button>
+                </div>
+            </div>
+        </form>
+        <form action="profileUpdate.do" method="post">
+            <div class="profile-section">
+                <div class="nickname">
+                    <div class="wrapper">
+                        <div class="title-wrapper">
+                            <h3>닉네임</h3>
+                        </div>
+                        <div class="content-wrapper">
+                            <div class="contents cont"><%=vo.getNickname()%></div>
+                            <div class="contents-input cont" style="display: none;">
+                                <input id="nick" name="nick" class="fixName-input" type="text" value="<%=vo.getNickname()%>"/>
+                            </div>
+                        </div>
+                        <div class="edit-wrapper">
+                            <button class="tab fix-button active" type="button">수정</button>
+                            <button class="tab update-button" type="submit">저장</button>
+                        </div>
+                    </div>
+                </div>
 
-<section class="container">
-    <div class="auto-margin">
-        <div class="profile-title">
-            <h2>회원정보 수정</h2>
-        </div>
-        <div class="tabs">
-            <span class="tab signin active"><a href="/profile.do">내 정보</a></span>
-            <span class="tab signup"><a href="/profileUpdate.do">비밀번호 변경</a></span>
-        </div>
-        <div class="profile-body">
-            <%--            <form>--%>
-            아이디
-            <div class="checkBlock">
-                <input name="id" id="id" type="text" minlength="4" maxlength="30"/>
-                <button class="checkButton">중복확인</button>
+                <div class="leave">
+                    <div class="wrapper">
+                        <div class="title-wrapper">
+                            <h3>회원탈퇴</h3>
+                        </div>
+                        <div class="content-wrapper">
+                            <div class="contents">
+                                <button class="leave-button">회원탈퇴</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            이메일
-            <div class="checkBlock">
-                <input id="email" name="email" type="email"/>
-                <button class="checkButton">중복확인</button>
-            </div>
-            <div class="profile-footer">
-                <button>수정</button>
-                <button id="go-back">나가기</button>
-                <!-- 나가기 버튼 안되는데 나중에 수정 -->
-            </div>
-            <%--            </form>--%>
-
-        </div>
+        </form>
     </div>
 </section>
 
-<script type="text/javascript">
-    document.getElementById('go-back').addEventListener('click', () => {
-        console.log("??")
-        window.history.back();
+<script src="http://code.jquery.com/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#image_section').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $("#imgFile").change(function () {
+        readURL(this);
+    });
+
+    function delImg(){
+        $('#image_section').removeAttr('src');
+    }
+
+
+    $('.edit-wrapper .tab').click(function () {
+        if ($(this).hasClass('fix-button')) {
+            $('.edit-wrapper .tab').removeClass('active');
+            $('.update-button').addClass('active');
+            $('.cont').hide();
+            $('.contents-input').show();
+        }
+        if ($(this).hasClass('update-button')) {
+            $('.edit-wrapper .tab').removeClass('active');
+            $('.fix-button').addClass('active');
+            $('.cont').hide();
+            $('.contents').show();
+        }
     });
 </script>
-
 </body>
 </html>

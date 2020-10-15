@@ -8,6 +8,17 @@ public class MemberVo {
     private String email;
     private boolean lgn_fl;
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    private String image;
+
+
     public int getMem_sq() {
         return mem_sq;
     }

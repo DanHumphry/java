@@ -1,9 +1,6 @@
 package com.bee.www.action.Member;
 
-import com.bee.www.common.Action;
-import com.bee.www.common.ActionForward;
-import com.bee.www.common.BCrypt;
-import com.bee.www.common.RegExp;
+import com.bee.www.common.*;
 import com.bee.www.service.BoardService;
 import com.bee.www.vo.MemberVo;
 
@@ -63,6 +60,10 @@ public class MemberJoinProcAction implements Action {
             out.println("<script>alert('회원 가입에 실패하였습니다.');location.href='/';</script>");
             out.close();
             return null;
+        }else{
+            memberVo.setLgn_fl(true);
+            LoginManager lm = LoginManager.getInstance();
+            lm.setSession(request.getSession(),memberVo.getId());
         }
 
         //메인페이지로 이동
