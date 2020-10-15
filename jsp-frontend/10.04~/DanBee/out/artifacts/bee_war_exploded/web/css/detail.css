@@ -55,7 +55,6 @@ hr{
 .content-count{
     float: left;
     width: 50px;
-    text-align: right;
     display: block;
 }
 .content-count p{
@@ -106,3 +105,89 @@ hr{
 .detail-auto{
     text-align: -webkit-center;
 }
+
+/*aside*/
+.detail-container{
+    position: relative;
+}
+aside{
+    position: absolute;
+    left: -5.5rem;
+}
+.aside-container {
+    width: 4rem;
+    background: rgb(248, 249, 250);
+    border: 1px solid rgb(241, 243, 245);
+    border-radius: 2rem;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-align: center;
+    align-items: center;
+}
+.svg-circle{
+    height: 3rem;
+    width: 3rem;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    background: white;
+    border: 1px solid rgb(173, 181, 189);
+    border-radius: 1.5rem;
+    color: rgb(134, 142, 150);
+    cursor: pointer;
+    z-index: 5;
+}
+.svg-circle svg{
+    width: 24px;
+    height: 24px;
+}
+.like-count{
+    margin-top: 0.5rem;
+    color: rgb(73, 80, 87);
+    line-height: 1;
+    font-size: 0.75rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+.mobile-like-count{
+    display: none;
+}
+
+@media all and (max-width: 1064px){
+    aside{
+        display: none;
+    }
+    .mobile-like-count{
+        display: flex;
+    }
+    .mobile-like-button{
+        background: white;
+        border: 1px solid rgb(173, 181, 189);
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+        display: flex;
+        -webkit-box-align: center;
+        align-items: center;
+        height: 1.5rem;
+        border-radius: 0.75rem;
+        outline: none;
+        cursor: pointer;
+    }
+    .mobile-like-button svg{
+        width: 0.75rem;
+        height: 0.75rem;
+        margin-right: 0.75rem;
+        color: rgb(173, 181, 189);
+    }
+    .mobile-like-button span{
+        font-size: 0.75rem;
+        font-weight: bold;
+        color: rgb(173, 181, 189);
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+}
+/*aside*/
