@@ -10,6 +10,15 @@ public class AttendanceVo {
     private int B_sq;
     private String title;
     private int like;
+    private int comments;
+
+    public int getComments() {
+        return comments;
+    }
+
+    public void setComments(int comments) {
+        this.comments = comments;
+    }
 
     public int getB_sq() {
         return B_sq;

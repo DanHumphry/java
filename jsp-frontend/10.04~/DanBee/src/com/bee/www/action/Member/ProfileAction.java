@@ -20,6 +20,7 @@ public class ProfileAction implements Action {
         ActionForward forward = new ActionForward();
 
         String id =request.getParameter("id");
+
         //값 비어있는지,형식(정규식) 검사
         if (id == null || id.equals("") || !RegExp.checkString(MEMBER_ID, id)) {
             response.setContentType("text/html;charset=UTF-8");
@@ -31,10 +32,12 @@ public class ProfileAction implements Action {
 
         BoardService service = new BoardService();
         MemberVo memberVo = service.getMember(id);
+
+        if(memberVo.getNewFileName()==null){
+            memberVo.setNewFileName("basic.jpg");
+        }
+
         request.setAttribute("vo",memberVo);
-
-
-
         forward.setPath("/views/profile-info.jsp");
         return forward;
     }

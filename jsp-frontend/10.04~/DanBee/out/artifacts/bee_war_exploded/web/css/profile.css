@@ -244,7 +244,12 @@ input[type="file"]{
     padding: 9px;
     font-size: 15px;
 }
-
+.content-wrapper2{
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    margin-left: 1rem;
+}
 
 
 

@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/index_header.css">
     <link rel="stylesheet" href="css/profile.css">
+    <link rel="shortcut icon" href="../images/basic.jpg" type="image/x-icon">
+    <link rel="icon" href="../images/basic.jpg" type="image/x-icon">
 </head>
 <body>
 <header>
@@ -52,15 +54,14 @@
 
 <section class="Chat-container">
     <div class="all-margin">
-        <form action="" method="post">
+        <form action="profileImgUpdate.do" method="post" enctype="multipart/form-data">
             <div class="img-section">
                 <div class="img-area">
-                    <img id="image_section" src="<%=vo.getImage()%>" alt=""/>
-                    <button class="up-button" type="button">
-                        <label for="imgFile" class="img-up">
-                            <input type="file" id="imgFile" name="imgFile" accept=".jpg, .png, .jpeg, .gif"/>업로드
+                    <img id="image_section" src="../resources/img/<%=vo.getNewFileName()%>" alt=""/>
+                        <label for="imgFile" class="del-button img-up">
+                            <input type="file" id="imgFile" name="imgFile" accept=".jpg, .png, .jpeg, .gif" value=""/>업로드
                         </label>
-                    </button>
+                    <button class="up-button" type="submit">저장</button>
                     <button class="del-button" onclick="delImg()">제거</button>
                 </div>
             </div>
@@ -94,6 +95,9 @@
                             <div class="contents">
                                 <button class="leave-button">회원탈퇴</button>
                             </div>
+                        </div>
+                        <div class="content-wrapper2">
+                            <a href="/" class="up-button">나가기</a>
                         </div>
                     </div>
                 </div>

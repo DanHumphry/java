@@ -66,7 +66,7 @@ public class BoardDAO {
                 vo.setId(rs.getString("id"));
                 vo.setPwd(rs.getString("pwd"));
                 vo.setNickname(rs.getString("nickname"));
-                vo.setImage(rs.getString("image"));
+                vo.setNewFileName(rs.getString("image"));
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -251,7 +251,7 @@ public class BoardDAO {
             //현재 로그인된 id에 해당하는 고유번호 조회
             pstmt = con.prepareStatement("select b.sq, b.m_sq, m.id, " +
                     "b.title, b.content, " +
-                    "b.like, b.writeDate, m.nickname " +
+                    "b.like, b.writeDate, m.nickname, b.comments " +
                     "from board b inner join member m on b.m_sq = m.sq " +
                     "where b.sq=? ");
             pstmt.setInt(1,num);
@@ -265,6 +265,7 @@ public class BoardDAO {
                 vo.setLike(rs.getInt("like"));
                 vo.setWriteDate(rs.getString("writeDate"));
                 vo.setNickname(rs.getString("nickname"));
+                vo.setComments(rs.getInt("comments"));
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -336,6 +337,22 @@ public class BoardDAO {
             //현재 로그인된 id에 해당하는 고유번호 조회
             pstmt = con.prepareStatement("update member set nickname=? where id=?");
             pstmt.setString(1,vo.getNickname());
+            pstmt.setString(2,vo.getId());
+            count=pstmt.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(pstmt);
+        }
+        return count;
+    }
+    public int profileImgUpdate(MemberVo vo){
+        PreparedStatement pstmt = null;
+        int count = 0;
+        try{
+            //현재 로그인된 id에 해당하는 고유번호 조회
+            pstmt = con.prepareStatement("update member set image=? where id=?");
+            pstmt.setString(1,vo.getNewFileName());
             pstmt.setString(2,vo.getId());
             count=pstmt.executeUpdate();
         }catch (Exception e){

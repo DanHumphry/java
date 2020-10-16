@@ -8,6 +8,8 @@ public class MemberVo {
     private String email;
     private boolean lgn_fl;
 
+    private String image;
+
     public String getImage() {
         return image;
     }
@@ -16,8 +18,33 @@ public class MemberVo {
         this.image = image;
     }
 
-    private String image;
+    private String filename;
+    private String address;
+    private String newFileName;
 
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getNewFileName() {
+        return newFileName;
+    }
+
+    public void setNewFileName(String newFileName) {
+        this.newFileName = newFileName;
+    }
 
     public int getMem_sq() {
         return mem_sq;
