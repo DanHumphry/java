@@ -247,22 +247,49 @@ public class BoardService {
         close(con);
         return isSucess;
     }
-    public boolean insertComment(AttendanceVo vo) {
-        //세팅
+    public boolean recCheck(int no, String id){
         BoardDAO dao = BoardDAO.getInstance();
         Connection con = getConnection();
         dao.setConnection(con);
-        //그냥 count넘겨도 되지만 boolean으로 함
-        boolean isSucess = false;
+        boolean isSucess =false;
 
-        int count = dao.insertComment(vo);
-        if (count > 0) {    //성공
+        int count = dao.recCheck(no, id);
+        if (count == 0) {    //아직 추천하지 않은 결과
             commit(con);
             isSucess = true;
-        } else {          //실패
+
+        } else {          //이미 추천된 결과
             rollback(con);
         }
         close(con);
         return isSucess;
+    }
+    public void recUpdate(int no, String id) {
+        BoardDAO dao = BoardDAO.getInstance();
+        Connection con = getConnection();
+        dao.setConnection(con);
+
+        dao.recUpdate(no, id);
+
+        close(con);
+    }
+    public void recDelete(int no, String id) {
+        BoardDAO dao = BoardDAO.getInstance();
+        Connection con = getConnection();
+        dao.setConnection(con);
+
+        dao.recDelete(no, id);
+
+        close(con);
+    }
+    public int recCount(int no){
+        BoardDAO dao = BoardDAO.getInstance();
+        Connection con = getConnection();
+        dao.setConnection(con);
+
+        int count=dao.recCount(no); //dao호출
+        close(con);
+
+        return count;
     }
 }

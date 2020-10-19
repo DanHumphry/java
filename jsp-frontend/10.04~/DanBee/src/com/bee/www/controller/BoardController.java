@@ -164,6 +164,20 @@ public class BoardController extends HttpServlet {
             }catch (Exception e){
                 e.printStackTrace();
             }
+        }else if(command.equals("/recUpdate.do")){
+            action = new BoardRecUpdateAction();
+            try{
+                forward = action.execute(request,response);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }else if(command.equals("/recCount.do")){
+            action = new BoardRecCountAction();
+            try{
+                forward = action.execute(request,response);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
 
         if (forward != null) {

@@ -114,7 +114,7 @@
                                         <td onclick="showDetail(<%=list.get(i).getB_sq()%>)" class="title"><%=list.get(i).getTitle()%></td>
                                         <td class="user"><%=list.get(i).getNickname()%></td>
                                         <td class="date"><%=list.get(i).getWriteDate().substring(0, 11)%></td>
-                                        <td class="view"><%=list.get(i).getLike()%></td>
+                                        <td class="view likeCt<%=i%>"></td>
                                     </tr>
                                     <% } %>
                                     </tbody>
@@ -155,6 +155,25 @@
             sBtn.removeClass("active");     // sBtn 속에 (active) 클래스를 삭제 한다.
             $(this).parent().addClass("active"); // 클릭한 a에 (active)클래스를 넣는다.
         })
+    })
+    $(function() {
+        function recCount() {
+            <%
+                for(int i=0;i<list.size();i++) {
+            %>
+            $.ajax({
+                url: "/recCount.do",
+                type: "POST",
+                data: {
+                    no: '<%=list.get(i).getB_sq()%>'
+                },
+                success: function (count) {
+                    $(".likeCt<%=i%>").html(count);
+                },
+            })
+            <% } %>
+        };
+        recCount();
     })
 </script>
 </body>

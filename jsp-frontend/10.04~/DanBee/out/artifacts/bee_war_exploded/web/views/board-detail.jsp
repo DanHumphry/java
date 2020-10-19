@@ -31,7 +31,6 @@
             </div>
             <div class="header-login">
                 <%
-                    //로그인 상태
                     if(id==null){
                 %>
                 <a href="/join.do">
@@ -39,7 +38,7 @@
                 </a>
                 <a href="/login.do">
                     <h3>로그인</h3></a>
-                <% } //로그아웃 상태
+                <% }
                 else { %>
                 <a href="/profile.do?id=<%=id%>">
                     <h3 class="join">회원정보</h3>
@@ -77,10 +76,12 @@
 
         <aside>
             <div class="aside-container">
-                <div data-testid="like" class="svg-circle" id="btnLike">
+                <div class="svg-circle btnLike" id="btnLike">
                     <svg class="like-svg" viewBox="0 0 24 24"><path fill="currentColor" d="M18 1l-6 4-6-4-6 5v7l12 10 12-10v-7z"></path></svg>
                 </div>
-                <div class="like-count"><%=vo.getLike()%></div>
+                <div class="like-count">
+                    <span class="likeCt"></span>
+                </div>
             </div>
         </aside>
 
@@ -101,9 +102,9 @@
                         <%=vo.getComments()%>
                     </div>
                     <div class="mobile-like-count">
-                        <button id="like-btn" class="mobile-like-button">
+                        <button id="like-btn" class="mobile-like-button btnLike">
                             <svg width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M18 1l-6 4-6-4-6 5v7l12 10 12-10v-7z"></path></svg>
-                            <span id="like"><%=vo.getLike()%></span>
+                            <span class="likeCt"></span>
                         </button>
                     </div>
                 </div>
@@ -178,5 +179,45 @@
 
     </div>
 </div>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $(".btnLike").click(function(){
+            <%
+                if (id==null){
+            %>
+                alert("로그인이 필요합니다.");
+                location.href='/login.do';
+            <%
+                }else {
+            %>
+                $.ajax({
+                    url: "/recUpdate.do",
+                    type: "POST",
+                    data: {
+                        no: '<%=vo.getB_sq()%>'
+                    },
+                    success: function () {
+                        recCount();
+                    },
+                })
+            <% }  %>
+        })
+        // 게시글 추천수
+        function recCount() {
+            $.ajax({
+                url: "/recCount.do",
+                type: "POST",
+                data: {
+                    no: '<%=vo.getB_sq()%>'
+                },
+                success: function (count) {
+                    $(".likeCt").html(count);
+                },
+            })
+        };
+        recCount();
+    })
+</script>
 </body>
 </html>

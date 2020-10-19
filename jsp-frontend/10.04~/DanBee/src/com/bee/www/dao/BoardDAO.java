@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
+import java.util.Map;
 
 import static com.bee.www.common.JdbcUtil.close;
 
@@ -220,7 +221,7 @@ public class BoardDAO {
         try{
             pstmt = con.prepareStatement("select b.sq, m.nickname, " +
                     "b.title,b.content," +
-                    "b.like,b.writeDate " +
+                    "b.writeDate " +
                     "from board b inner join member m on b.m_sq = m.sq"+
                     " order by sq desc");
             rs=pstmt.executeQuery();
@@ -230,7 +231,6 @@ public class BoardDAO {
                 vo.setNickname(rs.getString("nickname"));
                 vo.setTitle(rs.getString("title"));
                 vo.setContent(rs.getString("content"));
-                vo.setLike(rs.getInt("like"));
                 vo.setWriteDate(rs.getString("writeDate"));
                 list.add(vo);
             }
@@ -251,7 +251,7 @@ public class BoardDAO {
             //현재 로그인된 id에 해당하는 고유번호 조회
             pstmt = con.prepareStatement("select b.sq, b.m_sq, m.id, " +
                     "b.title, b.content, " +
-                    "b.like, b.writeDate, m.nickname, b.comments " +
+                    "b.writeDate, m.nickname, b.comments " +
                     "from board b inner join member m on b.m_sq = m.sq " +
                     "where b.sq=? ");
             pstmt.setInt(1,num);
@@ -262,7 +262,6 @@ public class BoardDAO {
                 vo.setId(rs.getString("id"));
                 vo.setTitle(rs.getString("title"));
                 vo.setContent(rs.getString("content"));
-                vo.setLike(rs.getInt("like"));
                 vo.setWriteDate(rs.getString("writeDate"));
                 vo.setNickname(rs.getString("nickname"));
                 vo.setComments(rs.getInt("comments"));
@@ -362,20 +361,74 @@ public class BoardDAO {
         }
         return count;
     }
-    public int insertComment(AttendanceVo vo){
+    public int recCheck(int no,String id){
         PreparedStatement pstmt = null;
-        int count = 0;
+        ResultSet rs = null;
+        int result = 0;
         try{
-            //현재 로그인된 id에 해당하는 고유번호 조회
-            pstmt = con.prepareStatement("insert into comment(m_sq, b_sq, content, nickname) value(?, ?, ?, ?)");
-            pstmt.setInt(1,vo.getM_sq());
-            pstmt.setInt(2,vo.getB_sq());
-            pstmt.setString(3,vo.getContent());
-            pstmt.setString(4, vo.getNickname());
-            count=pstmt.executeUpdate();
+            pstmt = con.prepareStatement("select count(*) from rec where b_sq = ? and m_id = ?");
+            pstmt.setInt(1,no);
+            pstmt.setString(2,id);
+            rs = pstmt.executeQuery();
+            while(rs.next()){
+                System.out.println("rs -> result 전: " + result);
+                result=rs.getInt("count(*)");
+                System.out.println("rs -> result 후: " + result);
+            }
         }catch (Exception e){
             e.printStackTrace();
         }finally {
+            close(rs);
+            close(pstmt);
+        }
+        return result;
+    }
+    public void recUpdate(int no,String id){
+        PreparedStatement pstmt = null;
+        try{
+            pstmt = con.prepareStatement("insert into rec(b_sq, m_id) values(?, ?)");
+            pstmt.setInt(1,no);
+            pstmt.setString(2,id);
+            pstmt.executeUpdate();
+            System.out.println("exupdate : " + pstmt.executeUpdate());
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(pstmt);
+        }
+    }
+
+    // 게시글 추천 제거
+    public void recDelete(int no,String id){
+        PreparedStatement pstmt = null;
+        try{
+            pstmt = con.prepareStatement("delete from rec where b_sq = ? and m_id = ?");
+            pstmt.setInt(1,no);
+            pstmt.setString(2,id);
+            pstmt.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(pstmt);
+        }
+    }
+
+    // 게시글 추천수
+    public int recCount(int no){
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        int count = 0;
+        try{
+            pstmt = con.prepareStatement("select count(*) from rec where b_sq = ?");
+            pstmt.setInt(1,no);
+            rs = pstmt.executeQuery();
+            while(rs.next()){
+                count=rs.getInt("count(*)");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(rs);
             close(pstmt);
         }
         return count;
