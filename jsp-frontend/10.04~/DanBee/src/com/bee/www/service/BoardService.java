@@ -247,4 +247,22 @@ public class BoardService {
         close(con);
         return isSucess;
     }
+    public boolean insertComment(AttendanceVo vo) {
+        //세팅
+        BoardDAO dao = BoardDAO.getInstance();
+        Connection con = getConnection();
+        dao.setConnection(con);
+        //그냥 count넘겨도 되지만 boolean으로 함
+        boolean isSucess = false;
+
+        int count = dao.insertComment(vo);
+        if (count > 0) {    //성공
+            commit(con);
+            isSucess = true;
+        } else {          //실패
+            rollback(con);
+        }
+        close(con);
+        return isSucess;
+    }
 }

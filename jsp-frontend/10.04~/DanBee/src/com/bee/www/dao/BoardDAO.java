@@ -362,4 +362,22 @@ public class BoardDAO {
         }
         return count;
     }
+    public int insertComment(AttendanceVo vo){
+        PreparedStatement pstmt = null;
+        int count = 0;
+        try{
+            //현재 로그인된 id에 해당하는 고유번호 조회
+            pstmt = con.prepareStatement("insert into comment(m_sq, b_sq, content, nickname) value(?, ?, ?, ?)");
+            pstmt.setInt(1,vo.getM_sq());
+            pstmt.setInt(2,vo.getB_sq());
+            pstmt.setString(3,vo.getContent());
+            pstmt.setString(4, vo.getNickname());
+            count=pstmt.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(pstmt);
+        }
+        return count;
+    }
 }

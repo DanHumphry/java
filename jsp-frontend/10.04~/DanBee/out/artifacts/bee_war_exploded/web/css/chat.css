@@ -72,3 +72,6 @@
 .my-chat-box{
     text-align: right;
 }
+.mainImg-body a{
+    cursor: pointer;
+}

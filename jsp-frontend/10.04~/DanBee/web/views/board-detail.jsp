@@ -142,36 +142,40 @@
 </div>
 <div class="commnet-container">
     <div class="comment-count">
-        <h4>Comments 0</h4>
+        <h4>Comments <%=vo.getComments()%></h4>
     </div>
-    <table>
-        <tbody>
-        <tr class="left-section">
-            <td class="left-info-nick">닉네임</td>
-            <td class="left-info-date">2020-10-14</td>
-        </tr>
-        <tr class="right-section">
-            <td class="right-info"><a href="#">답변</a></td>
-            <td class="right-info"><a href="#">수정</a></td>
-            <td class="right-info"><a href="#">삭제</a></td>
-        </tr>
-        </tbody>
-        <tfoot>
-        <tr>
-            <td class="comment-content">Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                Quibusdam similique quam, deserunt vero voluptate minus odit temporibus excepturi,
-                animi ab itaque ipsa blanditiis veritatis, rerum necessitatibus illo inventore tempore alias!</td>
-        </tr>
-        </tfoot>
-
-    </table>
+    <%
+        for (int i = 0; i < vo.getComments(); i++) {
+    %>
+    <table >
+        <tbody >
+        <tr class="left-section" >
+            <td class="left-info-nick"></td>
+            <td class="left-info-date"></td>
+        </tr >
+        <tr class="right-section" >
+            <td class="right-info" ><a href = "#" > 답변 </a ></td >
+            <td class="right-info" ><a href = "#" > 수정 </a ></td >
+            <td class="right-info" ><a href = "#" > 삭제 </a ></td >
+        </tr >
+        </tbody >
+        <tfoot >
+        <tr >
+            <td class="comment-content"></td>
+        </tr >
+        </tfoot >
+    </table >
+    <% } %>
     <div>
-        <div class="comment-txt">
-            <textarea placeholder="여러분의 소중한 댓글을 입력해주세요."></textarea>
-        </div>
-        <div class="comment-button">
-            <button>댓글달기</button>
-        </div>
+        <form action="commentWrite.do?num=<%=vo.getB_sq()%>" method="post">
+            <div class="comment-txt">
+                <textarea id="cmtCnt" name="cmtCnt" placeholder="여러분의 소중한 댓글을 입력해주세요."></textarea>
+            </div>
+            <div class="comment-button">
+                <button type="submit">댓글달기</button>
+            </div>
+        </form>
+
     </div>
 </div>
 </body>
