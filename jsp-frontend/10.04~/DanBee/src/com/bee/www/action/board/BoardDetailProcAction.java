@@ -29,13 +29,8 @@ public class BoardDetailProcAction implements Action {
         }
 
         //write에서 데이터받아오기
-        String job=request.getParameter("choose_region"); //지역
         String title = request.getParameter("title");
         String content = request.getParameter("content");
-        //지역선택 검사
-        if (job== null || job.equals("")) {
-            job = "seoul";
-        }
 
         //글 번호 유효성검사,RegExp = 글 번호 유효성 검사
         if (title == null || content == null

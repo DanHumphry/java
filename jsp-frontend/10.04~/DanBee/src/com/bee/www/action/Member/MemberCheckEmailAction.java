@@ -21,7 +21,7 @@ public class MemberCheckEmailAction implements Action {
 
         //checkId.jsp재사용
         ActionForward forward = new ActionForward();
-        forward.setPath("/views/AjaxCheckId.jsp");
+        forward.setPath("/views/Ajax/AjaxCheckId.jsp");
         return forward;
     }
 }

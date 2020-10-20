@@ -18,15 +18,12 @@ public class BoardRecUpdateAction implements Action {
         LoginManager lm = LoginManager.getInstance();
         String id = lm.getMemberId(request.getSession());
 
-        System.out.println("id : "+ id);
         BoardService service = new BoardService();
 
         if(service.recCheck(no, id)){
-            service.recUpdate(no, id);
-            System.out.println("추천 아직안했음");
+            service.recUpdate(no, id); //추천 아직안했음
         }else{
-            service.recDelete(no, id);
-            System.out.println("추천 이미 했음");
+            service.recDelete(no, id); //추천 했음 삭제 ㄱㄱ
         }
         return null;
     }

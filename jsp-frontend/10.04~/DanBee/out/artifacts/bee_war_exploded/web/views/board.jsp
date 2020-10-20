@@ -167,8 +167,12 @@
                 data: {
                     no: '<%=list.get(i).getB_sq()%>'
                 },
-                success: function (count) {
-                    $(".likeCt<%=i%>").html(count);
+                error: function () {
+                    console.log("서버 통신 실패");
+                },
+                success: function (data) {
+                    let JsonData = JSON.parse(data);
+                    $(".likeCt<%=i%>").html(JsonData.count);
                 },
             })
             <% } %>

@@ -1,8 +1,10 @@
 <%@ page import="com.bee.www.common.LoginManager" %>
 <%@ page import="com.bee.www.vo.AttendanceVo" %>
+<%@ page import="com.bee.www.vo.MemberVo" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     AttendanceVo vo = (AttendanceVo) request.getAttribute("vo");
+    MemberVo Mvo = (MemberVo) request.getAttribute("Mvo");
     LoginManager lm=LoginManager.getInstance();
     String id=lm.getMemberId(session);
 %>
@@ -168,15 +170,14 @@
     </table >
     <% } %>
     <div>
-        <form action="commentWrite.do?num=<%=vo.getB_sq()%>" method="post">
+        <form>
             <div class="comment-txt">
                 <textarea id="cmtCnt" name="cmtCnt" placeholder="여러분의 소중한 댓글을 입력해주세요."></textarea>
             </div>
             <div class="comment-button">
-                <button type="submit">댓글달기</button>
+                <button id="cmtCnt-btn">댓글달기</button>
             </div>
         </form>
-
     </div>
 </div>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
@@ -211,12 +212,59 @@
                 data: {
                     no: '<%=vo.getB_sq()%>'
                 },
-                success: function (count) {
-                    $(".likeCt").html(count);
+                error: function () {
+                    console.log("서버 통신 실패");
+                },
+                success: function (data) {
+                    let JsonData = JSON.parse(data);
+                    $(".likeCt").html(JsonData.count);
+                    if(JsonData.onOff == 0){ //전달받은 0은 아직 추천하지 않았을경우
+                        $(".btnLike svg").css("color" , "rgb(134, 142, 150)")
+                    }else {//내가 추천해 놓은 경우
+                        $(".btnLike svg").css("color" , "#8bd6f1")
+                    }
                 },
             })
         };
         recCount();
+
+        $("#cmtCnt-btn").click(function(){
+            <%
+                if (id==null){
+            %>
+            alert("로그인이 필요합니다.");
+            location.href='/login.do';
+            <%
+                }else {
+            %>
+            $.ajax({
+                url: "/commentIn.do",
+                type: "POST",
+                data: {
+                    content : $("#cmtCnt").val(),
+                    num : '<%=vo.getB_sq()%>',
+                },
+                success: function () {
+                    console.log("보내기 성공");
+                    // commentUp();
+                },
+            })
+            <% }  %>
+        })
+        // function commentUp() {
+        //     $.ajax({
+        //         url: "/commentUp.do",
+        //         type: "GET",
+        //         data: {},
+        //         error: function () {
+        //             console.log("서버 통신 실패");
+        //         },
+        //         success: function (data) {
+        //
+        //         },
+        //     })
+        // };
+        // commentUp()
     })
 </script>
 </body>

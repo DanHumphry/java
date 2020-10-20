@@ -38,7 +38,7 @@ public class MemberCheckIdAction implements Action {
 //        }
 
         ActionForward forward = new ActionForward();
-        forward.setPath("/views/AjaxCheckId.jsp");
+        forward.setPath("/views/Ajax/AjaxCheckId.jsp");
         return forward;
     }
 }

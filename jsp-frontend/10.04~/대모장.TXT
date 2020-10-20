@@ -31,3 +31,11 @@ onClick="return check_name_text(); 일경우에는 에러멘트 발생후 다음
 onClick="check_name_text();  일경우에는 에러멘트 발생후 에러에 다음 return값에 상관없이 동작합니다.
 즉 폼으로 데이타가 전송이 됨
 
+
+         좋아요 버튼 구현시 막혔던 사항들
+insert 구문이 DAO에서 삽입이 되지않는 상황이 발생(예외x 그냥 삽입만 안됨)
+>> 해결 : service에서 con을 수동commit안해주면 자동 rollback되는 상황이 생김
+
+ajax 통신중 json형태로 주고받지않아도 줄때는 html형식 받을때는 json형태로 받을 수도있음
+ json.parse(), >> json문자열을 js 객체로 변환
+ json.stringify(), >> js객체를 json문자열로 변환

@@ -371,9 +371,7 @@ public class BoardDAO {
             pstmt.setString(2,id);
             rs = pstmt.executeQuery();
             while(rs.next()){
-                System.out.println("rs -> result 전: " + result);
                 result=rs.getInt("count(*)");
-                System.out.println("rs -> result 후: " + result);
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -386,19 +384,16 @@ public class BoardDAO {
     public void recUpdate(int no,String id){
         PreparedStatement pstmt = null;
         try{
-            pstmt = con.prepareStatement("insert into rec(b_sq, m_id) values(?, ?)");
+            pstmt = con.prepareStatement("insert into rec(b_sq, m_id) value(?, ?)");
             pstmt.setInt(1,no);
             pstmt.setString(2,id);
             pstmt.executeUpdate();
-            System.out.println("exupdate : " + pstmt.executeUpdate());
         }catch (Exception e){
             e.printStackTrace();
         }finally {
             close(pstmt);
         }
     }
-
-    // 게시글 추천 제거
     public void recDelete(int no,String id){
         PreparedStatement pstmt = null;
         try{
@@ -412,7 +407,6 @@ public class BoardDAO {
             close(pstmt);
         }
     }
-
     // 게시글 추천수
     public int recCount(int no){
         PreparedStatement pstmt = null;
@@ -429,6 +423,23 @@ public class BoardDAO {
             e.printStackTrace();
         }finally {
             close(rs);
+            close(pstmt);
+        }
+        return count;
+    }
+    public int insertComment(AttendanceVo vo){
+        PreparedStatement pstmt = null;
+        int count = 0;
+        try{
+            //현재 로그인된 id에 해당하는 고유번호 조회
+            pstmt = con.prepareStatement("insert into board_comment(b_sq, m_id, content) value(?, ?, ?)");
+            pstmt.setInt(1,vo.getB_sq());
+            pstmt.setString(2,vo.getId());
+            pstmt.setString(3,vo.getContent());
+            count=pstmt.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
             close(pstmt);
         }
         return count;
