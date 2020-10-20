@@ -222,8 +222,8 @@ public class BoardDAO {
             pstmt = con.prepareStatement("select b.sq, m.nickname, " +
                     "b.title,b.content," +
                     "b.writeDate " +
-                    "from board b inner join member m on b.m_sq = m.sq"+
-                    " order by sq desc");
+                    "from board b inner join member m on b.m_sq = m.sq "+
+                    "order by sq desc");
             rs=pstmt.executeQuery();
             while(rs.next()){
                 AttendanceVo vo = new AttendanceVo();
@@ -251,7 +251,7 @@ public class BoardDAO {
             //현재 로그인된 id에 해당하는 고유번호 조회
             pstmt = con.prepareStatement("select b.sq, b.m_sq, m.id, " +
                     "b.title, b.content, " +
-                    "b.writeDate, m.nickname, b.comments " +
+                    "b.writeDate, m.nickname " +
                     "from board b inner join member m on b.m_sq = m.sq " +
                     "where b.sq=? ");
             pstmt.setInt(1,num);
@@ -264,7 +264,6 @@ public class BoardDAO {
                 vo.setContent(rs.getString("content"));
                 vo.setWriteDate(rs.getString("writeDate"));
                 vo.setNickname(rs.getString("nickname"));
-                vo.setComments(rs.getInt("comments"));
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -443,5 +442,35 @@ public class BoardDAO {
             close(pstmt);
         }
         return count;
+    }
+    public ArrayList<AttendanceVo> getComment() {
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        ArrayList<AttendanceVo> list = new ArrayList<>();
+
+        try{
+            pstmt = con.prepareStatement("select b_c.sq, b_c.b_sq, m.nickname, " +
+                    "b_c.content, b_c.writeDate " +
+                    "from board_comment b_c " +
+                    "inner join board b on b_c.b_sq = b.sq "+
+                    "inner join member m on b.m_sq = m.sq "+
+                    "order by sq desc");
+            rs=pstmt.executeQuery();
+            while(rs.next()){
+                AttendanceVo vo = new AttendanceVo();
+                vo.setC_sq(rs.getInt("sq"));
+                vo.setB_sq(rs.getInt("b_sq"));
+                vo.setNickname(rs.getString("nickname"));
+                vo.setContent(rs.getString("content"));
+                vo.setWriteDate(rs.getString("writeDate"));
+                list.add(vo);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(rs);
+            close(pstmt);
+        }
+        return list;
     }
 }

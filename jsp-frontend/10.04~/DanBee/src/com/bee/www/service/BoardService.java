@@ -293,7 +293,6 @@ public class BoardService {
         return count;
     }
     public boolean insertComment(AttendanceVo vo) {
-        //세팅
         BoardDAO dao = BoardDAO.getInstance();
         Connection con = getConnection();
         dao.setConnection(con);
@@ -308,5 +307,16 @@ public class BoardService {
         }
         close(con);
         return isSucess;
+    }
+
+    public ArrayList<AttendanceVo> getComment(){
+        BoardDAO dao = BoardDAO.getInstance();
+        Connection con = getConnection();
+        dao.setConnection(con);
+
+        ArrayList<AttendanceVo> list = dao.getComment();
+        close(con);
+
+        return list;
     }
 }

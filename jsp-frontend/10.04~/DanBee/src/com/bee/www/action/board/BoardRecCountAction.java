@@ -30,7 +30,6 @@ public class BoardRecCountAction implements Action {
             request.setAttribute("onOff", 1);//추천되있을때는 1전달
         }
 
-
         ActionForward forward = new ActionForward();
         forward.setPath("/views/Ajax/AjaxCheckRec.jsp");
         return forward;

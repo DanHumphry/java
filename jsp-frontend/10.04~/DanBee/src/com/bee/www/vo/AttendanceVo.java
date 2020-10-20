@@ -12,6 +12,16 @@ public class AttendanceVo {
     private int like;
     private int comments;
 
+    private int c_sq;
+
+    public int getC_sq() {
+        return c_sq;
+    }
+
+    public void setC_sq(int c_sq) {
+        this.c_sq = c_sq;
+    }
+
     public int getComments() {
         return comments;
     }
