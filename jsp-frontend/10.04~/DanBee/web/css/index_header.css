@@ -59,4 +59,7 @@
         width: auto;
     }
 }
+.nav-section nav ul li .tab.active{
+    color: rgb(12, 167, 179);
+}
 /* header css*/

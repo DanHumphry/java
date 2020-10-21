@@ -5,6 +5,8 @@
 3.학원정보,자유게시판 페이지 이전,다음버튼 위치
 4.헤더 전체 검색 없애기 (index.jsp에선 없앴음)
 5. 헤더 분리 가능?
+>> life사이클 문제로 난항 >> html및 css  >> java >> javascript 순서
+include페이지 사용시 header에서 적용한 javascript가 적용되어야할 페이지에서 초기화 되면서 적용 x 
 6.디테일 조회수 아이콘 다른걸로...
 
 https://noonnu.cc/font_page/376
