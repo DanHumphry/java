@@ -2,7 +2,6 @@ package com.bee.www.action.board;
 
 import com.bee.www.common.Action;
 import com.bee.www.common.ActionForward;
-import com.bee.www.common.LoginManager;
 import com.bee.www.service.BoardService;
 import com.bee.www.vo.AttendanceVo;
 
@@ -15,14 +14,17 @@ public class CommentUpAction implements Action {
 
     public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request.setCharacterEncoding("utf-8");
+        String num = request.getParameter("num");
+        int numInt = Integer.parseInt(num);
 
         BoardService service = new BoardService();
 
-        ArrayList<AttendanceVo> list = service.getComment();
+        ArrayList<AttendanceVo> list = service.getComment(numInt);
         request.setAttribute("list", list);
 
         ActionForward forward = new ActionForward();
-        forward.setPath("/views/Ajax/AjaxCheckComment.jsp");
+        forward.setPath("/board-detail.do?num="+numInt);
         return forward;
+//        return null;
     }
 }

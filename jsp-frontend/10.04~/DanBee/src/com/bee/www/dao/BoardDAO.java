@@ -443,7 +443,7 @@ public class BoardDAO {
         }
         return count;
     }
-    public ArrayList<AttendanceVo> getComment() {
+    public ArrayList<AttendanceVo> getComment(int numInt) {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         ArrayList<AttendanceVo> list = new ArrayList<>();
@@ -454,7 +454,8 @@ public class BoardDAO {
                     "from board_comment b_c " +
                     "inner join board b on b_c.b_sq = b.sq "+
                     "inner join member m on b.m_sq = m.sq "+
-                    "order by sq desc");
+                    "where b_c.b_sq = ? ");
+            pstmt.setInt(1,numInt);
             rs=pstmt.executeQuery();
             while(rs.next()){
                 AttendanceVo vo = new AttendanceVo();

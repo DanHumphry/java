@@ -1,0 +1,13 @@
+1.전체 폰트 
+영어 Source Sans Pro - Regular 400
+한글 정선동강체
+2.게시판들 로고 변경 -> 메인 로고보다 조금작게 
+3.학원정보,자유게시판 페이지 이전,다음버튼 위치
+4.헤더 전체 검색 없애기 (index.jsp에선 없앴음)
+5. 헤더 분리 가능?
+6.디테일 조회수 아이콘 다른걸로...
+
+https://noonnu.cc/font_page/376
+
+https://fonts.google.com/specimen/Source+Sans+Pro?
+preview.text=hhaha&preview.text_type=custom&sidebar.open=true&query=source&selection.family=Source+Sans+Pro

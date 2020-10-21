@@ -9,6 +9,7 @@ import com.bee.www.vo.AttendanceVo;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import static com.bee.www.common.RegExp.ARTICLE_NUM;
 
@@ -37,8 +38,16 @@ public class BoardDetailAction implements Action {
         }
         BoardService service = new BoardService();
         AttendanceVo vo = service.getArticleDetail(numInt);    //detail service 호출
+        ArrayList<AttendanceVo> list = service.getComment(numInt);
 
         if (vo == null) {
+            response.setContentType("text/html;charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('잘못된 접근입니다.');history.back();</script>");
+            out.close();
+            return null;
+        }
+        if (list == null) {
             response.setContentType("text/html;charset=UTF-8");
             PrintWriter out = response.getWriter();
             out.println("<script>alert('잘못된 접근입니다.');history.back();</script>");
@@ -48,6 +57,7 @@ public class BoardDetailAction implements Action {
 
         ActionForward forward = new ActionForward();
         request.setAttribute("vo", vo);
+        request.setAttribute("list", list);
         forward.setPath("/views/board-detail.jsp");
         return forward;
     }

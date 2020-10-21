@@ -5,7 +5,10 @@
 <%
     LoginManager lm = LoginManager.getInstance();
     String id = lm.getMemberId(session);
+
     ArrayList<AttendanceVo> list = (ArrayList<AttendanceVo>) request.getAttribute("list");
+    System.out.println(list);
+    System.out.println(list.size());
 %>
 <html>
 <head>

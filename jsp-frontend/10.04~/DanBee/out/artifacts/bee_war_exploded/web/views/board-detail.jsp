@@ -1,12 +1,14 @@
 <%@ page import="com.bee.www.common.LoginManager" %>
 <%@ page import="com.bee.www.vo.AttendanceVo" %>
-<%@ page import="com.bee.www.vo.MemberVo" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     AttendanceVo vo = (AttendanceVo) request.getAttribute("vo");
     LoginManager lm=LoginManager.getInstance();
     String id=lm.getMemberId(session);
+
+    ArrayList<AttendanceVo> list = (ArrayList<AttendanceVo>) request.getAttribute("list");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -99,10 +101,6 @@
             </div>
             <div class="pull-right">
                 <div class="detail-content">
-                    <div class="content-count">
-                        <svg class="like-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22"><defs><clipPath><rect y="8" x="8" height="32" width="32" fill="none" rx="16"/></clipPath><clipPath><rect y="507.8" x="392.57" height="32" width="32" fill="none" rx="16"/></clipPath><clipPath><rect width="32" height="32" x="392.57" y="507.8" fill="none" rx="16"/></clipPath><clipPath><rect y="507.8" x="392.57" height="32" width="32" fill="none" rx="16"/></clipPath><clipPath><rect y="507.8" x="392.57" height="32" width="32" fill="none" rx="16"/></clipPath><clipPath><rect width="32" height="32" x="392.57" y="507.8" fill="none" rx="16"/></clipPath><clipPath><rect width="32" height="32" x="8" y="8" fill="none" rx="16"/></clipPath><clipPath><rect width="32" height="32" x="392.57" y="507.8" fill="none" rx="16"/></clipPath><clipPath><rect y="507.8" x="392.57" height="32" width="32" fill="none" rx="16"/></clipPath><clipPath><rect y="507.8" x="392.57" height="32" width="32" fill="none" rx="16"/></clipPath><clipPath><rect y="8" x="8" height="32" width="32" fill="none" rx="16"/></clipPath><clipPath><path d="m0 706.47h1490.93v-706.47h-1490.93v706.47"/></clipPath><clipPath><path d="m22.2 686.12h1447.73v-667.19h-1447.73v667.19"/></clipPath><clipPath><rect y="507.8" x="392.57" height="32" width="32" fill="none" rx="16"/></clipPath><clipPath><rect y="507.8" x="392.57" height="32" width="32" fill="none" rx="16"/></clipPath><clipPath><rect y="507.8" x="392.57" height="32" width="32" fill="none" rx="16"/></clipPath><clipPath><rect y="507.8" x="392.57" height="32" width="32" fill="none" rx="16"/></clipPath><clipPath><rect y="8" x="8" height="32" width="32" fill="none" rx="16"/></clipPath></defs><path d="m740.86 187.66c0-12.912 12.526-23.416 27.922-23.416 15.397 0 27.923 10.505 27.923 23.416 0 12.912-12.526 23.416-27.923 23.416-1.295 0-2.594-.075-3.871-.223-5.93 3.767-10.308 5.829-13.02 6.131-.094.001-.189.016-.282.016-.872 0-1.678-.434-2.159-1.163-.537-.815-.572-1.848-.094-2.692.022-.04 2.116-3.861 1.512-7.51-6.37-4.458-10.01-10.973-10.01-17.975" fill="#4d4d4d" transform="matrix(.30328 0 0 .30328-222.16-46.812)"/></svg>
-                        댓글숫자
-                    </div>
                     <div class="mobile-like-count">
                         <button id="like-btn" class="mobile-like-button btnLike">
                             <svg width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M18 1l-6 4-6-4-6 5v7l12 10 12-10v-7z"></path></svg>
@@ -145,30 +143,39 @@
 </div>
 <div class="commnet-container">
     <div class="comment-count">
-        <h4>Comments 댓글숫자</h4>
+        <h4>Comments <%=list.size()%></h4>
     </div>
-<%--    <%--%>
-<%--        for (int i = 0; i < vo.getComments(); i++) {--%>
-<%--    %>--%>
+    <%
+        for(int i=0;i<list.size();i++) {
+    %>
     <table >
         <tbody >
         <tr class="left-section" >
-            <td class="left-info-nick">nick</td>
-            <td class="left-info-date">date</td>
+            <td class="left-info-nick"><%=list.get(i).getNickname()%></td>
+            <td class="left-info-date"><%=list.get(i).getWriteDate()%></td>
         </tr >
         <tr class="right-section" >
-            <td class="right-info" ><a href = "#" > 답변 </a ></td >
-            <td class="right-info" ><a href = "#" > 수정 </a ></td >
-            <td class="right-info" ><a href = "#" > 삭제 </a ></td >
+            <td id="reCmt<%=i%>" class="right-info">답변</td >
+            <td id="fixCmt<%=i%>" class="right-info">수정</td >
+            <td id="delCmt<%=i%>" class="right-info">삭제</td >
         </tr >
         </tbody >
         <tfoot >
-        <tr >
-            <td class="comment-content">contents</td>
+        <tr class="cmt-content">
+            <td class="comment-content"><%=list.get(i).getContent()%></td>
         </tr >
+        <tr class="reCmt-hidden<%=i%> hiddenReCmt">
+            <td class="reComment-txt">
+                <textarea id="reCmtCnt<%=i%>" name="reCmtCnt<%=i%>" placeholder="여러분의 소중한 댓글을 입력해주세요."></textarea>
+            </td>
+            <td class="reComment-button">
+                <button id="reCmtCnt-btn<%=i%>" class="reCmtBtn">댓글달기</button>
+            </td>
+        </tr>
         </tfoot >
+
     </table >
-<%--    <% } %>--%>
+    <% } %>
     <div>
         <div class="comment-txt">
             <textarea id="cmtCnt" name="cmtCnt" placeholder="여러분의 소중한 댓글을 입력해주세요."></textarea>
@@ -244,30 +251,20 @@
                 },
                 success: function () {
                     console.log("보내기 성공");
-                    commentUp();
+                    location.reload()
                 },
             })
             <% }  %>
         })
-        function commentUp() {
-            $.ajax({
-                url: "/commentUp.do",
-                type: "GET",
-                error: function () {
-                    console.log("가져오기 실패");
-                },
-                success: function (data) {
-                    console.log(data);
-                    let list = [];
-                    list.push(data);
-                    console.log(list);
-                    let JsonData = JSON.parse(data);
-                    console.log(JsonData);
-                    console.log(JsonData.c_sq);
-                },
-            })
-        };
-        commentUp()
+
+        <%
+            for(int i=0;i<list.size();i++) {
+        %>
+        $("#reCmt<%=i%>").click(function (){
+            $(".hiddenReCmt").css("display", "none");
+            $(".reCmt-hidden<%=i%>").css("display", "block");
+        })
+        <% } %>
     })
 </script>
 </body>

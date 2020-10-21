@@ -218,13 +218,15 @@ aside{
     margin: 10px 5px 0px 5px;
     padding: 0 10px 5px 10px;
 }
-.commnet-container table tfoot tr{
+.commnet-container table tfoot .cmt-content{
     display: block;
     padding: 13px 25px 13px 25px;
     margin-bottom: 3px;
 }
-.right-info a{
-    margin-left: 5px;
+.right-info{
+    display: inline-block;
+    margin-left: 7px;
+    cursor: pointer;
 }
 .commnet-container table tbody .left-info-nick{
     display: block;
@@ -262,5 +264,36 @@ aside{
     padding: 0px 1.25rem;
     height: 2rem;
     font-size: 1rem;
+}
+
+.reComment-txt textarea{
+    resize: none;
+    padding: 1rem 1rem 1.5rem;
+    outline: none;
+    border: 1px solid rgb(233, 236, 239);
+    border-radius: 4px;
+    min-height: 6.125rem;
+    font-size: 1rem;
+    color: rgb(33, 37, 41);
+    line-height: 1.75;
+    width: 100%;
+}
+.reComment-txt{
+    width: 90%;
+}
+.reComment-button .reCmtBtn{
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    background: #8bd6f1;
+    color: white;
+    border-radius: 4px;
+    height: 2rem;
+    font-size: 1rem;
+    margin-left: 0px;
+}
+.hiddenReCmt{
+    display: none;
 }
 /*comment*/

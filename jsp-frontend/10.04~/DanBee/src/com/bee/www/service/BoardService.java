@@ -309,12 +309,12 @@ public class BoardService {
         return isSucess;
     }
 
-    public ArrayList<AttendanceVo> getComment(){
+    public ArrayList<AttendanceVo> getComment(int numInt){
         BoardDAO dao = BoardDAO.getInstance();
         Connection con = getConnection();
         dao.setConnection(con);
 
-        ArrayList<AttendanceVo> list = dao.getComment();
+        ArrayList<AttendanceVo> list = dao.getComment(numInt);
         close(con);
 
         return list;
