@@ -211,6 +211,7 @@ aside{
     width: 100%;
     max-width: 840px;
     border-bottom: 0.5px solid rgb(211, 211, 211);
+    padding-bottom: 15px;
 }
 .commnet-container table tbody{
     display: flex;
@@ -221,7 +222,7 @@ aside{
 .commnet-container table tfoot .cmt-content{
     display: block;
     padding: 13px 25px 13px 25px;
-    margin-bottom: 3px;
+    margin-bottom: 15px;
 }
 .right-info{
     display: inline-block;
@@ -295,5 +296,31 @@ aside{
 }
 .hiddenReCmt{
     display: none;
+    padding: 0px 25px;
+    margin-top: 15px;
 }
+.reCmtCnt{
+    margin: 0px 25px -1px 25px;
+    padding: 10px 20px;
+    display: block;
+    border: 1px solid gray;
+    background-color: rgb(248, 249, 250);
+    position: relative;
+}
+.reCmtCnt-date{
+    display: inline-block;
+    width: 75%;
+}
+.reCmtCnt-right-info{
+    display: inline-block;
+    margin-left: 7px;
+    cursor: pointer;
+    position: absolute;
+}
+.reCmtCnt-content{
+    display: block;
+    padding: 12px;
+    margin-top: 5px;
+}
+
 /*comment*/

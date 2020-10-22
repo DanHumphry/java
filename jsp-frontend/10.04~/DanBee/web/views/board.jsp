@@ -72,11 +72,22 @@
                             </div>
                             <div class="pagination">
                                 <ul>
-                                    <li class="active"><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">5</a></li>
+                                    <li>
+                                        <a href="#">«</a>
+                                    </li>
+                                    <li class="active">
+                                        <a href="#">
+                                            1
+                                        </a>
+                                    </li>
+                                    <li class="">
+                                        <a href="#">
+                                            2
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">»</a>
+                                    </li>
                                 </ul>
                             </div>
                             <div class="search">

@@ -12,14 +12,14 @@ public class AttendanceVo {
     private int like;
     private int comments;
 
-    private int c_sq;
+    private int C_sq;
 
     public int getC_sq() {
-        return c_sq;
+        return C_sq;
     }
 
     public void setC_sq(int c_sq) {
-        this.c_sq = c_sq;
+        C_sq = c_sq;
     }
 
     public int getComments() {

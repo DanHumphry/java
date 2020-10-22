@@ -185,8 +185,8 @@ public class BoardController extends HttpServlet {
             }catch (Exception e){
                 e.printStackTrace();
             }
-        }else if(command.equals("/commentUp.do")){
-            action = new CommentUpAction();
+        }else if(command.equals("/reCommentIn.do")){
+            action = new ReCommentInAction();
             try{
                 forward = action.execute(request,response);
             }catch (Exception e){

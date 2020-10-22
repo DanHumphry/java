@@ -1,15 +1,14 @@
-1.전체 폰트 
-영어 Source Sans Pro - Regular 400
-한글 정선동강체
+3.학원정보,자유게시판 페이지 이전,다음버튼 위치 >> acive관련 js코드 수정
+
 2.게시판들 로고 변경 -> 메인 로고보다 조금작게 
-3.학원정보,자유게시판 페이지 이전,다음버튼 위치
-4.헤더 전체 검색 없애기 (index.jsp에선 없앴음)
-5. 헤더 분리 가능?
->> life사이클 문제로 난항 >> html및 css  >> java >> javascript 순서
-include페이지 사용시 header에서 적용한 javascript가 적용되어야할 페이지에서 초기화 되면서 적용 x 
-6.디테일 조회수 아이콘 다른걸로...
+3.review 밑에부분 밀리는거
 
-https://noonnu.cc/font_page/376
+select reb_c.sq, reb_c.b_c_sq, m.nickname, m.id,
+                    reb_c.content, reb_c.writeDate
+                    from board_recomment reb_c 
+                    inner join board_comment b_c on reb_c.b_c_sq = b_c.sq 
+                    inner join board b on b_c.sq = b.sq 
+                    inner join member m on b.m_sq = m.sq 
+                    where reb_c.b_c_sq = ?
 
-https://fonts.google.com/specimen/Source+Sans+Pro?
-preview.text=hhaha&preview.text_type=custom&sidebar.open=true&query=source&selection.family=Source+Sans+Pro
+select sq from board_comment b_c inner join board_recomment reb_c on b_c.b_sq = reb_c.b_csq; 

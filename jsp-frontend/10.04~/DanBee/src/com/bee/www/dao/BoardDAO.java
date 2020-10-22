@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import static com.bee.www.common.JdbcUtil.close;
@@ -449,7 +450,7 @@ public class BoardDAO {
         ArrayList<AttendanceVo> list = new ArrayList<>();
 
         try{
-            pstmt = con.prepareStatement("select b_c.sq, b_c.b_sq, m.nickname, " +
+            pstmt = con.prepareStatement("select b_c.sq, b_c.b_sq, m.nickname, m.id, " +
                     "b_c.content, b_c.writeDate " +
                     "from board_comment b_c " +
                     "inner join board b on b_c.b_sq = b.sq "+
@@ -462,6 +463,7 @@ public class BoardDAO {
                 vo.setC_sq(rs.getInt("sq"));
                 vo.setB_sq(rs.getInt("b_sq"));
                 vo.setNickname(rs.getString("nickname"));
+                vo.setId(rs.getString("id"));
                 vo.setContent(rs.getString("content"));
                 vo.setWriteDate(rs.getString("writeDate"));
                 list.add(vo);
@@ -473,5 +475,74 @@ public class BoardDAO {
             close(pstmt);
         }
         return list;
+    }
+    public int insertReComment(AttendanceVo vo){
+        PreparedStatement pstmt = null;
+        int count = 0;
+        try{
+            //현재 로그인된 id에 해당하는 고유번호 조회
+            pstmt = con.prepareStatement("insert into board_recomment(b_c_sq, m_id, content) value(?, ?, ?)");
+            pstmt.setInt(1,vo.getC_sq());
+            pstmt.setString(2,vo.getId());
+            pstmt.setString(3,vo.getContent());
+            count=pstmt.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(pstmt);
+        }
+        return count;
+    }
+    public ArrayList<AttendanceVo> getReComment(int numInt) {
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        ArrayList<AttendanceVo> list = new ArrayList<>();
+
+        try{
+            pstmt = con.prepareStatement("select reb_c.sq, reb_c.b_c_sq, m.nickname, m.id, " +
+                    "reb_c.content, reb_c.writeDate " +
+                    "from board_recomment reb_c " +
+                    "inner join board_comment b_c on reb_c.b_c_sq = b_c.sq " +
+                    "inner join board b on b_c.b_sq = b.sq "+
+                    "inner join member m on b.m_sq = m.sq "+
+                    "where reb_c.b_c_sq = ? ");
+            pstmt.setInt(1,numInt);
+            rs=pstmt.executeQuery();
+            while(rs.next()){
+                AttendanceVo vo = new AttendanceVo();
+                vo.setC_sq(rs.getInt("sq"));
+                vo.setB_sq(rs.getInt("b_sq"));
+                vo.setNickname(rs.getString("nickname"));
+                vo.setId(rs.getString("id"));
+                vo.setContent(rs.getString("content"));
+                vo.setWriteDate(rs.getString("writeDate"));
+                list.add(vo);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(rs);
+            close(pstmt);
+        }
+        return list;
+    }
+    public List<Integer> getB_c(int numInt){
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        List<Integer> sq = new ArrayList<Integer>();
+        try{
+            pstmt = con.prepareStatement("select sq from board_comment where b_sq = ?");
+            pstmt.setInt(1,numInt);
+            rs = pstmt.executeQuery();
+            while (rs.next()){
+                sq.add(rs.getInt("sq"));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(rs);
+            close(pstmt);
+        }
+        return sq;
     }
 }

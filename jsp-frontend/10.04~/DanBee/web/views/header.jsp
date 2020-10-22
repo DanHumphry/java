@@ -61,29 +61,25 @@
     <section class="nav-section">
         <nav>
             <ul>
-                <li><a href="/attendance.do" class="tab att active">출석체크</a></li>
-                <li><a href="/board.do" class="tab bod">게시판</a></li>
+                <li><a href="/attendance.do" id="test1">출석체크</a></li>
+                <li><a href="/board.do" id="test2">게시판</a></li>
             </ul>
         </nav>
     </section>
 </div>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script type="text/javascript">
-    $(function(){
-        $('.nav-section .tab').click(function () {
-            if ($(this).hasClass('att')) {
-                $('.nav-section .tab').removeClass('active');
-                $('.att').addClass('active');
-                $('.att').css('color', 'rgb(12, 167, 179)');
-                console.log("att why?");
-            }
-            if ($(this).hasClass('bod')) {
-                $('.nav-section .tab').removeClass('active');
-                $('.bod').addClass('active');
-                $('.bod').css('color', 'rgb(12, 167, 179)');
-                console.log("bod why?");
-            }
-        });
+    $(function (){
+        let attURL = 'http://localhost:8080/attendance.do';
+        let bodURL = 'http://localhost:8080/board.do';
+        let bodDetailURL = 'http://localhost:8080/board-detail.do';
+
+        let para = document.location.href.split("?");
+
+        if (para[0] == bodURL || para[0] == bodDetailURL){
+            $('#test2').css('color', 'rgb(12, 167, 179)');
+        }else if (para[0] == attURL){
+            $('#test1').css('color', 'rgb(12, 167, 179)');
+        }
     })
 </script>
 </body>

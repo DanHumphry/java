@@ -3,6 +3,7 @@ package com.bee.www.action.board;
 import com.bee.www.common.Action;
 import com.bee.www.common.ActionForward;
 import com.bee.www.common.RegExp;
+import com.bee.www.dao.BoardDAO;
 import com.bee.www.service.BoardService;
 import com.bee.www.vo.AttendanceVo;
 
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.bee.www.common.RegExp.ARTICLE_NUM;
 
@@ -39,6 +41,8 @@ public class BoardDetailAction implements Action {
         BoardService service = new BoardService();
         AttendanceVo vo = service.getArticleDetail(numInt);    //detail service 호출
         ArrayList<AttendanceVo> list = service.getComment(numInt);
+        List<Integer> b_c = service.getB_c(numInt);
+        ArrayList<AttendanceVo> ReList = service.getReComment(numInt);
 
         if (vo == null) {
             response.setContentType("text/html;charset=UTF-8");
@@ -58,6 +62,7 @@ public class BoardDetailAction implements Action {
         ActionForward forward = new ActionForward();
         request.setAttribute("vo", vo);
         request.setAttribute("list", list);
+        request.setAttribute("ReList", ReList);
         forward.setPath("/views/board-detail.jsp");
         return forward;
     }

@@ -6,6 +6,7 @@ import com.bee.www.vo.MemberVo;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.bee.www.common.JdbcUtil.*;
 
@@ -318,5 +319,40 @@ public class BoardService {
         close(con);
 
         return list;
+    }
+    public boolean insertReComment(AttendanceVo vo) {
+        BoardDAO dao = BoardDAO.getInstance();
+        Connection con = getConnection();
+        dao.setConnection(con);
+        boolean isSucess = false;
+
+        int count = dao.insertReComment(vo);
+        if (count > 0) {    //성공
+            commit(con);
+            isSucess = true;
+        } else {          //실패
+            rollback(con);
+        }
+        close(con);
+        return isSucess;
+    }
+    public ArrayList<AttendanceVo> getReComment(int numInt){
+        BoardDAO dao = BoardDAO.getInstance();
+        Connection con = getConnection();
+        dao.setConnection(con);
+
+        ArrayList<AttendanceVo> list = dao.getReComment(numInt);
+        close(con);
+
+        return list;
+    }
+    public List<Integer> getB_c(int numInt){
+        BoardDAO dao = BoardDAO.getInstance();
+        Connection con = getConnection();
+        dao.setConnection(con);
+
+        List<Integer> sq = dao.getB_c(numInt);
+        close(con);
+        return sq;
     }
 }
