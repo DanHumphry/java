@@ -27,8 +27,7 @@
             </div>
             <div class="header-login">
                 <%
-                    //로그인 상태
-                    if(id==null){
+                    if(id==null){//로그인 상태
                 %>
                 <a href="/join.do">
                     <h3 class="join">회원가입</h3>

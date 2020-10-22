@@ -2,6 +2,7 @@
 <%@ page import="com.bee.www.vo.AttendanceVo" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="com.bee.www.vo.MemberVo" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     AttendanceVo vo = (AttendanceVo) request.getAttribute("vo");
@@ -9,7 +10,7 @@
     String id=lm.getMemberId(session);
     ArrayList<AttendanceVo> list = (ArrayList<AttendanceVo>) request.getAttribute("list");
     ArrayList<AttendanceVo> ReList = (ArrayList<AttendanceVo>) request.getAttribute("ReList");
-    System.out.println(ReList);
+    MemberVo memberVo = (MemberVo) request.getAttribute("memberVo");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -47,8 +48,14 @@
         <hr>
         <div class="detail-userInfo">
             <div class="pull-left">
-                <p class="userName"><%=vo.getNickname()%></p>
-                <P><%=vo.getWriteDate().substring(0, 11)%></P>
+                <div class="board-profileImg-section">
+                    <img class="board-profileImg" src="../resources/img/<%=memberVo.getNewFileName()%>" alt=""/>
+                </div>
+                <div class="pull-left-right">
+                    <p class="userName"><%=vo.getNickname()%></p>
+                    <P><%=vo.getWriteDate().substring(0, 11)%></P>
+                </div>
+
             </div>
             <div class="pull-right">
                 <div class="detail-content">
@@ -102,26 +109,46 @@
     <table >
         <tbody >
         <tr class="left-section" >
+            <td class="left-info-img">
+                <img class="board-profileImg" src="../resources/img/<%=memberVo.getNewFileName()%>" alt=""/>
+            </td>
             <td class="left-info-nick"><%=list.get(i).getNickname()%></td>
-            <td class="left-info-date"><%=list.get(i).getWriteDate()%></td>
+            <td class="left-info-date"><%=list.get(i).getWriteDate().substring(0, 11)%></td>
         </tr >
+
         <tr class="right-section" >
             <td id="reCmt<%=i%>" class="right-info">답변</td >
+            <%
+                if(id.equals(list.get(i).getId())){
+            %>
             <td id="fixCmt<%=i%>" class="right-info">수정</td >
             <td id="delCmt<%=i%>" class="right-info">삭제</td >
+            <% } %>
         </tr >
         </tbody >
         <tfoot >
         <tr class="cmt-content">
             <td class="comment-content"><%=list.get(i).getContent()%></td>
         </tr>
+        <%
+            for(int a = 0; a < ReList.size(); a++) {
+                if (list.get(i).getC_sq() == ReList.get(a).getC_sq()) {
+        %>
         <tr class="reCmtCnt">
-            <td class="reCmtCnt-nick">닉네임</td>
-            <td class="reCmtCnt-date">2020-20-20</td>
+            <td class="reCmtCnt-img">
+                <img class="board-profileImg" src="../resources/img/<%=memberVo.getNewFileName()%>" alt=""/>
+            </td>
+            <td class="reCmtCnt-nick"><%=ReList.get(a).getNickname()%></td>
+            <td class="reCmtCnt-date"><%=ReList.get(a).getWriteDate().substring(0, 11)%></td>
+            <%
+                if(id.equals(ReList.get(a).getId())){
+            %>
             <td class="reCmtCnt-right-info" style="right: 55px">수정</td >
             <td class="reCmtCnt-right-info" style="right: 10px">삭제</td >
-            <td class="reCmtCnt-content">내용입니다.</td>
+            <% } %>
+            <td class="reCmtCnt-content"><%=ReList.get(a).getContent()%></td>
         </tr>
+        <% } } %>
         <tr class="reCmt-hidden<%=i%> hiddenReCmt">
             <td class="reComment-txt">
                 <textarea id="reCmtCnt<%=i%>" name="reCmtCnt<%=i%>" placeholder="여러분의 소중한 댓글을 입력해주세요."></textarea>

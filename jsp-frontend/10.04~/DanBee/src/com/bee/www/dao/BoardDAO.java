@@ -432,10 +432,11 @@ public class BoardDAO {
         int count = 0;
         try{
             //현재 로그인된 id에 해당하는 고유번호 조회
-            pstmt = con.prepareStatement("insert into board_comment(b_sq, m_id, content) value(?, ?, ?)");
+            pstmt = con.prepareStatement("insert into board_comment(b_sq, m_sq, m_id, content) value(?, ?, ?, ?)");
             pstmt.setInt(1,vo.getB_sq());
-            pstmt.setString(2,vo.getId());
-            pstmt.setString(3,vo.getContent());
+            pstmt.setInt(2,vo.getM_sq());
+            pstmt.setString(3,vo.getId());
+            pstmt.setString(4,vo.getContent());
             count=pstmt.executeUpdate();
         }catch (Exception e){
             e.printStackTrace();
@@ -453,8 +454,7 @@ public class BoardDAO {
             pstmt = con.prepareStatement("select b_c.sq, b_c.b_sq, m.nickname, m.id, " +
                     "b_c.content, b_c.writeDate " +
                     "from board_comment b_c " +
-                    "inner join board b on b_c.b_sq = b.sq "+
-                    "inner join member m on b.m_sq = m.sq "+
+                    "inner join member m on b_c.m_sq = m.sq "+
                     "where b_c.b_sq = ? ");
             pstmt.setInt(1,numInt);
             rs=pstmt.executeQuery();
@@ -481,10 +481,11 @@ public class BoardDAO {
         int count = 0;
         try{
             //현재 로그인된 id에 해당하는 고유번호 조회
-            pstmt = con.prepareStatement("insert into board_recomment(b_c_sq, m_id, content) value(?, ?, ?)");
+            pstmt = con.prepareStatement("insert into board_recomment(b_c_sq, m_sq, m_id, content) value(?, ?, ?, ?)");
             pstmt.setInt(1,vo.getC_sq());
-            pstmt.setString(2,vo.getId());
-            pstmt.setString(3,vo.getContent());
+            pstmt.setInt(2,vo.getM_sq());
+            pstmt.setString(3,vo.getId());
+            pstmt.setString(4,vo.getContent());
             count=pstmt.executeUpdate();
         }catch (Exception e){
             e.printStackTrace();
@@ -503,15 +504,14 @@ public class BoardDAO {
                     "reb_c.content, reb_c.writeDate " +
                     "from board_recomment reb_c " +
                     "inner join board_comment b_c on reb_c.b_c_sq = b_c.sq " +
-                    "inner join board b on b_c.b_sq = b.sq "+
-                    "inner join member m on b.m_sq = m.sq "+
-                    "where reb_c.b_c_sq = ? ");
+                    "inner join member m on b_c.m_sq = m.sq "+
+                    "where b_c.b_sq = ? ");
             pstmt.setInt(1,numInt);
             rs=pstmt.executeQuery();
             while(rs.next()){
                 AttendanceVo vo = new AttendanceVo();
-                vo.setC_sq(rs.getInt("sq"));
-                vo.setB_sq(rs.getInt("b_sq"));
+                vo.setReC_sq(rs.getInt("sq"));
+                vo.setC_sq(rs.getInt("b_c_sq"));
                 vo.setNickname(rs.getString("nickname"));
                 vo.setId(rs.getString("id"));
                 vo.setContent(rs.getString("content"));
@@ -525,24 +525,5 @@ public class BoardDAO {
             close(pstmt);
         }
         return list;
-    }
-    public List<Integer> getB_c(int numInt){
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        List<Integer> sq = new ArrayList<Integer>();
-        try{
-            pstmt = con.prepareStatement("select sq from board_comment where b_sq = ?");
-            pstmt.setInt(1,numInt);
-            rs = pstmt.executeQuery();
-            while (rs.next()){
-                sq.add(rs.getInt("sq"));
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }finally {
-            close(rs);
-            close(pstmt);
-        }
-        return sq;
     }
 }

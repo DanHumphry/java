@@ -54,6 +54,7 @@ public class CommentInAction implements Action {
         vo.setB_sq(numInt);
         vo.setId(id);
         vo.setContent(content);
+        vo.setM_sq(service.getMemberSequence(id));
 
         if (!service.insertComment(vo)) {
             response.setContentType("text/html;charset=UTF-8");

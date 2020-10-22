@@ -346,13 +346,4 @@ public class BoardService {
 
         return list;
     }
-    public List<Integer> getB_c(int numInt){
-        BoardDAO dao = BoardDAO.getInstance();
-        Connection con = getConnection();
-        dao.setConnection(con);
-
-        List<Integer> sq = dao.getB_c(numInt);
-        close(con);
-        return sq;
-    }
 }

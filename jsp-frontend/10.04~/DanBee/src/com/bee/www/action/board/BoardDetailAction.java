@@ -2,10 +2,12 @@ package com.bee.www.action.board;
 
 import com.bee.www.common.Action;
 import com.bee.www.common.ActionForward;
+import com.bee.www.common.LoginManager;
 import com.bee.www.common.RegExp;
 import com.bee.www.dao.BoardDAO;
 import com.bee.www.service.BoardService;
 import com.bee.www.vo.AttendanceVo;
+import com.bee.www.vo.MemberVo;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +21,8 @@ public class BoardDetailAction implements Action {
     @Override
     public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String num = request.getParameter("num");
+        LoginManager lm = LoginManager.getInstance();
+        String id = lm.getMemberId(request.getSession());
 
         //글 번호 유효성검사,RegExp = 글 번호 유효성 검사
         if (num == null || num.equals("") || !RegExp.checkString(ARTICLE_NUM, num)) {
@@ -41,8 +45,11 @@ public class BoardDetailAction implements Action {
         BoardService service = new BoardService();
         AttendanceVo vo = service.getArticleDetail(numInt);    //detail service 호출
         ArrayList<AttendanceVo> list = service.getComment(numInt);
-        List<Integer> b_c = service.getB_c(numInt);
         ArrayList<AttendanceVo> ReList = service.getReComment(numInt);
+        MemberVo memberVo = service.getMember(id);
+        if(memberVo.getNewFileName()==null){
+            memberVo.setNewFileName("basic.jpg");
+        }
 
         if (vo == null) {
             response.setContentType("text/html;charset=UTF-8");
@@ -63,6 +70,7 @@ public class BoardDetailAction implements Action {
         request.setAttribute("vo", vo);
         request.setAttribute("list", list);
         request.setAttribute("ReList", ReList);
+        request.setAttribute("memberVo",memberVo);
         forward.setPath("/views/board-detail.jsp");
         return forward;
     }

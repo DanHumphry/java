@@ -13,8 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.PrintWriter;
-import java.util.Enumeration;
-
 
 public class ProfileImgUpdateAction implements Action {
     @Override
@@ -24,6 +22,8 @@ public class ProfileImgUpdateAction implements Action {
         PrintWriter out = response.getWriter();
         LoginManager lm = LoginManager.getInstance();
         String id = lm.getMemberId(request.getSession());
+
+        System.out.println(id);
 
         BoardService service = new BoardService();
         MemberVo vo = new MemberVo();

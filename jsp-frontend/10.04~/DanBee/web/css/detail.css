@@ -324,3 +324,20 @@ aside{
 }
 
 /*comment*/
+
+
+/* detail profile-Img */
+.board-profileImg{
+    display: block;
+    height: 3rem;
+    width: 3rem;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.pull-left{
+    display: flex;
+}
+.board-profileImg-section{
+    margin-right: 12px;
+}
+/* detail profile-Img */

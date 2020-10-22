@@ -54,6 +54,7 @@ public class ReCommentInAction implements Action {
         vo.setC_sq(numInt);
         vo.setId(id);
         vo.setContent(content);
+        vo.setM_sq(service.getMemberSequence(id));
 
         if (!service.insertReComment(vo)) {
             response.setContentType("text/html;charset=UTF-8");

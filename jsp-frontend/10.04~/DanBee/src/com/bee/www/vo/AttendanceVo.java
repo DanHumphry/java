@@ -9,10 +9,17 @@ public class AttendanceVo {
 
     private int B_sq;
     private String title;
-    private int like;
-    private int comments;
+
+    public int getReC_sq() {
+        return ReC_sq;
+    }
+
+    public void setReC_sq(int reC_sq) {
+        ReC_sq = reC_sq;
+    }
 
     private int C_sq;
+    private int ReC_sq;
 
     public int getC_sq() {
         return C_sq;
@@ -20,14 +27,6 @@ public class AttendanceVo {
 
     public void setC_sq(int c_sq) {
         C_sq = c_sq;
-    }
-
-    public int getComments() {
-        return comments;
-    }
-
-    public void setComments(int comments) {
-        this.comments = comments;
     }
 
     public int getB_sq() {
@@ -44,14 +43,6 @@ public class AttendanceVo {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public int getLike() {
-        return like;
-    }
-
-    public void setLike(int like) {
-        this.like = like;
     }
 
     public String getWriteDate() {
