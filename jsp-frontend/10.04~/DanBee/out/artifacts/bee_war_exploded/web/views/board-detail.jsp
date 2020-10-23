@@ -10,7 +10,7 @@
     String id=lm.getMemberId(session);
     ArrayList<AttendanceVo> list = (ArrayList<AttendanceVo>) request.getAttribute("list");
     ArrayList<AttendanceVo> ReList = (ArrayList<AttendanceVo>) request.getAttribute("ReList");
-    MemberVo memberVo = (MemberVo) request.getAttribute("memberVo");
+    System.out.println(ReList);
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,7 +49,7 @@
         <div class="detail-userInfo">
             <div class="pull-left">
                 <div class="board-profileImg-section">
-                    <img class="board-profileImg" src="../resources/img/<%=memberVo.getNewFileName()%>" alt=""/>
+                    <img class="board-profileImg" src="../resources/img/<%=vo.getNewFileName()%>" alt=""/>
                 </div>
                 <div class="pull-left-right">
                     <p class="userName"><%=vo.getNickname()%></p>
@@ -107,46 +107,67 @@
         for(int i=0;i<list.size();i++) {
     %>
     <table >
-        <tbody >
-        <tr class="left-section" >
-            <td class="left-info-img">
-                <img class="board-profileImg" src="../resources/img/<%=memberVo.getNewFileName()%>" alt=""/>
-            </td>
-            <td class="left-info-nick"><%=list.get(i).getNickname()%></td>
-            <td class="left-info-date"><%=list.get(i).getWriteDate().substring(0, 11)%></td>
-        </tr >
+        <tbody class="cmt-content<%=i%>">
+            <tr class="left-section" >
+                <td class="left-info-img">
+                    <img class="board-profileImg" src="../resources/img/<%=list.get(i).getNewFileName()%>" alt=""/>
+                </td>
+                <td class="left-info-nick"><%=list.get(i).getNickname()%></td>
+                <td class="left-info-date"><%=list.get(i).getWriteDate().substring(0, 11)%></td>
+            </tr >
 
-        <tr class="right-section" >
-            <td id="reCmt<%=i%>" class="right-info">답변</td >
-            <%
-                if(id.equals(list.get(i).getId())){
-            %>
-            <td id="fixCmt<%=i%>" class="right-info">수정</td >
-            <td id="delCmt<%=i%>" class="right-info">삭제</td >
-            <% } %>
-        </tr >
+            <tr class="right-section" >
+                <td id="reCmt<%=i%>" class="right-info">답변</td >
+                <%
+                    if(id.equals(list.get(i).getId())){
+                %>
+                <td id="fixCmt<%=i%>" class="right-info tabActive<%=i%>">수정</td >
+                <td id="delCmt<%=i%>" class="right-info">삭제</td >
+                <% } %>
+            </tr >
         </tbody >
+        <tbody>
+            <tr class="cmt-content<%=i%>">
+                <td class="comment-content"><%=list.get(i).getContent()%></td>
+            </tr>
+        </tbody>
+
         <tfoot >
-        <tr class="cmt-content">
-            <td class="comment-content"><%=list.get(i).getContent()%></td>
-        </tr>
+        <div class="fix-comment-hidden<%=i%>" style="display: none">
+            <div class="fix-comment-txt">
+                <textarea id="fixCmtCnt<%=i%>" name="fixcmtCnt" placeholder="여러분의 소중한 댓글을 입력해주세요."><%=list.get(i).getContent()%></textarea>
+            </div>
+            <div class="fix-comment-button">
+                <button class="fix-CmtBtn-cancel">취소</button>
+                <button id="fixCmtCnt-btn<%=i%>" class="fix-CmtBtn tabActive<%=i%>">수정하기</button>
+            </div>
+        </div>
         <%
             for(int a = 0; a < ReList.size(); a++) {
                 if (list.get(i).getC_sq() == ReList.get(a).getC_sq()) {
         %>
-        <tr class="reCmtCnt">
+        <tr class="reCmtCnt reFixCmt-hiddenInfo<%=a%>">
             <td class="reCmtCnt-img">
-                <img class="board-profileImg" src="../resources/img/<%=memberVo.getNewFileName()%>" alt=""/>
+                <img class="board-profileImg" src="../resources/img/<%=ReList.get(a).getNewFileName()%>" alt=""/>
             </td>
             <td class="reCmtCnt-nick"><%=ReList.get(a).getNickname()%></td>
             <td class="reCmtCnt-date"><%=ReList.get(a).getWriteDate().substring(0, 11)%></td>
             <%
                 if(id.equals(ReList.get(a).getId())){
             %>
-            <td class="reCmtCnt-right-info" style="right: 55px">수정</td >
-            <td class="reCmtCnt-right-info" style="right: 10px">삭제</td >
+            <td class="reCmtCnt-right-info fixTabActive<%=a%>" id="reCmtCnt-fix<%=a%>" style="right: 55px">수정</td >
+            <td class="reCmtCnt-right-info" id="reCmtCnt-del<%=a%>" style="right: 10px">삭제</td >
             <% } %>
             <td class="reCmtCnt-content"><%=ReList.get(a).getContent()%></td>
+        </tr>
+        <tr class="reFixCmt-hidden<%=a%> hiddenReCmtFix" style="display: none">
+            <td class="reComment-fixTxt">
+                <textarea id="reFixCmtCnt<%=a%>" name="reFixCmtCnt<%=a%>" placeholder="여러분의 소중한 댓글을 입력해주세요."><%=ReList.get(a).getContent()%></textarea>
+            </td>
+            <td class="reComment-fixButton">
+                <button>취소</button>
+                <button id="reFixCmtCnt-btn<%=a%>" class="reCmtBtn fixTabActive<%=a%>">완료</button>
+            </td>
         </tr>
         <% } } %>
         <tr class="reCmt-hidden<%=i%> hiddenReCmt">
@@ -158,7 +179,6 @@
             </td>
         </tr>
         </tfoot >
-
     </table >
     <% } %>
     <div>
@@ -206,9 +226,7 @@
                     console.log("서버 통신 실패");
                 },
                 success: function (data) {
-                    console.log(data);
                     let JsonData = JSON.parse(data);
-                    console.log(JsonData);
                     $(".likeCt").html(JsonData.count);
                     if(JsonData.onOff == 0){ //전달받은 0은 아직 추천하지 않았을경우
                         $(".btnLike svg").css("color" , "rgb(134, 142, 150)")
@@ -281,6 +299,143 @@
             <% }  %>
         })
         <% } %>
+
+        <%
+            for(int i=0;i<list.size();i++) {
+        %>
+        $('.tabActive<%=i%>').click(function () {
+            if ($(this).hasClass('right-info')) {
+                $('.cmt-content<%=i%>').hide();
+                $('.fix-comment-hidden<%=i%>').show();
+            }
+            if ($(this).hasClass('fix-CmtBtn')) {
+                $('.fix-comment-hidden<%=i%>').hide();
+                $('.cmt-content<%=i%>').show();
+            }
+        });
+        <% } %>
+
+        <%
+            for(int i=0;i<list.size();i++) {
+        %>
+        $("#fixCmtCnt-btn<%=i%>").click(function(){
+            <%
+                if (id==null){
+            %>
+            alert("로그인이 필요합니다.");
+            location.href='/login.do';
+            <%
+                }else {
+            %>
+            $.ajax({
+                url: "/fixCommentIn.do",
+                type: "POST",
+                data: {
+                    num : '<%=list.get(i).getReC_sq()%>',
+                    content : $("#fixCmtCnt<%=i%>").val()
+                },
+                success: function () {
+                    console.log("보내기 성공");
+                    location.reload()
+                },
+            })
+        })
+        <% } } %>
+
+        <%
+            for(int i=0;i<list.size();i++) {
+        %>
+        $("#delCmt<%=i%>").click(function(){
+            <%
+                if (id==null){
+            %>
+            alert("로그인이 필요합니다.");
+            location.href='/login.do';
+            <%
+                }else {
+            %>
+            $.ajax({
+                url: "/delComment.do",
+                type: "POST",
+                data: {
+                    num : '<%=list.get(i).getC_sq()%>'
+                },
+                success: function () {
+                    console.log("보내기 성공");
+                    location.reload()
+                },
+            })
+        })
+        <% } } %>
+
+        <%
+            for(int a = 0; a < ReList.size(); a++) {
+        %>
+        $('.fixTabActive<%=a%>').click(function () {
+            if ($(this).hasClass('reCmtCnt-right-info')) {
+                $('.reFixCmt-hiddenInfo<%=a%>').hide();
+                $('.reFixCmt-hidden<%=a%>').show();
+            }
+            if ($(this).hasClass('reCmtBtn')) {
+                $('.reFixCmt-hidden<%=a%>').hide();
+                $('.reFixCmt-hiddenInfo<%=a%>').show();
+            }
+        });
+        <% } %>
+
+
+        <%
+            for(int a = 0; a < ReList.size(); a++) {
+        %>
+        $("#reFixCmtCnt-btn<%=a%>").click(function(){
+            <%
+                if (id==null){
+            %>
+            alert("로그인이 필요합니다.");
+            location.href='/login.do';
+            <%
+                }else {
+            %>
+            $.ajax({
+                url: "/fixReCommentIn.do",
+                type: "POST",
+                data: {
+                    num : '<%=ReList.get(a).getReC_sq()%>',
+                    content : $("#reFixCmtCnt<%=a%>").val()
+                },
+                success: function () {
+                    console.log("보내기 성공");
+                    location.reload()
+                },
+            })
+        })
+        <% } } %>
+
+        <%
+            for(int a = 0; a < ReList.size(); a++) {
+        %>
+        $("#reCmtCnt-del<%=a%>").click(function(){
+            <%
+                if (id==null){
+            %>
+            alert("로그인이 필요합니다.");
+            location.href='/login.do';
+            <%
+                }else {
+            %>
+            $.ajax({
+                url: "/delReComment.do",
+                type: "POST",
+                data: {
+                    num : '<%=ReList.get(a).getReC_sq()%>'
+                },
+                success: function () {
+                    console.log("보내기 성공");
+                    location.reload()
+                },
+            })
+        })
+        <% } } %>
     })
 </script>
 </body>

@@ -46,10 +46,8 @@ public class BoardDetailAction implements Action {
         AttendanceVo vo = service.getArticleDetail(numInt);    //detail service 호출
         ArrayList<AttendanceVo> list = service.getComment(numInt);
         ArrayList<AttendanceVo> ReList = service.getReComment(numInt);
+
         MemberVo memberVo = service.getMember(id);
-        if(memberVo.getNewFileName()==null){
-            memberVo.setNewFileName("basic.jpg");
-        }
 
         if (vo == null) {
             response.setContentType("text/html;charset=UTF-8");

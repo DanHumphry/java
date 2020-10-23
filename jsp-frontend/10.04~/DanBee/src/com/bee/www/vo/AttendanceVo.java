@@ -10,6 +10,37 @@ public class AttendanceVo {
     private int B_sq;
     private String title;
 
+    private int C_sq;
+    private int ReC_sq;
+
+    private String filename;
+    private String address;
+    private String newFileName;
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getNewFileName() {
+        return newFileName;
+    }
+
+    public void setNewFileName(String newFileName) {
+        this.newFileName = newFileName;
+    }
+
     public int getReC_sq() {
         return ReC_sq;
     }
@@ -17,9 +48,6 @@ public class AttendanceVo {
     public void setReC_sq(int reC_sq) {
         ReC_sq = reC_sq;
     }
-
-    private int C_sq;
-    private int ReC_sq;
 
     public int getC_sq() {
         return C_sq;

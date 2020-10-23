@@ -346,4 +346,99 @@ public class BoardService {
 
         return list;
     }
+    public boolean fixInsertComment(AttendanceVo vo) {
+        BoardDAO dao = BoardDAO.getInstance();
+        Connection con = getConnection();
+        dao.setConnection(con);
+        boolean isSucess = false;
+
+        int count = dao.fixInsertComment(vo);
+        if (count > 0) {    //성공
+            commit(con);
+            isSucess = true;
+        } else {          //실패
+            rollback(con);
+        }
+        close(con);
+        return isSucess;
+    }
+    public String getB_CWriterId(int num) {
+        BoardDAO dao = BoardDAO.getInstance();
+        Connection con = getConnection();
+        dao.setConnection(con);
+
+        String id = dao.getB_CWriterId(num); //dao에서 구함
+
+        close(con);
+        return id;
+    }
+    public boolean deleteB_C(int num) {
+        //세팅
+        BoardDAO dao = BoardDAO.getInstance();
+        Connection con = getConnection();
+        dao.setConnection(con);
+        boolean isSucess = false;
+
+        int count = dao.deleteB_C(num);
+        if (count > 0) {    //성공
+            commit(con);
+            isSucess = true;
+        } else {          //실패
+            rollback(con);
+        }
+        close(con);
+        return isSucess;
+    }
+    public boolean fixInsertReComment(AttendanceVo vo) {
+        BoardDAO dao = BoardDAO.getInstance();
+        Connection con = getConnection();
+        dao.setConnection(con);
+        boolean isSucess = false;
+
+        int count = dao.fixInsertReComment(vo);
+        if (count > 0) {    //성공
+            commit(con);
+            isSucess = true;
+        } else {          //실패
+            rollback(con);
+        }
+        close(con);
+        return isSucess;
+    }
+    public String getReB_CWriterId(int num) {
+        BoardDAO dao = BoardDAO.getInstance();
+        Connection con = getConnection();
+        dao.setConnection(con);
+
+        String id = dao.getReB_CWriterId(num); //dao에서 구함
+
+        close(con);
+        return id;
+    }
+    public boolean deleteReB_C(int num) {
+        //세팅
+        BoardDAO dao = BoardDAO.getInstance();
+        Connection con = getConnection();
+        dao.setConnection(con);
+        boolean isSucess = false;
+
+        int count = dao.deleteReB_C(num);
+        if (count > 0) {    //성공
+            commit(con);
+            isSucess = true;
+        } else {          //실패
+            rollback(con);
+        }
+        close(con);
+        return isSucess;
+    }
+    public String getMemberImg(String id){
+        BoardDAO dao = BoardDAO.getInstance();
+        Connection con = getConnection();
+        dao.setConnection(con);
+
+        String img = dao.getMemberImg(id);
+        close(con);
+        return img;
+    }
 }

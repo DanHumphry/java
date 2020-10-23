@@ -14,7 +14,7 @@ import java.io.PrintWriter;
 import static com.bee.www.common.RegExp.ARTICLE_CONTENT;
 import static com.bee.www.common.RegExp.ARTICLE_NUM;
 
-public class ReCommentInAction implements Action {
+public class FixReCommentInAction implements Action {
 
     public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         request.setCharacterEncoding("utf-8");
@@ -51,16 +51,15 @@ public class ReCommentInAction implements Action {
         }
 
         AttendanceVo vo = new AttendanceVo();
-        vo.setC_sq(numInt);
+        vo.setReC_sq(numInt);
         vo.setId(id);
         vo.setContent(content);
         vo.setM_sq(service.getMemberSequence(id));
-        vo.setNewFileName(service.getMemberImg(id));
 
-        if (!service.insertReComment(vo)) {
+        if (!service.fixInsertReComment(vo)) {
             response.setContentType("text/html;charset=UTF-8");
             PrintWriter out = response.getWriter();
-            out.println("<script>alert('댓글작성 실패.');history.back();</script>");
+            out.println("<script>alert('댓글수정 실패.');history.back();</script>");
             out.close();
             return null;
         }

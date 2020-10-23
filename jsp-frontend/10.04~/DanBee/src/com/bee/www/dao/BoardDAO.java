@@ -202,10 +202,11 @@ public class BoardDAO {
         int count = 0;
         try{
             //현재 로그인된 id에 해당하는 고유번호 조회
-            pstmt = con.prepareStatement("insert into board(m_sq, title, content) value(?, ?, ?)");
+            pstmt = con.prepareStatement("insert into board(m_sq, title, content, profileImg) value(?, ?, ?, ?)");
             pstmt.setInt(1,vo.getM_sq());
             pstmt.setString(2,vo.getTitle());
             pstmt.setString(3,vo.getContent());
+            pstmt.setString(4,vo.getNewFileName());
             count=pstmt.executeUpdate();
         }catch (Exception e){
             e.printStackTrace();
@@ -252,7 +253,7 @@ public class BoardDAO {
             //현재 로그인된 id에 해당하는 고유번호 조회
             pstmt = con.prepareStatement("select b.sq, b.m_sq, m.id, " +
                     "b.title, b.content, " +
-                    "b.writeDate, m.nickname " +
+                    "b.writeDate, m.nickname, b.profileImg " +
                     "from board b inner join member m on b.m_sq = m.sq " +
                     "where b.sq=? ");
             pstmt.setInt(1,num);
@@ -265,6 +266,7 @@ public class BoardDAO {
                 vo.setContent(rs.getString("content"));
                 vo.setWriteDate(rs.getString("writeDate"));
                 vo.setNickname(rs.getString("nickname"));
+                vo.setNewFileName(rs.getString("profileImg"));
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -432,11 +434,12 @@ public class BoardDAO {
         int count = 0;
         try{
             //현재 로그인된 id에 해당하는 고유번호 조회
-            pstmt = con.prepareStatement("insert into board_comment(b_sq, m_sq, m_id, content) value(?, ?, ?, ?)");
+            pstmt = con.prepareStatement("insert into board_comment(b_sq, m_sq, m_id, content, profileImg) value(?, ?, ?, ?, ?)");
             pstmt.setInt(1,vo.getB_sq());
             pstmt.setInt(2,vo.getM_sq());
             pstmt.setString(3,vo.getId());
             pstmt.setString(4,vo.getContent());
+            pstmt.setString(5, vo.getNewFileName());
             count=pstmt.executeUpdate();
         }catch (Exception e){
             e.printStackTrace();
@@ -452,10 +455,11 @@ public class BoardDAO {
 
         try{
             pstmt = con.prepareStatement("select b_c.sq, b_c.b_sq, m.nickname, m.id, " +
-                    "b_c.content, b_c.writeDate " +
+                    "b_c.content, b_c.writeDate, b_c.profileImg " +
                     "from board_comment b_c " +
                     "inner join member m on b_c.m_sq = m.sq "+
-                    "where b_c.b_sq = ? ");
+                    "where b_c.b_sq = ? " +
+                    "order by b_c.sq ASC");
             pstmt.setInt(1,numInt);
             rs=pstmt.executeQuery();
             while(rs.next()){
@@ -466,6 +470,7 @@ public class BoardDAO {
                 vo.setId(rs.getString("id"));
                 vo.setContent(rs.getString("content"));
                 vo.setWriteDate(rs.getString("writeDate"));
+                vo.setNewFileName(rs.getString("profileImg"));
                 list.add(vo);
             }
         }catch (Exception e){
@@ -481,11 +486,12 @@ public class BoardDAO {
         int count = 0;
         try{
             //현재 로그인된 id에 해당하는 고유번호 조회
-            pstmt = con.prepareStatement("insert into board_recomment(b_c_sq, m_sq, m_id, content) value(?, ?, ?, ?)");
+            pstmt = con.prepareStatement("insert into board_recomment(b_c_sq, m_sq, m_id, content, profileImg) value(?, ?, ?, ?, ?)");
             pstmt.setInt(1,vo.getC_sq());
             pstmt.setInt(2,vo.getM_sq());
             pstmt.setString(3,vo.getId());
             pstmt.setString(4,vo.getContent());
+            pstmt.setString(5, vo.getNewFileName());
             count=pstmt.executeUpdate();
         }catch (Exception e){
             e.printStackTrace();
@@ -501,10 +507,10 @@ public class BoardDAO {
 
         try{
             pstmt = con.prepareStatement("select reb_c.sq, reb_c.b_c_sq, m.nickname, m.id, " +
-                    "reb_c.content, reb_c.writeDate " +
+                    "reb_c.content, reb_c.writeDate, reb_c.profileImg " +
                     "from board_recomment reb_c " +
-                    "inner join board_comment b_c on reb_c.b_c_sq = b_c.sq " +
-                    "inner join member m on b_c.m_sq = m.sq "+
+                    "inner join member m on reb_c.m_sq = m.sq "+
+                    "inner join board_comment b_c on m.sq = b_c.m_sq " +
                     "where b_c.b_sq = ? ");
             pstmt.setInt(1,numInt);
             rs=pstmt.executeQuery();
@@ -516,6 +522,7 @@ public class BoardDAO {
                 vo.setId(rs.getString("id"));
                 vo.setContent(rs.getString("content"));
                 vo.setWriteDate(rs.getString("writeDate"));
+                vo.setNewFileName(rs.getString("profileImg"));
                 list.add(vo);
             }
         }catch (Exception e){
@@ -525,5 +532,131 @@ public class BoardDAO {
             close(pstmt);
         }
         return list;
+    }
+    public int fixInsertComment(AttendanceVo vo){
+        PreparedStatement pstmt = null;
+        int count = 0;
+        try{
+            //현재 로그인된 id에 해당하는 고유번호 조회
+            pstmt = con.prepareStatement("update board_comment set content=? where sq=?");
+            pstmt.setString(1,vo.getContent());
+            pstmt.setInt(2,vo.getC_sq());
+            count=pstmt.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(pstmt);
+        }
+        return count;
+    }
+    public String getB_CWriterId(int num){
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        String id = null;
+
+        try {
+            pstmt=con.prepareStatement("select m_id " +
+                    "from board_comment " +
+                    "where sq=?");
+            pstmt.setInt(1,num);
+            rs=pstmt.executeQuery();
+            while(rs.next()){
+                id=rs.getString("m_id");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(rs);
+            close(pstmt);
+        }
+        return id;
+    }
+    public int deleteB_C(int num){
+        PreparedStatement pstmt = null;
+        int count = 0;
+        try{
+            //현재 로그인된 id에 해당하는 고유번호 조회
+            pstmt = con.prepareStatement("delete from board_comment where sq=?");
+            pstmt.setInt(1,num);
+            count=pstmt.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(pstmt);
+        }
+        return count;
+    }
+    public int fixInsertReComment(AttendanceVo vo){
+        PreparedStatement pstmt = null;
+        int count = 0;
+        try{
+            //현재 로그인된 id에 해당하는 고유번호 조회
+            pstmt = con.prepareStatement("update board_recomment set content=? where sq=?");
+            pstmt.setString(1,vo.getContent());
+            pstmt.setInt(2,vo.getReC_sq());
+            count=pstmt.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(pstmt);
+        }
+        return count;
+    }
+    public String getReB_CWriterId(int num){
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        String id = null;
+
+        try {
+            pstmt=con.prepareStatement("select m_id " +
+                    "from board_recomment " +
+                    "where sq=?");
+            pstmt.setInt(1,num);
+            rs=pstmt.executeQuery();
+            while(rs.next()){
+                id=rs.getString("m_id");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(rs);
+            close(pstmt);
+        }
+        return id;
+    }
+    public int deleteReB_C(int num){
+        PreparedStatement pstmt = null;
+        int count = 0;
+        try{
+            //현재 로그인된 id에 해당하는 고유번호 조회
+            pstmt = con.prepareStatement("delete from board_recomment where sq=?");
+            pstmt.setInt(1,num);
+            count=pstmt.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(pstmt);
+        }
+        return count;
+    }
+    public String getMemberImg(String id){
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        String img = null;
+        try{
+            //현재 로그인된 id에 해당하는 고유번호 조회
+            pstmt = con.prepareStatement("select image from member where id=?");
+            pstmt.setString(1,id);
+            rs = pstmt.executeQuery();
+            while (rs.next()){
+                img =rs.getString("image");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(rs);
+            close(pstmt);
+        }
+        return img;
     }
 }

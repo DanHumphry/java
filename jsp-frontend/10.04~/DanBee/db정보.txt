@@ -71,3 +71,4 @@ create table rec
         foreign key (b_sq) references board (sq)
 );
 
++ board, comment, recomment 모두 profileImg필드 추가 longblob타입

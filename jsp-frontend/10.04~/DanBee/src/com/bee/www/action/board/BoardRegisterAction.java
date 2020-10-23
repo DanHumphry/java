@@ -53,6 +53,7 @@ public class BoardRegisterAction implements Action {
         vo.setTitle(title);
         vo.setContent(content);
         vo.setM_sq(service.getMemberSequence(id));
+        vo.setNewFileName(service.getMemberImg(id));
 
         if(!service.insertArticle(vo)){ //글 저장 service 호출
             response.setContentType("text/html;charset=UTF-8");

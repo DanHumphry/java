@@ -55,6 +55,7 @@ public class CommentInAction implements Action {
         vo.setId(id);
         vo.setContent(content);
         vo.setM_sq(service.getMemberSequence(id));
+        vo.setNewFileName(service.getMemberImg(id));
 
         if (!service.insertComment(vo)) {
             response.setContentType("text/html;charset=UTF-8");
