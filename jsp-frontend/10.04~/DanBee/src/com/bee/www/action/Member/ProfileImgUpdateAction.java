@@ -23,13 +23,10 @@ public class ProfileImgUpdateAction implements Action {
         LoginManager lm = LoginManager.getInstance();
         String id = lm.getMemberId(request.getSession());
 
-        System.out.println(id);
-
         BoardService service = new BoardService();
         MemberVo vo = new MemberVo();
 
         String saveDirectory = request.getServletContext().getRealPath("/resources/img");
-        System.out.println(saveDirectory);
 
         File saveDir = new File(saveDirectory);
         if (!saveDir.exists())

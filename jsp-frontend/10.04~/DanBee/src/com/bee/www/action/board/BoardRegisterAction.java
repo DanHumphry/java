@@ -55,6 +55,10 @@ public class BoardRegisterAction implements Action {
         vo.setM_sq(service.getMemberSequence(id));
         vo.setNewFileName(service.getMemberImg(id));
 
+        if (vo.getNewFileName() == null){
+            vo.setNewFileName("basic.jpg");;
+        }
+
         if(!service.insertArticle(vo)){ //글 저장 service 호출
             response.setContentType("text/html;charset=UTF-8");
             PrintWriter out = response.getWriter();

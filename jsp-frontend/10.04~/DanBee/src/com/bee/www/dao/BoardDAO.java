@@ -510,9 +510,9 @@ public class BoardDAO {
                     "reb_c.content, reb_c.writeDate, reb_c.profileImg " +
                     "from board_recomment reb_c " +
                     "inner join member m on reb_c.m_sq = m.sq "+
-                    "inner join board_comment b_c on m.sq = b_c.m_sq " +
-                    "where b_c.b_sq = ? ");
-            pstmt.setInt(1,numInt);
+                    "inner join board_comment b_c on m.sq = b_c.m_sq " );
+//                    "where b_c.b_sq = ? "
+//            pstmt.setInt(1,numInt);
             rs=pstmt.executeQuery();
             while(rs.next()){
                 AttendanceVo vo = new AttendanceVo();

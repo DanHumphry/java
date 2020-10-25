@@ -64,3 +64,16 @@
     color: rgb(12, 167, 179);
 }
 /* header css*/
+
+
+/* enterChat */
+.enterChat svg{
+    width: 70px;
+    height: 70px;
+}
+.enterChat{
+    position: absolute;
+    bottom: 25px;
+    right: 25px;
+}
+/* enterChat */

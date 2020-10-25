@@ -105,10 +105,6 @@
         </form>
     </div>
 </section>
-<div class="right-info1 commentTab1" style="cursor: pointer"
-    onclick="commentModify(1)"><a>수정</a></div>
-<div class="fix-button1 commentTab1" style="cursor: pointer"
-    onclick="commentModify1(1)"><a>완료</a></div>
 
 <script src="http://code.jquery.com/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -151,34 +147,9 @@
             $('.cont').hide();
             $('.contents').show();
             console.log(this);
-
-
         }
 
     });
-    function commentModify(num) {
-        $('.right-info' + num).hide();
-        $('.fix-button' + num).show();
-
-
-    }
-    function commentModify1(num) {
-        $('.fix-button' + num).hide();
-        $('.right-info' + num).show();
-
-
-
-        // if ($('.commentTab'+num).hasClass('right-info2')) {   //댓글내용일 때
-        //     console.log(1)
-        //     $('.comment-info' + num).hide();
-        //     $('.fixTxt' + num).show();          //수정창 뜨게
-        // }
-        // if ($('.commentTab'+num).hasClass('fix-button2')) {   //수정창일때
-        //     $('.fixTxt' + num).hide();
-        //     $('.comment-info' + num).show();    //댓글내용 뜨게
-        //     console.log(2)
-        // }
-    }
 </script>
 </body>
 </html>

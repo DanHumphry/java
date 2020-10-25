@@ -2,7 +2,6 @@
 <%@ page import="com.bee.www.vo.AttendanceVo" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="com.bee.www.vo.MemberVo" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     AttendanceVo vo = (AttendanceVo) request.getAttribute("vo");
@@ -10,7 +9,6 @@
     String id=lm.getMemberId(session);
     ArrayList<AttendanceVo> list = (ArrayList<AttendanceVo>) request.getAttribute("list");
     ArrayList<AttendanceVo> ReList = (ArrayList<AttendanceVo>) request.getAttribute("ReList");
-    System.out.println(ReList);
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -117,13 +115,16 @@
             </tr >
 
             <tr class="right-section" >
+                <%
+                    if (id != null){
+                %>
                 <td id="reCmt<%=i%>" class="right-info">답변</td >
                 <%
                     if(id.equals(list.get(i).getId())){
                 %>
                 <td id="fixCmt<%=i%>" class="right-info tabActive<%=i%>">수정</td >
                 <td id="delCmt<%=i%>" class="right-info">삭제</td >
-                <% } %>
+                <% } } %>
             </tr >
         </tbody >
         <tbody>
@@ -153,11 +154,12 @@
             <td class="reCmtCnt-nick"><%=ReList.get(a).getNickname()%></td>
             <td class="reCmtCnt-date"><%=ReList.get(a).getWriteDate().substring(0, 11)%></td>
             <%
-                if(id.equals(ReList.get(a).getId())){
+                if (id != null){
+                    if(id.equals(ReList.get(a).getId())){
             %>
             <td class="reCmtCnt-right-info fixTabActive<%=a%>" id="reCmtCnt-fix<%=a%>" style="right: 55px">수정</td >
             <td class="reCmtCnt-right-info" id="reCmtCnt-del<%=a%>" style="right: 10px">삭제</td >
-            <% } %>
+            <% } } %>
             <td class="reCmtCnt-content"><%=ReList.get(a).getContent()%></td>
         </tr>
         <tr class="reFixCmt-hidden<%=a%> hiddenReCmtFix" style="display: none">

@@ -57,7 +57,11 @@ public class CommentInAction implements Action {
         vo.setM_sq(service.getMemberSequence(id));
         vo.setNewFileName(service.getMemberImg(id));
 
-        if (!service.insertComment(vo)) {
+        if (vo.getNewFileName() == null) {
+            vo.setNewFileName("basic.jpg");
+        }
+
+            if (!service.insertComment(vo)) {
             response.setContentType("text/html;charset=UTF-8");
             PrintWriter out = response.getWriter();
             out.println("<script>alert('댓글작성 실패.');history.back();</script>");
