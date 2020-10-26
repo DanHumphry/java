@@ -1,3 +1,8 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color: rgba(249, 249, 249, 0.534);
+}
 #messageWindow{
     background: black;
     color: greenyellow;
@@ -22,16 +27,32 @@
 #main-container{
     width: 100%;
     height: 100%;
-    display: inline-block;
+    text-align: center;
+    display: block;
+    animation: 0.4s ease-in-out 0s 1 normal forwards running slide;
 }
-#chat-container{
+@keyframes slide {
+    0% {
+        opacity: 0;
+        transform: translateY(400px) scale(0.75);
+    }
+    75% {
+        opacity: 1;
+        transform: translateY(-16px) scale(1);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+.chat-container{
     vertical-align: bottom;
     width: 100%;
-    height: 250px;
-    overflow: scroll;
-    overflow-x:hidden;
+    max-width: 880px;
+    height: 700px;
+    overflow-x: hidden;
     background: #9bbbd4;
-    padding: 10px;
+    display: inline-block;
 }
 .chat{
     font-size: 20px;
@@ -96,4 +117,43 @@
 }
 .my-chatInfo{
     display: inline-block;
+}
+.chat-inlineBlock{
+    width: 100%;
+    max-width: 880px;
+    display: inline-block;
+}
+.chat-userInfo{
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    background: #85b3d4;
+    margin-top: 65px;
+}
+.chat-leftInfo{
+    display: flex;
+}
+.chat-userImg img{
+    width: 70px;
+    height: 70px;
+    border-radius: 35px;
+    object-fit: cover;
+}
+.chat-userNick{
+    padding-top: 10px;
+    padding-left: 10px;
+}
+.chatOutBtn svg{
+    width: 1.5rem;
+    height: 1.5rem;
+    color: #607080;
+}
+.chatOutBtn{
+    position: absolute;
+    right: 7px;
+    top: 7px;
+    cursor: pointer;
+}
+.chat-padding{
+    padding: 10px;
 }

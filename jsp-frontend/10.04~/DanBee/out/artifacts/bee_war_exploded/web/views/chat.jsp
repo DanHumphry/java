@@ -3,8 +3,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%
-    LoginManager lm = LoginManager.getInstance();
-    String id = lm.getMemberId(session);
     MemberVo vo = (MemberVo) request.getAttribute("vo");
 %>
 <!DOCTYPE html>
@@ -18,13 +16,37 @@
 </head>
 <body>
 <div id="main-container">
-    <div id="chat-container">
+    <div class="chat-inlineBlock">
+        <div class="chat-userInfo">
+            <div class="chat-padding">
+                <div class="chat-leftInfo">
+                    <div class="chat-userImg">
+                        <img id="image_section" src="../resources/img/<%=vo.getNewFileName()%>" alt=""/>
+                    </div>
+                    <div class="chat-userNick">
+                        <%=vo.getNickname()%>
+                    </div>
+                </div>
+                <div class="chatOutBtn chat-rightInfo" onclick="history.back()">
+                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" tabindex="1" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="chat-container">
+        <div id="chat-container" class="chat-padding">
 
+        </div>
     </div>
-    <div id="bottom-container">
-        <input id="inputMessage" type="text">
-        <input id="btn-submit" type="submit" value="전송" >
+    <div class="chat-inlineBlock">
+        <div id="bottom-container">
+            <input id="inputMessage" type="text">
+            <input id="btn-submit" type="submit" value="전송" >
+        </div>
     </div>
+
 </div>
 
 <script type="text/javascript">
@@ -45,11 +67,13 @@
 
     // Send 버튼을 누르면 호출되는 함수
     function onMessage(e){
-        let imgURL = "<%=vo.getNewFileName()%>";
         let chatMsg = e.data;
-        console.log(e)
-        console.log(e.data)
-        // console.log(JSON.parse(e.data))
+        let info = chatMsg.split("/");
+
+        let userImg = info[0];
+        let username = info[1];
+        let userMsg = info[2];
+
         let date = new Date();
         let dateInfo = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
         if(chatMsg.substring(0,6) == 'server'){
@@ -63,10 +87,10 @@
             let $chat = $(
                 "<div class='chat-box chat-margin'>" +
                 "<div class=\"chat-img\">" +
-                "<img id=\"image_section\" src=\"../resources/img/"+imgURL+"\" alt=\"\"/>" +
+                "<img id=\"image_section\" src=\"../resources/img/"+userImg+"\" alt=\"\"/>" +
                 "</div>" +
                 "<div class='chat'>"
-                + chatMsg +
+                +username + " : " +userMsg +
                 "</div>" +
                 "<div class='chat-info chat-box otherUser-chat'>"
                 + dateInfo +

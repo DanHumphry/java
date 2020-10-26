@@ -1,5 +1,11 @@
 package com.bee.www.common;
 
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+import javax.json.JsonString;
+import javax.json.stream.JsonLocation;
+import javax.json.stream.JsonParser;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSession;
 import javax.websocket.*;
@@ -10,6 +16,7 @@ import com.bee.www.service.BoardService;
 import com.bee.www.vo.MemberVo;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -75,7 +82,7 @@ public class WebSocket extends HttpServlet {
             while(it.hasNext()){
                 Session currentSession = it.next();
                 if(!currentSession.equals(session)){
-                    currentSession.getBasicRemote().sendText(userName + " : " + message);
+                    currentSession.getBasicRemote().sendText(userImg + "/" +  userName + "/" + message);
                     //currentSession은 현재 접속해있는 유저의 session에 해당
                     //onMsg가 가지고 있는 session과 비교후 같지 않아야만 sendText실행
                     //즉 내가 보낸 메세지는 내가 받지않는다(front에서 내가 보낸 메세지는 내가 따로 확인되게 설계)
