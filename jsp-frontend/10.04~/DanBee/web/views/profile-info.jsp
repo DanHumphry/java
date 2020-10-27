@@ -93,7 +93,7 @@
                         </div>
                         <div class="content-wrapper">
                             <div class="contents">
-                                <button class="leave-button">회원탈퇴</button>
+                                <button type="button" class="leave-button" onclick="deleteMember()">회원탈퇴</button>
                             </div>
                         </div>
                         <div class="content-wrapper2">
@@ -148,8 +148,15 @@
             $('.contents').show();
             console.log(this);
         }
-
     });
+
+    function deleteMember() {
+        if(confirm('탈퇴하시겠습니까?')==true) {
+            location.href='/memberDelete.do';
+        }else{
+            return;
+        }
+    }
 </script>
 </body>
 </html>

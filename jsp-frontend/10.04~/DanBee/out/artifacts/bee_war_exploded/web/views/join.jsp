@@ -6,10 +6,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원 가입</title>
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="805115670990-b1g6ke28qjgt0q458r4oj049p6s3t8qu.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <link rel="stylesheet" type="text/css" href="/css/index.css">
     <link rel="stylesheet" type="text/css" href="/css/index_header.css">
     <link rel="stylesheet" type="text/css" href="/css/login.css">
-    <!--jquery cdn -->
     <script src="https://code.jquery.com/jquery-3.5.1.js"
             integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
             crossorigin="anonymous"></script>
@@ -211,6 +213,43 @@
                 return false;
             }
         }
+
+        function onSignIn(googleUser) {
+            var profile = googleUser.getBasicProfile();
+            console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+            console.log('Full Name: ' + profile.getName());
+            console.log("Image URL: " + profile.getImageUrl());
+            console.log("Email: " + profile.getEmail());
+            var id_token = googleUser.getAuthResponse().id_token;
+            console.log("ID Token: " + id_token);
+            console.log("id : " +  profile.getEmail().split("@")[0])
+
+            $.ajax({
+                url: "/google.do",
+                type: "post",
+                data: {
+                    id : profile.getEmail().split("@")[0],
+                    email : profile.getEmail(),
+                    nick : profile.getName(),
+                    pwd : id_token,
+                    pwd_confirm : id_token
+                },
+                error: function () {
+                    console.log("서버 통신 실패");
+                },
+                success: function () {
+                    console.log("서버 통신 성공");
+                    location.href = '/';
+                }
+            });
+        };
+
+        function signOut() {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+                console.log('User signed out.');
+            });
+        }
     </script>
 </head>
 <body>
@@ -232,7 +271,7 @@
             <div class="main-container">
                 <div class="main-padding">
                     <div class="main-section">
-                        <section class="container">
+                        <section class="container container2">
                             <article class="modal">
                                 <a href="/"><div class="exit-wrapper">
                                     <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" tabindex="1" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
@@ -270,6 +309,22 @@
                                                 <input name="nick" id="nick" type="text" class="inpt2"
                                                        placeholder="닉네임 입력"/>
                                             </div>
+                                            <section class="social-box">
+                                                <h4>소셜 계정으로 회원가입</h4>
+                                                <div class="googlebox">
+                                                    <a href="#">
+                                                        <svg width="20" height="20" fill="none" viewBox="0 0 20 20" class="google-login">
+                                                            <path fill="#4285F4" d="M19.99 10.187c0-.82-.069-1.417-.216-2.037H10.2v3.698h5.62c-.113.92-.725 2.303-2.084 3.233l-.02.124 3.028 2.292.21.02c1.926-1.738 3.037-4.296 3.037-7.33z"></path>
+                                                            <path fill="#34A853" d="M10.2 19.931c2.753 0 5.064-.886 6.753-2.414l-3.218-2.436c-.862.587-2.017.997-3.536.997a6.126 6.126 0 0 1-5.801-4.141l-.12.01-3.148 2.38-.041.112c1.677 3.256 5.122 5.492 9.11 5.492z"></path>
+                                                            <path fill="#FBBC05" d="M4.398 11.937a6.008 6.008 0 0 1-.34-1.971c0-.687.125-1.351.329-1.971l-.006-.132-3.188-2.42-.104.05A9.79 9.79 0 0 0 .001 9.965a9.79 9.79 0 0 0 1.088 4.473l3.309-2.502z"></path>
+                                                            <path fill="#EB4335" d="M10.2 3.853c1.914 0 3.206.809 3.943 1.484l2.878-2.746C15.253.985 12.953 0 10.199 0 6.211 0 2.766 2.237 1.09 5.492l3.297 2.503A6.152 6.152 0 0 1 10.2 3.853z"></path>
+                                                        </svg>
+                                                    </a>
+                                                </div>
+                                            </section>
+
+                                            <div class="g-signin2" data-onsuccess="onSignIn" data-longtitle="true"></div>
+
                                             <div class="submit-wrap">
                                                 <input type="submit" value="회원가입" class="submit"/>
                                             </div>

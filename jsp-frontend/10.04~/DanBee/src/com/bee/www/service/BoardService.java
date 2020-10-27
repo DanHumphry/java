@@ -441,4 +441,21 @@ public class BoardService {
         close(con);
         return img;
     }
+    public boolean deleteMember(String id) {
+        //세팅
+        BoardDAO dao = BoardDAO.getInstance();
+        Connection con = getConnection();
+        dao.setConnection(con);
+        boolean isSucess = false;
+
+        int count = dao.deleteMember(id);
+        if (count > 0) {    //성공
+            commit(con);
+            isSucess = true;
+        } else {          //실패
+            rollback(con);
+        }
+        close(con);
+        return isSucess;
+    }
 }

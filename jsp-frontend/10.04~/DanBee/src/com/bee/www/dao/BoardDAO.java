@@ -509,8 +509,8 @@ public class BoardDAO {
             pstmt = con.prepareStatement("select reb_c.sq, reb_c.b_c_sq, m.nickname, m.id, " +
                     "reb_c.content, reb_c.writeDate, reb_c.profileImg " +
                     "from board_recomment reb_c " +
-                    "inner join member m on reb_c.m_sq = m.sq "+
-                    "inner join board_comment b_c on m.sq = b_c.m_sq " );
+                    "inner join member m on reb_c.m_sq = m.sq " );
+//                    "inner join board_comment b_c on m.sq = b_c.m_sq "
 //                    "where b_c.b_sq = ? "
 //            pstmt.setInt(1,numInt);
             rs=pstmt.executeQuery();
@@ -658,5 +658,21 @@ public class BoardDAO {
             close(pstmt);
         }
         return img;
+    }
+
+    public int deleteMember(String id){
+        PreparedStatement pstmt = null;
+        int count = 0;
+        try{
+            //현재 로그인된 id에 해당하는 고유번호 조회
+            pstmt = con.prepareStatement("delete from member where id=?");
+            pstmt.setString(1,id);
+            count=pstmt.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(pstmt);
+        }
+        return count;
     }
 }

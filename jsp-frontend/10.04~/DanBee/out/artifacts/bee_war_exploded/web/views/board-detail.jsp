@@ -79,7 +79,7 @@
     %>
     <div class="left-button">
         <button onclick="location.href='/board-update.do?num=<%=vo.getB_sq()%>'">수정</button>
-        <button onclick="location.href='/board-delete.do?num=<%=vo.getB_sq()%>'">삭제</button>
+        <button id="b_sq-delete">삭제</button>
     </div>
     <div class="right-button">
         <button onclick="location.href='/board.do'">목록</button>
@@ -356,19 +356,33 @@
             <%
                 }else {
             %>
-            $.ajax({
-                url: "/delComment.do",
-                type: "POST",
-                data: {
-                    num : '<%=list.get(i).getC_sq()%>'
-                },
-                success: function () {
-                    console.log("보내기 성공");
-                    location.reload()
-                },
-            })
+            if (confirm('정말 삭제하시겠습니까 ?') == true) {
+                $.ajax({
+                    url: "/delComment.do",
+                    type: "POST",
+                    data: {
+                        num : '<%=list.get(i).getC_sq()%>'
+                    },
+                    success: function () {
+                        console.log("보내기 성공");
+                        location.reload();
+                        confirmDelete();
+                    },
+                })
+            }
+
         })
         <% } } %>
+
+        <%
+            for(int i=0;i<list.size();i++) {
+        %>
+        function confirmDelete(){
+            if (<%=list.get(i).getC_sq()%>){
+                alert("댓글이 있는 게시글은 삭제할 수 없습니다.");
+            }
+        }
+        <% } %>
 
         <%
             for(int a = 0; a < ReList.size(); a++) {
@@ -425,19 +439,29 @@
             <%
                 }else {
             %>
-            $.ajax({
-                url: "/delReComment.do",
-                type: "POST",
-                data: {
-                    num : '<%=ReList.get(a).getReC_sq()%>'
-                },
-                success: function () {
-                    console.log("보내기 성공");
-                    location.reload()
-                },
-            })
+            if (confirm('정말 삭제하시겠습니까 ?') == true) {
+                $.ajax({
+                    url: "/delReComment.do",
+                    type: "POST",
+                    data: {
+                        num : '<%=ReList.get(a).getReC_sq()%>'
+                    },
+                    success: function () {
+                        console.log("보내기 성공");
+                        location.reload()
+                    },
+                })
+            }
         })
         <% } } %>
+
+        $("#b_sq-delete").click( ()=>{
+            if(confirm('정말 삭제하시겠습니까 ?')==true) {
+                location.href = '/board-delete.do?num=<%=vo.getB_sq()%>'
+            }else {
+                return ;
+            }
+        })
     })
 </script>
 </body>

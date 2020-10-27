@@ -10,7 +10,7 @@ import java.io.PrintWriter;
 
 import static com.bee.www.common.RegExp.*;
 
-public class MemberJoinProcAction implements Action {
+public class GoogleAPIAction implements Action {
     @Override
     public ActionForward execute
             (HttpServletRequest request, HttpServletResponse response)
@@ -19,34 +19,17 @@ public class MemberJoinProcAction implements Action {
         //view에서 값 받아오기
         String id = request.getParameter("id");
         String pwd = request.getParameter("pwd");
-        String pwd_confirm = request.getParameter("pwd_confirm");
         String email = request.getParameter("email");
         String nick = request.getParameter("nick");
 
-        System.out.println(nick);
-        System.out.println(pwd);
-        System.out.println(pwd_confirm);
-        System.out.println(email);
-        System.out.println(id);
-
         //값 비어있는지,형식(정규식) 검사
-        if (id == null || id.equals("") || !RegExp.checkString(MEMBER_ID, id)
-                || pwd == null || pwd.equals("") || !RegExp.checkString(MEMBER_PWD, pwd)
+        if (id == null || id.equals("")
+                || pwd == null || pwd.equals("")
                 || nick == null || nick.equals("")
-//                || !RegExp.checkString(MEMBER_NICK, nick)
-                || email == null || email.equals("") || !RegExp.checkString(MEMBER_EMAIL, email)) {
+                || email == null || email.equals("")) {
             response.setContentType("text/html;charset=UTF-8");
             PrintWriter out = response.getWriter();
             out.println("<script>alert('잘못된 접근입니다');location.href='/';</script>");
-            out.close();
-            return null;
-        }
-
-        //pwd,pwd확인 일치하는지 검사
-        if (!pwd.equals(pwd_confirm)) {
-            response.setContentType("text/html;charset=UTF-8");
-            PrintWriter out = response.getWriter();
-            out.println("<script>alert('두 비밀번호가 일치하지 않습니다.');location.href='/';</script>");
             out.close();
             return null;
         }
@@ -72,10 +55,6 @@ public class MemberJoinProcAction implements Action {
             lm.setSession(request.getSession(),memberVo.getId());
         }
 
-        //메인페이지로 이동
-        ActionForward forward = new ActionForward();
-        forward.setPath("/");
-        forward.setRedirect(true);
-        return forward;
+        return null;
     }
 }

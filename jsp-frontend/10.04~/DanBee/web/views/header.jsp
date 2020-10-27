@@ -42,7 +42,7 @@
                 <a href="/logout.do">
                     <h3>로그아웃</h3>
                 </a>
-                <% }  %>
+                <% } %>
             </div>
         </div>
     </div>
