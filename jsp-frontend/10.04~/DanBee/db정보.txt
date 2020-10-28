@@ -3,7 +3,7 @@ create table member
     sq       int auto_increment
         primary key,
     id       varchar(50)          not null,
-    pwd      varchar(200)         not null,
+    pwd      varchar(1000)        not null,
     nickname varchar(80)          not null,
     email    varchar(100)         not null,
     lgn_fl   tinyint(1) default 0 not null,
@@ -12,12 +12,14 @@ create table member
 
 create table board
 (
-    sq        int auto_increment
+    sq         int auto_increment
         primary key,
-    title     longtext                           not null,
-    content   longtext                           not null,
-    m_sq      int                                null,
-    writeDate datetime default CURRENT_TIMESTAMP null,
+    title      longtext                           not null,
+    content    longtext                           not null,
+    m_sq       int                                null,
+    writeDate  datetime default CURRENT_TIMESTAMP null,
+    profileImg longblob                           null,
+    likeCount  int      default 0                 null,
     constraint board_member_sq_fk
         foreign key (m_sq) references member (sq)
 );
@@ -35,13 +37,14 @@ create table attendance
 
 create table board_comment
 (
-    sq        int auto_increment
+    sq         int auto_increment
         primary key,
-    b_sq      int                                not null,
-    content   longtext                           not null,
-    m_id      varchar(50)                        not null,
-    writeDate datetime default CURRENT_TIMESTAMP not null,
-    m_sq      int                                not null,
+    b_sq       int                                not null,
+    content    longtext                           not null,
+    m_id       varchar(50)                        not null,
+    writeDate  datetime default CURRENT_TIMESTAMP not null,
+    m_sq       int                                not null,
+    profileImg longblob                           null,
     constraint board_comment_board_sq_fk
         foreign key (b_sq) references board (sq),
     constraint board_comment_member_sq_fk
@@ -50,13 +53,14 @@ create table board_comment
 
 create table board_recomment
 (
-    sq        int auto_increment
+    sq         int auto_increment
         primary key,
-    b_c_sq    int                                not null,
-    content   longtext                           not null,
-    m_id      varchar(50)                        null,
-    writeDate datetime default CURRENT_TIMESTAMP not null,
-    m_sq      int                                not null,
+    b_c_sq     int                                not null,
+    content    longtext                           not null,
+    m_id       varchar(50)                        null,
+    writeDate  datetime default CURRENT_TIMESTAMP not null,
+    m_sq       int                                not null,
+    profileImg longblob                           null,
     constraint board_recomment_board_comment_sq_fk
         foreign key (b_c_sq) references board_comment (sq),
     constraint board_recomment_member_sq_fk
@@ -65,10 +69,10 @@ create table board_recomment
 
 create table rec
 (
-    b_sq int         not null,
-    m_id varchar(50) not null,
+    b_sq int null,
+    m_sq int null,
     constraint rec_board_sq_fk
-        foreign key (b_sq) references board (sq)
+        foreign key (b_sq) references board (sq),
+    constraint rec_member_sq_fk
+        foreign key (m_sq) references member (sq)
 );
-
-+ board, comment, recomment 모두 profileImg필드 추가 longblob타입

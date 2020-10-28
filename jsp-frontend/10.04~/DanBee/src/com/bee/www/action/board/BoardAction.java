@@ -13,6 +13,7 @@ public class BoardAction implements Action {
     @Override
     public ActionForward execute
             (HttpServletRequest request, HttpServletResponse response) {
+
         BoardService service = new BoardService();
 
         ArrayList<AttendanceVo> articleList = service.getArticleList();

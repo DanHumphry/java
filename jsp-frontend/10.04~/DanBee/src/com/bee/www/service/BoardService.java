@@ -248,13 +248,13 @@ public class BoardService {
         close(con);
         return isSucess;
     }
-    public boolean recCheck(int no, String id){
+    public boolean recCheck(int no, int m_sq){
         BoardDAO dao = BoardDAO.getInstance();
         Connection con = getConnection();
         dao.setConnection(con);
         boolean isSucess = false;
 
-        int count = dao.recCheck(no, id);
+        int count = dao.recCheck(no, m_sq);
         if (count == 0) {    //아직 추천하지 않은 결과
             commit(con);
             isSucess = true;
@@ -265,21 +265,21 @@ public class BoardService {
         close(con);
         return isSucess;
     }
-    public void recUpdate(int no, String id) {
+    public void recUpdate(int no, int m_sq) {
         BoardDAO dao = BoardDAO.getInstance();
         Connection con = getConnection();
         dao.setConnection(con);
 
-        dao.recUpdate(no, id);
+        dao.recUpdate(no, m_sq);
         commit(con);
         close(con);
     }
-    public void recDelete(int no, String id) {
+    public void recDelete(int no, int m_sq) {
         BoardDAO dao = BoardDAO.getInstance();
         Connection con = getConnection();
         dao.setConnection(con);
 
-        dao.recDelete(no, id);
+        dao.recDelete(no, m_sq);
         commit(con);
         close(con);
     }
@@ -457,5 +457,25 @@ public class BoardService {
         }
         close(con);
         return isSucess;
+    }
+
+    public void updateBoardRec(int count, int no) {
+        BoardDAO dao = BoardDAO.getInstance();
+        Connection con = getConnection();
+        dao.setConnection(con);
+
+        dao.updateBoardRec(count, no);
+        commit(con);
+        close(con);
+    }
+    public ArrayList<AttendanceVo> getBestArticleList(){
+        BoardDAO dao = BoardDAO.getInstance();
+        Connection con = getConnection();
+        dao.setConnection(con);
+
+        ArrayList<AttendanceVo> list = dao.getBestArticleList();
+        close(con);
+
+        return list;
     }
 }

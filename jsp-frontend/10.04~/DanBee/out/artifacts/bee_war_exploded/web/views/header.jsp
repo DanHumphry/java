@@ -42,8 +42,7 @@
                 <a href="/logout.do">
                     <h3>로그아웃</h3>
                 </a>
-                <% }  %>
-                <a onclick="signOut()">Sign out</a>
+                <% } %>
             </div>
         </div>
     </div>

@@ -1,12 +1,10 @@
 <%@ page import="com.bee.www.vo.AttendanceVo" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="com.bee.www.common.LoginManager" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    LoginManager lm = LoginManager.getInstance();
-    String id = lm.getMemberId(session);
-
     ArrayList<AttendanceVo> list = (ArrayList<AttendanceVo>) request.getAttribute("list");
+    String value = (String) request.getAttribute("value");
+    System.out.println("value : " + value);
 %>
 <html>
 <head>
@@ -33,10 +31,10 @@
                         <div class="content-list">
                             <div class="list-header2">
                                 <div class="board-sort2">
-                                        <form>
-                                            <select class="list-sort">
-                                                <option value="newest">최신순</option>
-                                                <option value="best">추천순</option>
+                                        <form id="filter-form" name="filter-form" method="post">
+                                            <select id="filter-select" name="filter-select" class="list-sort">
+                                                <option id="newest" name="newest" value="newest">최신순</option>
+                                                <option id="best" name="best" value="best">추천순</option>
                                             </select>
                                         </form>
                                     <div class="control">
@@ -45,7 +43,7 @@
                                 </div>
                             </div>
                             <div class="board-list">
-                                <table>
+                                <table id="board-listId">
                                     <thead>
                                     <tr>
                                         <th class="num">번호</th>
@@ -124,8 +122,7 @@
             sBtn.removeClass("active");     // sBtn 속에 (active) 클래스를 삭제 한다.
             $(this).parent().addClass("active"); // 클릭한 a에 (active)클래스를 넣는다.
         })
-    })
-    $(function() {
+
         function recCount() {
             <%
                 for(int i=0;i<list.size();i++) {
@@ -147,7 +144,49 @@
             <% } %>
         };
         recCount();
+
+
+        //고생많이한 부분 ..
+        //action URL값에 value값을 붙여서 보내고싶었는데 붙일 수 가 없었음. 돌아오기전에 이미 null값이 들어간 상태로 action이 보내지기때문
+        // 때문에 script태그 안에서 this.val값을 먼저 action의 url에 집어 넣어준뒤에 submit을 해준 모습이다. 이래야
+        //select된 option값에따라 url에 알맞게 value값이 들어가고
+        //value값에 따른 selected가 이루어진다.
+        $('#filter-select').change(function (){
+            let form = $("form");
+            let action = "/boardFilter.do?val=" + $(this).val();
+            form.attr("action", action);
+            this.form.submit();
+        })
+        let para = document.location.href.split("?");
+
+        if (para[1] != null){
+            if (para[1].substring(4) == "best"){
+                $('#filter-select #best').attr('selected', 'selected');
+            }
+            if (para[1].substring(4) == "newest"){
+                $('#filter-select #newest').attr('selected', 'selected');
+            }
+        }
+
     })
+
+    // function selectSubmit(){
+    //
+    //     $.ajax({
+    //         url: "/boardFilter.do",
+    //         type: "POST",
+    //         data: {
+    //             val : $('#filter-select').val()
+    //         },
+    //         error: function () {
+    //             console.log("서버 통신 실패");
+    //         },
+    //         success: function (data) {
+    //             console.log(data)
+    //         },
+    //     })
+    // }
+
 
 </script>
 </body>

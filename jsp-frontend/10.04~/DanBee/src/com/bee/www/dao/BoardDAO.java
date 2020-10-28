@@ -252,7 +252,7 @@ public class BoardDAO {
         try{
             //현재 로그인된 id에 해당하는 고유번호 조회
             pstmt = con.prepareStatement("select b.sq, b.m_sq, m.id, " +
-                    "b.title, b.content, " +
+                    "b.title, b.content, b.likeCount, " +
                     "b.writeDate, m.nickname, b.profileImg " +
                     "from board b inner join member m on b.m_sq = m.sq " +
                     "where b.sq=? ");
@@ -264,6 +264,7 @@ public class BoardDAO {
                 vo.setId(rs.getString("id"));
                 vo.setTitle(rs.getString("title"));
                 vo.setContent(rs.getString("content"));
+                vo.setLikeCount(rs.getInt("likeCount"));
                 vo.setWriteDate(rs.getString("writeDate"));
                 vo.setNickname(rs.getString("nickname"));
                 vo.setNewFileName(rs.getString("profileImg"));
@@ -363,14 +364,14 @@ public class BoardDAO {
         }
         return count;
     }
-    public int recCheck(int no,String id){
+    public int recCheck(int no, int m_sq){
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         int result = 0;
         try{
-            pstmt = con.prepareStatement("select count(*) from rec where b_sq = ? and m_id = ?");
+            pstmt = con.prepareStatement("select count(*) from rec where b_sq = ? and m_sq = ?");
             pstmt.setInt(1,no);
-            pstmt.setString(2,id);
+            pstmt.setInt(2,m_sq);
             rs = pstmt.executeQuery();
             while(rs.next()){
                 result=rs.getInt("count(*)");
@@ -383,12 +384,12 @@ public class BoardDAO {
         }
         return result;
     }
-    public void recUpdate(int no,String id){
+    public void recUpdate(int no, int m_sq){
         PreparedStatement pstmt = null;
         try{
-            pstmt = con.prepareStatement("insert into rec(b_sq, m_id) value(?, ?)");
+            pstmt = con.prepareStatement("insert into rec(b_sq, m_sq) value(?, ?)");
             pstmt.setInt(1,no);
-            pstmt.setString(2,id);
+            pstmt.setInt(2,m_sq);
             pstmt.executeUpdate();
         }catch (Exception e){
             e.printStackTrace();
@@ -396,12 +397,12 @@ public class BoardDAO {
             close(pstmt);
         }
     }
-    public void recDelete(int no,String id){
+    public void recDelete(int no, int m_sq){
         PreparedStatement pstmt = null;
         try{
-            pstmt = con.prepareStatement("delete from rec where b_sq = ? and m_id = ?");
+            pstmt = con.prepareStatement("delete from rec where b_sq = ? and m_sq = ?");
             pstmt.setInt(1,no);
-            pstmt.setString(2,id);
+            pstmt.setInt(2,m_sq);
             pstmt.executeUpdate();
         }catch (Exception e){
             e.printStackTrace();
@@ -674,5 +675,51 @@ public class BoardDAO {
             close(pstmt);
         }
         return count;
+    }
+
+    public void updateBoardRec(int count, int no){
+        PreparedStatement pstmt = null;
+
+        try{
+            //현재 로그인된 id에 해당하는 고유번호 조회
+            pstmt = con.prepareStatement("update board set likeCount = ? where sq=?");
+            pstmt.setInt(1,count);
+            pstmt.setInt(2,no);
+            count=pstmt.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(pstmt);
+        }
+    }
+
+    public ArrayList<AttendanceVo> getBestArticleList() {
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        ArrayList<AttendanceVo> list = new ArrayList<>();
+
+        try{
+            pstmt = con.prepareStatement("select b.sq, m.nickname, " +
+                    "b.title,b.content," +
+                    "b.writeDate " +
+                    "from board b inner join member m on b.m_sq = m.sq "+
+                    "order by likeCount desc");
+            rs=pstmt.executeQuery();
+            while(rs.next()){
+                AttendanceVo vo = new AttendanceVo();
+                vo.setB_sq(rs.getInt("sq"));
+                vo.setNickname(rs.getString("nickname"));
+                vo.setTitle(rs.getString("title"));
+                vo.setContent(rs.getString("content"));
+                vo.setWriteDate(rs.getString("writeDate"));
+                list.add(vo);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(rs);
+            close(pstmt);
+        }
+        return list;
     }
 }

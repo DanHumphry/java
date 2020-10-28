@@ -6,6 +6,15 @@ public class AttendanceVo {
     private String id;
     private String nickname;
     private String writeDate;
+    private int likeCount;
+
+    public int getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
+    }
 
     private int B_sq;
     private String title;

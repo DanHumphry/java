@@ -27,7 +27,7 @@ body{
 #main-container{
     width: 100%;
     height: 100%;
-    text-align: center;
+    text-align: -webkit-center;
     display: block;
     animation: 0.4s ease-in-out 0s 1 normal forwards running slide;
 }
@@ -52,7 +52,6 @@ body{
     height: 700px;
     overflow-x: hidden;
     background: #9bbbd4;
-    display: inline-block;
 }
 .chat{
     font-size: 20px;
@@ -121,7 +120,6 @@ body{
 .chat-inlineBlock{
     width: 100%;
     max-width: 880px;
-    display: inline-block;
 }
 .chat-userInfo{
     display: flex;
