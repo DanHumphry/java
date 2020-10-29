@@ -61,7 +61,7 @@
         <nav>
             <ul>
                 <li><a href="/attendance.do" id="test1">출석체크</a></li>
-                <li><a href="/board.do" id="test2">게시판</a></li>
+                <li><a href="/board.do?pn=1&val=newest&filter=&keyword=" id="test2">게시판</a></li>
             </ul>
         </nav>
     </section>

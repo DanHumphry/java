@@ -1,12 +1,12 @@
 package com.bee.www.service;
 
+import com.bee.www.common.Pagenation;
 import com.bee.www.dao.BoardDAO;
 import com.bee.www.vo.AttendanceVo;
 import com.bee.www.vo.MemberVo;
 
 import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.bee.www.common.JdbcUtil.*;
 
@@ -148,12 +148,12 @@ public class BoardService {
         return isSucess;
     }
 
-    public ArrayList<AttendanceVo> getArticleList(){
+    public ArrayList<AttendanceVo> getArticleList(Pagenation pagenation){
         BoardDAO dao = BoardDAO.getInstance();
         Connection con = getConnection();
         dao.setConnection(con);
 
-        ArrayList<AttendanceVo> list = dao.getArticleList();
+        ArrayList<AttendanceVo> list = dao.getArticleList(pagenation);
         close(con);
 
         return list;
@@ -468,12 +468,41 @@ public class BoardService {
         commit(con);
         close(con);
     }
-    public ArrayList<AttendanceVo> getBestArticleList(){
+    public ArrayList<AttendanceVo> getBestArticleList(Pagenation pagenation){
         BoardDAO dao = BoardDAO.getInstance();
         Connection con = getConnection();
         dao.setConnection(con);
 
-        ArrayList<AttendanceVo> list = dao.getBestArticleList();
+        ArrayList<AttendanceVo> list = dao.getBestArticleList(pagenation);
+        close(con);
+
+        return list;
+    }
+    public int getArticleCount(){
+        BoardDAO dao = BoardDAO.getInstance();
+        Connection con = getConnection();
+        dao.setConnection(con);
+
+        int count=dao.getArticleCount();
+        close(con);
+        return count;
+    }
+    public ArrayList<AttendanceVo> getFilterArticleList(Pagenation pagenation, String query){
+        BoardDAO dao = BoardDAO.getInstance();
+        Connection con = getConnection();
+        dao.setConnection(con);
+
+        ArrayList<AttendanceVo> list = dao.getFilterArticleList(pagenation, query);
+        close(con);
+
+        return list;
+    }
+    public ArrayList<AttendanceVo> getBestFilterArticleList(Pagenation pagenation, String query){
+        BoardDAO dao = BoardDAO.getInstance();
+        Connection con = getConnection();
+        dao.setConnection(con);
+
+        ArrayList<AttendanceVo> list = dao.getBestFilterArticleList(pagenation, query);
         close(con);
 
         return list;

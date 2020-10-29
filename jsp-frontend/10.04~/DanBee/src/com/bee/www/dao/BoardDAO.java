@@ -1,5 +1,6 @@
 package com.bee.www.dao;
 
+import com.bee.www.common.Pagenation;
 import com.bee.www.vo.AttendanceVo;
 import com.bee.www.vo.MemberVo;
 
@@ -7,8 +8,6 @@ import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 import static com.bee.www.common.JdbcUtil.close;
 
@@ -215,7 +214,7 @@ public class BoardDAO {
         }
         return count;
     }
-    public ArrayList<AttendanceVo> getArticleList() {
+    public ArrayList<AttendanceVo> getArticleList(Pagenation pagenation) {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         ArrayList<AttendanceVo> list = new ArrayList<>();
@@ -225,7 +224,10 @@ public class BoardDAO {
                     "b.title,b.content," +
                     "b.writeDate " +
                     "from board b inner join member m on b.m_sq = m.sq "+
-                    "order by sq desc");
+                    "order by sq desc " +
+                    "limit ?, ?");
+            pstmt.setInt(1,pagenation.getStartArticleNumber());
+            pstmt.setInt(2,pagenation.getSHOW_ARTICLE_COUNT());
             rs=pstmt.executeQuery();
             while(rs.next()){
                 AttendanceVo vo = new AttendanceVo();
@@ -693,7 +695,7 @@ public class BoardDAO {
         }
     }
 
-    public ArrayList<AttendanceVo> getBestArticleList() {
+    public ArrayList<AttendanceVo> getBestArticleList(Pagenation pagenation) {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         ArrayList<AttendanceVo> list = new ArrayList<>();
@@ -703,7 +705,96 @@ public class BoardDAO {
                     "b.title,b.content," +
                     "b.writeDate " +
                     "from board b inner join member m on b.m_sq = m.sq "+
-                    "order by likeCount desc");
+                    "order by likeCount desc " +
+                    "limit ?, ?");
+            pstmt.setInt(1,pagenation.getStartArticleNumber());
+            pstmt.setInt(2,pagenation.getSHOW_ARTICLE_COUNT());
+            rs=pstmt.executeQuery();
+            while(rs.next()){
+                AttendanceVo vo = new AttendanceVo();
+                vo.setB_sq(rs.getInt("sq"));
+                vo.setNickname(rs.getString("nickname"));
+                vo.setTitle(rs.getString("title"));
+                vo.setContent(rs.getString("content"));
+                vo.setWriteDate(rs.getString("writeDate"));
+                list.add(vo);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(rs);
+            close(pstmt);
+        }
+        return list;
+    }
+
+    public int getArticleCount(){
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        int count =0;
+        try{
+            pstmt=con.prepareStatement(
+                    "select count(*) from board");
+            rs=pstmt.executeQuery();
+            while (rs.next()){
+                count=rs.getInt(1);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(rs);
+            close(pstmt);
+        }
+        return count;
+    }
+
+    public ArrayList<AttendanceVo> getFilterArticleList(Pagenation pagenation, String query) {
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        ArrayList<AttendanceVo> list = new ArrayList<>();
+
+        try{
+            pstmt = con.prepareStatement("select b.sq, m.nickname, " +
+                    "b.title,b.content," +
+                    "b.writeDate " +
+                    "from board b inner join member m on b.m_sq = m.sq where "+ query + " " +
+                    "order by sq desc " +
+                    "limit ?, ?");
+            pstmt.setInt(1,pagenation.getStartArticleNumber());
+            pstmt.setInt(2,pagenation.getSHOW_ARTICLE_COUNT());
+            rs=pstmt.executeQuery();
+            while(rs.next()){
+                AttendanceVo vo = new AttendanceVo();
+                vo.setB_sq(rs.getInt("sq"));
+                vo.setNickname(rs.getString("nickname"));
+                vo.setTitle(rs.getString("title"));
+                vo.setContent(rs.getString("content"));
+                vo.setWriteDate(rs.getString("writeDate"));
+                list.add(vo);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(rs);
+            close(pstmt);
+        }
+        return list;
+    }
+
+    public ArrayList<AttendanceVo> getBestFilterArticleList(Pagenation pagenation, String query) {
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        ArrayList<AttendanceVo> list = new ArrayList<>();
+
+        try{
+            pstmt = con.prepareStatement("select b.sq, m.nickname, " +
+                    "b.title,b.content," +
+                    "b.writeDate " +
+                    "from board b inner join member m on b.m_sq = m.sq where "+ query + " " +
+                    "order by likeCount desc " +
+                    "limit ?, ?");
+            pstmt.setInt(1,pagenation.getStartArticleNumber());
+            pstmt.setInt(2,pagenation.getSHOW_ARTICLE_COUNT());
             rs=pstmt.executeQuery();
             while(rs.next()){
                 AttendanceVo vo = new AttendanceVo();

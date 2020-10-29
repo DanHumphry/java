@@ -157,6 +157,7 @@
     width: 100%;
 }
 .pagination ul{
+    display: flex;
     padding: 0;
     width: 160px;
     list-style: none;
@@ -189,9 +190,6 @@
     transition-duration: 0.3s;
     z-index: 2;
 }
-/* .pagination a:hover{
-    background-color: #8bd6f1;
-} */
 .pagination ul .active{
     background-color: #8bd6f1;
     z-index: 3;

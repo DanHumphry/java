@@ -1,10 +1,12 @@
 <%@ page import="com.bee.www.vo.AttendanceVo" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="com.bee.www.common.Pagenation" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     ArrayList<AttendanceVo> list = (ArrayList<AttendanceVo>) request.getAttribute("list");
-    String value = (String) request.getAttribute("value");
-    System.out.println("value : " + value);
+    Pagenation pagenation = (Pagenation) request.getAttribute("pagenation");
+    String nowPage = request.getParameter("pn");
+    String val = (String) request.getAttribute("val");
 %>
 <html>
 <head>
@@ -71,33 +73,34 @@
                             <div class="pagination">
                                 <ul>
                                     <li>
-                                        <a href="#">«</a>
+                                        <% if (pagenation.getNowPageNumber() != 1) { %>
+                                        <a href="/board.do?pn=<%=pagenation.getStartPage()-1%>&val=<%=val%>&filter=&keyword=">«</a>
+                                        <% } %>
                                     </li>
-                                    <li class="active">
-                                        <a href="#">
-                                            1
+                                    <% for (int i = pagenation.getStartPage(); i <= pagenation.getEndPage(); i++) { %>
+                                    <li class="page<%=i%> testClass ">
+                                        <a href="/board.do?pn=<%=i%>&val=<%=val%>&filter=&keyword=">
+                                            <%=i%>
                                         </a>
                                     </li>
-                                    <li class="">
-                                        <a href="#">
-                                            2
-                                        </a>
-                                    </li>
+                                    <% } %>
                                     <li>
-                                        <a href="#">»</a>
+                                        <% if (pagenation.getNowPageNumber() != pagenation.getTotalPageCount()) { %>
+                                        <a href="/board.do?pn=<%=pagenation.getEndPage()+1%>&val=<%=val%>&filter=&keyword=">»</a>
+                                        <% } %>
                                     </li>
                                 </ul>
                             </div>
                             <div class="search">
-                                <form>
-                                    <select>
-                                        <option>전체</option>
-                                        <option value="title">제목</option>
-                                        <option value="username">작성자</option>
-                                    </select>
-                                    <input type="text"/>
-                                    <button type="submit" class="searchADNcontrol">검색</button>
-                                </form>
+                                <select name="filter" id="filter">
+                                    <option value="all" selected>전체</option>
+                                    <option value="title">제목</option>
+                                    <option value="content">내용</option>
+                                </select>
+                                <input type="text" name="keyword" id="keyword"/>
+                                <button onclick="return searchArticle()" class="searchADNcontrol"
+                                        id="btnSearch">검색
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -117,12 +120,6 @@
 <script src="http://code.jquery.com/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
 <script>
     $(function(){
-        var sBtn = $(".pagination ul > li");    //  ul > li 이를 sBtn으로 칭한다. (클릭이벤트는 li에 적용 된다.)
-        sBtn.find("a").click(function(){   // sBtn에 속해 있는  a 찾아 클릭 하면.
-            sBtn.removeClass("active");     // sBtn 속에 (active) 클래스를 삭제 한다.
-            $(this).parent().addClass("active"); // 클릭한 a에 (active)클래스를 넣는다.
-        })
-
         function recCount() {
             <%
                 for(int i=0;i<list.size();i++) {
@@ -145,49 +142,46 @@
         };
         recCount();
 
+        //pagination 부분
+        let PagePara = document.location.href.split("&")[0].split("pn=")[1];
+        <% for (int i = pagenation.getStartPage(); i <= pagenation.getEndPage(); i++) { %>
+        if (PagePara == <%=i%>){
+            $('.page<%=i%>').addClass('active');
+        }
+        <%}%>
 
-        //고생많이한 부분 ..
+        //고생많이한 부분 .. 최신순, 추천순 filter 부분
         //action URL값에 value값을 붙여서 보내고싶었는데 붙일 수 가 없었음. 돌아오기전에 이미 null값이 들어간 상태로 action이 보내지기때문
         // 때문에 script태그 안에서 this.val값을 먼저 action의 url에 집어 넣어준뒤에 submit을 해준 모습이다. 이래야
         //select된 option값에따라 url에 알맞게 value값이 들어가고
         //value값에 따른 selected가 이루어진다.
         $('#filter-select').change(function (){
             let form = $("form");
-            let action = "/boardFilter.do?val=" + $(this).val();
+            let action = "/board.do?pn=<%=nowPage%>&val=" + $(this).val() + "&filter=&keyword=";
             form.attr("action", action);
             this.form.submit();
         })
-        let para = document.location.href.split("?");
 
-        if (para[1] != null){
-            if (para[1].substring(4) == "best"){
-                $('#filter-select #best').attr('selected', 'selected');
-            }
-            if (para[1].substring(4) == "newest"){
-                $('#filter-select #newest').attr('selected', 'selected');
-            }
+        let para = document.location.href.split("&")[1].split("val=");
+
+        if (para[1] == "newest"){
+            $('#filter-select #newest').attr('selected', 'selected');
+        }else if (para[1] == "best"){
+            $('#filter-select #best').attr('selected', 'selected');
         }
-
     })
 
-    // function selectSubmit(){
-    //
-    //     $.ajax({
-    //         url: "/boardFilter.do",
-    //         type: "POST",
-    //         data: {
-    //             val : $('#filter-select').val()
-    //         },
-    //         error: function () {
-    //             console.log("서버 통신 실패");
-    //         },
-    //         success: function (data) {
-    //             console.log(data)
-    //         },
-    //     })
-    // }
-
-
+    function searchArticle() {
+        let filter = $('#filter option:selected').val();
+        let keyword = $('#keyword').val();
+        if (!keyword) {
+            alert("검색할 내용을 입력하세요.");
+            $('#keyword').focus();
+            return false;
+        }
+        location.href =
+            "/board.do?pn=1&val=<%=val%>&filter=" + filter + "&keyword=" + keyword;
+    }
 </script>
 </body>
 </html>
