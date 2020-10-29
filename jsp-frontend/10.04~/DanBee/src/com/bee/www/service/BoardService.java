@@ -487,6 +487,16 @@ public class BoardService {
         close(con);
         return count;
     }
+    public int getFilterArticleCount(String query){
+        BoardDAO dao = BoardDAO.getInstance();
+        Connection con = getConnection();
+        dao.setConnection(con);
+
+        int count=dao.getFilterArticleCount(query);
+        close(con);
+        return count;
+    }
+
     public ArrayList<AttendanceVo> getFilterArticleList(Pagenation pagenation, String query){
         BoardDAO dao = BoardDAO.getInstance();
         Connection con = getConnection();

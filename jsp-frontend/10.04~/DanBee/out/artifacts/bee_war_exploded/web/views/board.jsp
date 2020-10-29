@@ -7,6 +7,8 @@
     Pagenation pagenation = (Pagenation) request.getAttribute("pagenation");
     String nowPage = request.getParameter("pn");
     String val = (String) request.getAttribute("val");
+    String filter = (String) request.getAttribute("filter");
+    String keyword = (String) request.getAttribute("keyword");
 %>
 <html>
 <head>
@@ -74,19 +76,19 @@
                                 <ul>
                                     <li>
                                         <% if (pagenation.getNowPageNumber() != 1) { %>
-                                        <a href="/board.do?pn=<%=pagenation.getStartPage()-1%>&val=<%=val%>&filter=&keyword=">«</a>
+                                        <a href="/board.do?pn=<%=pagenation.getStartPage()-1%>&val=<%=val%>&filter=<%=filter%>&keyword=<%=keyword%>">«</a>
                                         <% } %>
                                     </li>
                                     <% for (int i = pagenation.getStartPage(); i <= pagenation.getEndPage(); i++) { %>
                                     <li class="page<%=i%> testClass ">
-                                        <a href="/board.do?pn=<%=i%>&val=<%=val%>&filter=&keyword=">
+                                        <a href="/board.do?pn=<%=i%>&val=<%=val%>&filter=<%=filter%>&keyword=<%=keyword%>">
                                             <%=i%>
                                         </a>
                                     </li>
                                     <% } %>
                                     <li>
                                         <% if (pagenation.getNowPageNumber() != pagenation.getTotalPageCount()) { %>
-                                        <a href="/board.do?pn=<%=pagenation.getEndPage()+1%>&val=<%=val%>&filter=&keyword=">»</a>
+                                        <a href="/board.do?pn=<%=pagenation.getEndPage()+1%>&val=<%=val%>&filter=<%=filter%>&keyword=<%=keyword%>">»</a>
                                         <% } %>
                                     </li>
                                 </ul>
@@ -157,7 +159,7 @@
         //value값에 따른 selected가 이루어진다.
         $('#filter-select').change(function (){
             let form = $("form");
-            let action = "/board.do?pn=<%=nowPage%>&val=" + $(this).val() + "&filter=&keyword=";
+            let action = "/board.do?pn=<%=nowPage%>&val=" + $(this).val() + "&filter=<%=filter%>&keyword=<%=keyword%>";
             form.attr("action", action);
             this.form.submit();
         })

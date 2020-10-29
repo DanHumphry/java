@@ -27,8 +27,7 @@ public class BoardAction implements Action  {
         ////검색,필터 받아와서 쿼리 생성
         String filter = request.getParameter("filter");
         String keyword = request.getParameter("keyword");
-        System.out.println("filter는 : " + filter);
-        System.out.println("keyword는 : " + keyword);
+
         if (filter == null || filter.equals("")) {      //필터 값 없을 시 전체로 대입
             filter = "all";
         }
@@ -40,7 +39,7 @@ public class BoardAction implements Action  {
                 || !RegExp.checkString(IS_NUMBER, pageNum)) {
             response.setContentType("text/html;charset=UTF-8");
             PrintWriter out = response.getWriter();
-            out.println("<script>alert('잘못된 접근입니다zzz.');location.href='/';</script>");
+            out.println("<script>alert('잘못된 접근입니다.');location.href='/';</script>");
             out.close();
             return null;
         }
@@ -51,6 +50,7 @@ public class BoardAction implements Action  {
 
         BoardService service = new BoardService();
         Pagenation pagenation = new Pagenation(page, service.getArticleCount());
+        Pagenation filterPagenation = new Pagenation(page, service.getFilterArticleCount(query));
 
         if (page > pagenation.getTotalPageCount()) {
             response.setContentType("text/html;charset=UTF-8");
@@ -61,7 +61,6 @@ public class BoardAction implements Action  {
             return null;
         }
 
-        System.out.println("query값은 : " + query);
         if (query == null){
             //쿼리값이 널인경우 : 사용자가 아무 검색을 하지 않았기때문에 val 값에따라 article get
             if (val.equals("newest")){
@@ -71,21 +70,24 @@ public class BoardAction implements Action  {
                 ArrayList<AttendanceVo> bestArticleList = service.getBestArticleList(pagenation);
                 request.setAttribute("list",bestArticleList);
             }
+            request.setAttribute("pagenation", pagenation);
 
         }else {
             //쿼리값이 널이 아닌경우 : 사용자가 검색기능을 이용했기때문에 검색결과에 맞춘 val 값에따른 article get
             if (val.equals("newest")){
-                ArrayList<AttendanceVo> articleList = service.getFilterArticleList(pagenation, query);
+                ArrayList<AttendanceVo> articleList = service.getFilterArticleList(filterPagenation, query);
                 request.setAttribute("list",articleList);
             }else if (val.equals("best")){
-                ArrayList<AttendanceVo> bestArticleList = service.getBestFilterArticleList(pagenation, query);
+                ArrayList<AttendanceVo> bestArticleList = service.getBestFilterArticleList(filterPagenation, query);
                 request.setAttribute("list",bestArticleList);
             }
-
+            request.setAttribute("pagenation", filterPagenation);
         }
 
-        request.setAttribute("pagenation", pagenation);
+
         request.setAttribute("val", val);
+        request.setAttribute("filter", filter);
+        request.setAttribute("keyword", keyword);
 
         ActionForward forward = new ActionForward();
         forward.setPath("/views/board.jsp");

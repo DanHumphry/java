@@ -68,7 +68,7 @@ public class BoardRegisterAction implements Action {
         }
 
         ActionForward forward = new ActionForward();
-        forward.setPath("/board.do");
+        forward.setPath("/board.do?pn=1&val=newest&filter=&keyword=");
         forward.setRedirect(true);
         return forward;
     }

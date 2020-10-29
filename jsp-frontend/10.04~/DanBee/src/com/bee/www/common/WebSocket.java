@@ -1,11 +1,5 @@
 package com.bee.www.common;
 
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-import javax.json.JsonString;
-import javax.json.stream.JsonLocation;
-import javax.json.stream.JsonParser;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSession;
 import javax.websocket.*;

@@ -747,6 +747,25 @@ public class BoardDAO {
         }
         return count;
     }
+    public int getFilterArticleCount(String query){
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        int count =0;
+        try{
+            pstmt=con.prepareStatement(
+                    "select count(*) from board where " + query);
+            rs=pstmt.executeQuery();
+            while (rs.next()){
+                count=rs.getInt(1);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(rs);
+            close(pstmt);
+        }
+        return count;
+    }
 
     public ArrayList<AttendanceVo> getFilterArticleList(Pagenation pagenation, String query) {
         PreparedStatement pstmt = null;
