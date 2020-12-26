@@ -1,0 +1,33 @@
+body{
+  background-color: rgb(248, 249, 250);
+}
+.body{
+  margin: 0;
+  padding: 0;
+}
+a{
+  text-decoration: none;
+  color: aliceblue;
+}
+li{
+  list-style: none;
+  cursor: pointer;
+}
+/* li + li{
+  margin-top: 2rem;
+} */
+button {
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+}
+hr {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: 0;
+  border-top: 1px solid rgba(0,0,0,.1);
+}
+/* .autoMargin{
+  padding: 0 12rem;
+} */
