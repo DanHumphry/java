@@ -21,10 +21,11 @@ public class BoardRecCountAction implements Action {
 
         BoardService service = new BoardService();
 
+        int m_sq = service.getMemberSequence(id);
         int count = service.recCount(no);  // 게시글 총 추천수를 구함
 
         request.setAttribute("count", count);
-        if(service.recCheck(no, id)){
+        if(service.recCheck(no, m_sq)){
             request.setAttribute("onOff", 0);//아직 추천하지 않았을때 0전달
         }else{
             request.setAttribute("onOff", 1);//추천되있을때는 1전달

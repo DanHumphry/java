@@ -93,7 +93,7 @@
                         </div>
                         <div class="content-wrapper">
                             <div class="contents">
-                                <button class="leave-button">회원탈퇴</button>
+                                <button type="button" class="leave-button" onclick="deleteMember()">회원탈퇴</button>
                             </div>
                         </div>
                         <div class="content-wrapper2">
@@ -135,14 +135,28 @@
             $('.update-button').addClass('active');
             $('.cont').hide();
             $('.contents-input').show();
+            console.log(this);
+            console.log($('.edit-wrapper .tab').html());
+            console.log($('.edit-wrapper .tab').get());
+            console.log($('.edit-wrapper .tab').get(0));
+            console.log($('.edit-wrapper .tab').get(1));
         }
         if ($(this).hasClass('update-button')) {
             $('.edit-wrapper .tab').removeClass('active');
             $('.fix-button').addClass('active');
             $('.cont').hide();
             $('.contents').show();
+            console.log(this);
         }
     });
+
+    function deleteMember() {
+        if(confirm('탈퇴하시겠습니까?')==true) {
+            location.href='/memberDelete.do';
+        }else{
+            return;
+        }
+    }
 </script>
 </body>
 </html>

@@ -71,7 +71,6 @@
                                                 <input id="id" name="id" type="text" class="inpt2" placeholder="아이디 입력" style="margin-bottom: 25px;"/>
                                                 <input id="pwd" name="pwd" type="password" class="inpt2" placeholder="패스워드 입력" style="margin-bottom: 25px;"/>
                                             </div>
-
                                             <h4>forgat your Id ?
                                                 <br/><a href="#">클릭</a>
                                             </h4>

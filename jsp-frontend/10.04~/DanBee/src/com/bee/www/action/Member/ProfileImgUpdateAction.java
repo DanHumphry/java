@@ -13,8 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.PrintWriter;
-import java.util.Enumeration;
-
 
 public class ProfileImgUpdateAction implements Action {
     @Override
@@ -29,7 +27,6 @@ public class ProfileImgUpdateAction implements Action {
         MemberVo vo = new MemberVo();
 
         String saveDirectory = request.getServletContext().getRealPath("/resources/img");
-        System.out.println(saveDirectory);
 
         File saveDir = new File(saveDirectory);
         if (!saveDir.exists())

@@ -6,28 +6,64 @@ public class AttendanceVo {
     private String id;
     private String nickname;
     private String writeDate;
+    private int likeCount;
+
+    public int getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
+    }
 
     private int B_sq;
     private String title;
-    private int like;
-    private int comments;
 
-    private int c_sq;
+    private int C_sq;
+    private int ReC_sq;
+
+    private String filename;
+    private String address;
+    private String newFileName;
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getNewFileName() {
+        return newFileName;
+    }
+
+    public void setNewFileName(String newFileName) {
+        this.newFileName = newFileName;
+    }
+
+    public int getReC_sq() {
+        return ReC_sq;
+    }
+
+    public void setReC_sq(int reC_sq) {
+        ReC_sq = reC_sq;
+    }
 
     public int getC_sq() {
-        return c_sq;
+        return C_sq;
     }
 
     public void setC_sq(int c_sq) {
-        this.c_sq = c_sq;
-    }
-
-    public int getComments() {
-        return comments;
-    }
-
-    public void setComments(int comments) {
-        this.comments = comments;
+        C_sq = c_sq;
     }
 
     public int getB_sq() {
@@ -44,14 +80,6 @@ public class AttendanceVo {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public int getLike() {
-        return like;
-    }
-
-    public void setLike(int like) {
-        this.like = like;
     }
 
     public String getWriteDate() {

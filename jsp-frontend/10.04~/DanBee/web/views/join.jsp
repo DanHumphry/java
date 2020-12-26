@@ -6,10 +6,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원 가입</title>
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="805115670990-b1g6ke28qjgt0q458r4oj049p6s3t8qu.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <link rel="stylesheet" type="text/css" href="/css/index.css">
     <link rel="stylesheet" type="text/css" href="/css/index_header.css">
     <link rel="stylesheet" type="text/css" href="/css/login.css">
-    <!--jquery cdn -->
     <script src="https://code.jquery.com/jquery-3.5.1.js"
             integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
             crossorigin="anonymous"></script>
@@ -110,11 +112,16 @@
             });
         }
 
-        $('#id').keyup(function (){
+        function initCheckId() {
             result = 1;  //id 칸에 다시 입력할 때 count 1로 초기화
-            console.log("keyup result = "+result);
             $('#id_check').html('20자 이내의 아이디 입력').css('color', '#9aa8d0');
-        });
+
+        }
+
+        function initCheckEmail() {
+            result2 = 1;  //id 칸에 다시 입력할 때 count 1로 초기화
+            $('#email_check').html('이메일 입력').css('color', '#9aa8d0');
+        }
 
         //form submit시
         function joinSubmit() {
@@ -211,6 +218,43 @@
                 return false;
             }
         }
+
+        function onSignIn(googleUser) {
+            var profile = googleUser.getBasicProfile();
+            console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+            console.log('Full Name: ' + profile.getName());
+            console.log("Image URL: " + profile.getImageUrl());
+            console.log("Email: " + profile.getEmail());
+            var id_token = googleUser.getAuthResponse().id_token;
+            console.log("ID Token: " + id_token);
+            console.log("id : " +  profile.getEmail().split("@")[0])
+
+            $.ajax({
+                url: "/google.do",
+                type: "post",
+                data: {
+                    id : profile.getEmail().split("@")[0],
+                    email : profile.getEmail(),
+                    nick : profile.getName(),
+                    pwd : id_token,
+                    pwd_confirm : id_token
+                },
+                error: function () {
+                    console.log("서버 통신 실패");
+                },
+                success: function () {
+                    console.log("서버 통신 성공");
+                    location.href = '/';
+                }
+            });
+        };
+
+        function signOut() {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+                console.log('User signed out.');
+            });
+        }
     </script>
 </head>
 <body>
@@ -251,14 +295,14 @@
                                             <!-- <p>가능한 아이디입니다.</p> -->
                                             <div class="checkBlock">
                                                 <input id="id" name="id" type="text" class="inpt" minlength="4"
-                                                       maxlength="20" placeholder="아이디 입력"/>
+                                                       maxlength="20" placeholder="아이디 입력" oninput="initCheckId()"/>
                                                 <button class="checkButton" type="button" value="ID중복확인"
                                                         name="confirmId" id="confirmId" onclick="checkId()">중복확인</button>
                                             </div>
                                             <p id="email_check">중복확인 해주세요.</p>
                                             <!-- <p>가능한 이메일입니다.</p> -->
                                             <div class="checkBlock">
-                                                <input id="email" name="email" type="email" class="inpt" placeholder="이메일 입력"/>
+                                                <input id="email" name="email" type="email" class="inpt" placeholder="이메일 입력" oninput="initCheckEmail()"/>
                                                 <button class="checkButton" type="button" value="Email중복확인"
                                                         name="confirmEmail" id="confirmEmail" onClick="checkEmail()">중복확인</button>
                                             </div>

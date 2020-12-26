@@ -185,8 +185,50 @@ public class BoardController extends HttpServlet {
             }catch (Exception e){
                 e.printStackTrace();
             }
-        }else if(command.equals("/commentUp.do")){
-            action = new CommentUpAction();
+        }else if(command.equals("/reCommentIn.do")){
+            action = new ReCommentInAction();
+            try{
+                forward = action.execute(request,response);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }else if(command.equals("/fixCommentIn.do")){
+            action = new FixCommentInAction();
+            try{
+                forward = action.execute(request,response);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }else if(command.equals("/delComment.do")){
+            action = new DelCommentAction();
+            try{
+                forward = action.execute(request,response);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }else if(command.equals("/fixReCommentIn.do")){
+            action = new FixReCommentInAction();
+            try{
+                forward = action.execute(request,response);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }else if(command.equals("/delReComment.do")){
+            action = new DelReCommentAction();
+            try{
+                forward = action.execute(request,response);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }else if(command.equals("/chat.do")){
+            action = new ChatAction();
+            try{
+                forward = action.execute(request,response);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }else if(command.equals("/memberDelete.do")){
+            action = new MemberDeleteAction();
             try{
                 forward = action.execute(request,response);
             }catch (Exception e){

@@ -1,5 +1,6 @@
 package com.bee.www.dao;
 
+import com.bee.www.common.Pagenation;
 import com.bee.www.vo.AttendanceVo;
 import com.bee.www.vo.MemberVo;
 
@@ -7,7 +8,6 @@ import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
-import java.util.Map;
 
 import static com.bee.www.common.JdbcUtil.close;
 
@@ -201,10 +201,11 @@ public class BoardDAO {
         int count = 0;
         try{
             //현재 로그인된 id에 해당하는 고유번호 조회
-            pstmt = con.prepareStatement("insert into board(m_sq, title, content) value(?, ?, ?)");
+            pstmt = con.prepareStatement("insert into board(m_sq, title, content, profileImg) value(?, ?, ?, ?)");
             pstmt.setInt(1,vo.getM_sq());
             pstmt.setString(2,vo.getTitle());
             pstmt.setString(3,vo.getContent());
+            pstmt.setString(4,vo.getNewFileName());
             count=pstmt.executeUpdate();
         }catch (Exception e){
             e.printStackTrace();
@@ -213,7 +214,7 @@ public class BoardDAO {
         }
         return count;
     }
-    public ArrayList<AttendanceVo> getArticleList() {
+    public ArrayList<AttendanceVo> getArticleList(Pagenation pagenation) {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         ArrayList<AttendanceVo> list = new ArrayList<>();
@@ -223,7 +224,10 @@ public class BoardDAO {
                     "b.title,b.content," +
                     "b.writeDate " +
                     "from board b inner join member m on b.m_sq = m.sq "+
-                    "order by sq desc");
+                    "order by sq desc " +
+                    "limit ?, ?");
+            pstmt.setInt(1,pagenation.getStartArticleNumber());
+            pstmt.setInt(2,pagenation.getSHOW_ARTICLE_COUNT());
             rs=pstmt.executeQuery();
             while(rs.next()){
                 AttendanceVo vo = new AttendanceVo();
@@ -250,8 +254,8 @@ public class BoardDAO {
         try{
             //현재 로그인된 id에 해당하는 고유번호 조회
             pstmt = con.prepareStatement("select b.sq, b.m_sq, m.id, " +
-                    "b.title, b.content, " +
-                    "b.writeDate, m.nickname " +
+                    "b.title, b.content, b.likeCount, " +
+                    "b.writeDate, m.nickname, b.profileImg " +
                     "from board b inner join member m on b.m_sq = m.sq " +
                     "where b.sq=? ");
             pstmt.setInt(1,num);
@@ -262,8 +266,10 @@ public class BoardDAO {
                 vo.setId(rs.getString("id"));
                 vo.setTitle(rs.getString("title"));
                 vo.setContent(rs.getString("content"));
+                vo.setLikeCount(rs.getInt("likeCount"));
                 vo.setWriteDate(rs.getString("writeDate"));
                 vo.setNickname(rs.getString("nickname"));
+                vo.setNewFileName(rs.getString("profileImg"));
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -360,14 +366,14 @@ public class BoardDAO {
         }
         return count;
     }
-    public int recCheck(int no,String id){
+    public int recCheck(int no, int m_sq){
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         int result = 0;
         try{
-            pstmt = con.prepareStatement("select count(*) from rec where b_sq = ? and m_id = ?");
+            pstmt = con.prepareStatement("select count(*) from rec where b_sq = ? and m_sq = ?");
             pstmt.setInt(1,no);
-            pstmt.setString(2,id);
+            pstmt.setInt(2,m_sq);
             rs = pstmt.executeQuery();
             while(rs.next()){
                 result=rs.getInt("count(*)");
@@ -380,12 +386,12 @@ public class BoardDAO {
         }
         return result;
     }
-    public void recUpdate(int no,String id){
+    public void recUpdate(int no, int m_sq){
         PreparedStatement pstmt = null;
         try{
-            pstmt = con.prepareStatement("insert into rec(b_sq, m_id) value(?, ?)");
+            pstmt = con.prepareStatement("insert into rec(b_sq, m_sq) value(?, ?)");
             pstmt.setInt(1,no);
-            pstmt.setString(2,id);
+            pstmt.setInt(2,m_sq);
             pstmt.executeUpdate();
         }catch (Exception e){
             e.printStackTrace();
@@ -393,12 +399,12 @@ public class BoardDAO {
             close(pstmt);
         }
     }
-    public void recDelete(int no,String id){
+    public void recDelete(int no, int m_sq){
         PreparedStatement pstmt = null;
         try{
-            pstmt = con.prepareStatement("delete from rec where b_sq = ? and m_id = ?");
+            pstmt = con.prepareStatement("delete from rec where b_sq = ? and m_sq = ?");
             pstmt.setInt(1,no);
-            pstmt.setString(2,id);
+            pstmt.setInt(2,m_sq);
             pstmt.executeUpdate();
         }catch (Exception e){
             e.printStackTrace();
@@ -431,10 +437,12 @@ public class BoardDAO {
         int count = 0;
         try{
             //현재 로그인된 id에 해당하는 고유번호 조회
-            pstmt = con.prepareStatement("insert into board_comment(b_sq, m_id, content) value(?, ?, ?)");
+            pstmt = con.prepareStatement("insert into board_comment(b_sq, m_sq, m_id, content, profileImg) value(?, ?, ?, ?, ?)");
             pstmt.setInt(1,vo.getB_sq());
-            pstmt.setString(2,vo.getId());
-            pstmt.setString(3,vo.getContent());
+            pstmt.setInt(2,vo.getM_sq());
+            pstmt.setString(3,vo.getId());
+            pstmt.setString(4,vo.getContent());
+            pstmt.setString(5, vo.getNewFileName());
             count=pstmt.executeUpdate();
         }catch (Exception e){
             e.printStackTrace();
@@ -449,12 +457,12 @@ public class BoardDAO {
         ArrayList<AttendanceVo> list = new ArrayList<>();
 
         try{
-            pstmt = con.prepareStatement("select b_c.sq, b_c.b_sq, m.nickname, " +
-                    "b_c.content, b_c.writeDate " +
+            pstmt = con.prepareStatement("select b_c.sq, b_c.b_sq, m.nickname, m.id, " +
+                    "b_c.content, b_c.writeDate, b_c.profileImg " +
                     "from board_comment b_c " +
-                    "inner join board b on b_c.b_sq = b.sq "+
-                    "inner join member m on b.m_sq = m.sq "+
-                    "where b_c.b_sq = ? ");
+                    "inner join member m on b_c.m_sq = m.sq "+
+                    "where b_c.b_sq = ? " +
+                    "order by b_c.sq ASC");
             pstmt.setInt(1,numInt);
             rs=pstmt.executeQuery();
             while(rs.next()){
@@ -462,6 +470,356 @@ public class BoardDAO {
                 vo.setC_sq(rs.getInt("sq"));
                 vo.setB_sq(rs.getInt("b_sq"));
                 vo.setNickname(rs.getString("nickname"));
+                vo.setId(rs.getString("id"));
+                vo.setContent(rs.getString("content"));
+                vo.setWriteDate(rs.getString("writeDate"));
+                vo.setNewFileName(rs.getString("profileImg"));
+                list.add(vo);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(rs);
+            close(pstmt);
+        }
+        return list;
+    }
+    public int insertReComment(AttendanceVo vo){
+        PreparedStatement pstmt = null;
+        int count = 0;
+        try{
+            //현재 로그인된 id에 해당하는 고유번호 조회
+            pstmt = con.prepareStatement("insert into board_recomment(b_c_sq, m_sq, m_id, content, profileImg) value(?, ?, ?, ?, ?)");
+            pstmt.setInt(1,vo.getC_sq());
+            pstmt.setInt(2,vo.getM_sq());
+            pstmt.setString(3,vo.getId());
+            pstmt.setString(4,vo.getContent());
+            pstmt.setString(5, vo.getNewFileName());
+            count=pstmt.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(pstmt);
+        }
+        return count;
+    }
+    public ArrayList<AttendanceVo> getReComment(int numInt) {
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        ArrayList<AttendanceVo> list = new ArrayList<>();
+
+        try{
+            pstmt = con.prepareStatement("select reb_c.sq, reb_c.b_c_sq, m.nickname, m.id, " +
+                    "reb_c.content, reb_c.writeDate, reb_c.profileImg " +
+                    "from board_recomment reb_c " +
+                    "inner join member m on reb_c.m_sq = m.sq " );
+//                    "inner join board_comment b_c on m.sq = b_c.m_sq "
+//                    "where b_c.b_sq = ? "
+//            pstmt.setInt(1,numInt);
+            rs=pstmt.executeQuery();
+            while(rs.next()){
+                AttendanceVo vo = new AttendanceVo();
+                vo.setReC_sq(rs.getInt("sq"));
+                vo.setC_sq(rs.getInt("b_c_sq"));
+                vo.setNickname(rs.getString("nickname"));
+                vo.setId(rs.getString("id"));
+                vo.setContent(rs.getString("content"));
+                vo.setWriteDate(rs.getString("writeDate"));
+                vo.setNewFileName(rs.getString("profileImg"));
+                list.add(vo);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(rs);
+            close(pstmt);
+        }
+        return list;
+    }
+    public int fixInsertComment(AttendanceVo vo){
+        PreparedStatement pstmt = null;
+        int count = 0;
+        try{
+            //현재 로그인된 id에 해당하는 고유번호 조회
+            pstmt = con.prepareStatement("update board_comment set content=? where sq=?");
+            pstmt.setString(1,vo.getContent());
+            pstmt.setInt(2,vo.getC_sq());
+            count=pstmt.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(pstmt);
+        }
+        return count;
+    }
+    public String getB_CWriterId(int num){
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        String id = null;
+
+        try {
+            pstmt=con.prepareStatement("select m_id " +
+                    "from board_comment " +
+                    "where sq=?");
+            pstmt.setInt(1,num);
+            rs=pstmt.executeQuery();
+            while(rs.next()){
+                id=rs.getString("m_id");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(rs);
+            close(pstmt);
+        }
+        return id;
+    }
+    public int deleteB_C(int num){
+        PreparedStatement pstmt = null;
+        int count = 0;
+        try{
+            //현재 로그인된 id에 해당하는 고유번호 조회
+            pstmt = con.prepareStatement("delete from board_comment where sq=?");
+            pstmt.setInt(1,num);
+            count=pstmt.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(pstmt);
+        }
+        return count;
+    }
+    public int fixInsertReComment(AttendanceVo vo){
+        PreparedStatement pstmt = null;
+        int count = 0;
+        try{
+            //현재 로그인된 id에 해당하는 고유번호 조회
+            pstmt = con.prepareStatement("update board_recomment set content=? where sq=?");
+            pstmt.setString(1,vo.getContent());
+            pstmt.setInt(2,vo.getReC_sq());
+            count=pstmt.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(pstmt);
+        }
+        return count;
+    }
+    public String getReB_CWriterId(int num){
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        String id = null;
+
+        try {
+            pstmt=con.prepareStatement("select m_id " +
+                    "from board_recomment " +
+                    "where sq=?");
+            pstmt.setInt(1,num);
+            rs=pstmt.executeQuery();
+            while(rs.next()){
+                id=rs.getString("m_id");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(rs);
+            close(pstmt);
+        }
+        return id;
+    }
+    public int deleteReB_C(int num){
+        PreparedStatement pstmt = null;
+        int count = 0;
+        try{
+            //현재 로그인된 id에 해당하는 고유번호 조회
+            pstmt = con.prepareStatement("delete from board_recomment where sq=?");
+            pstmt.setInt(1,num);
+            count=pstmt.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(pstmt);
+        }
+        return count;
+    }
+    public String getMemberImg(String id){
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        String img = null;
+        try{
+            //현재 로그인된 id에 해당하는 고유번호 조회
+            pstmt = con.prepareStatement("select image from member where id=?");
+            pstmt.setString(1,id);
+            rs = pstmt.executeQuery();
+            while (rs.next()){
+                img =rs.getString("image");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(rs);
+            close(pstmt);
+        }
+        return img;
+    }
+
+    public int deleteMember(String id){
+        PreparedStatement pstmt = null;
+        int count = 0;
+        try{
+            //현재 로그인된 id에 해당하는 고유번호 조회
+            pstmt = con.prepareStatement("delete from member where id=?");
+            pstmt.setString(1,id);
+            count=pstmt.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(pstmt);
+        }
+        return count;
+    }
+
+    public void updateBoardRec(int count, int no){
+        PreparedStatement pstmt = null;
+
+        try{
+            //현재 로그인된 id에 해당하는 고유번호 조회
+            pstmt = con.prepareStatement("update board set likeCount = ? where sq=?");
+            pstmt.setInt(1,count);
+            pstmt.setInt(2,no);
+            count=pstmt.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(pstmt);
+        }
+    }
+
+    public ArrayList<AttendanceVo> getBestArticleList(Pagenation pagenation) {
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        ArrayList<AttendanceVo> list = new ArrayList<>();
+
+        try{
+            pstmt = con.prepareStatement("select b.sq, m.nickname, " +
+                    "b.title,b.content," +
+                    "b.writeDate " +
+                    "from board b inner join member m on b.m_sq = m.sq "+
+                    "order by likeCount desc " +
+                    "limit ?, ?");
+            pstmt.setInt(1,pagenation.getStartArticleNumber());
+            pstmt.setInt(2,pagenation.getSHOW_ARTICLE_COUNT());
+            rs=pstmt.executeQuery();
+            while(rs.next()){
+                AttendanceVo vo = new AttendanceVo();
+                vo.setB_sq(rs.getInt("sq"));
+                vo.setNickname(rs.getString("nickname"));
+                vo.setTitle(rs.getString("title"));
+                vo.setContent(rs.getString("content"));
+                vo.setWriteDate(rs.getString("writeDate"));
+                list.add(vo);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(rs);
+            close(pstmt);
+        }
+        return list;
+    }
+
+    public int getArticleCount(){
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        int count =0;
+        try{
+            pstmt=con.prepareStatement(
+                    "select count(*) from board");
+            rs=pstmt.executeQuery();
+            while (rs.next()){
+                count=rs.getInt(1);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(rs);
+            close(pstmt);
+        }
+        return count;
+    }
+    public int getFilterArticleCount(String query){
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        int count =0;
+        try{
+            pstmt=con.prepareStatement(
+                    "select count(*) from board where " + query);
+            rs=pstmt.executeQuery();
+            while (rs.next()){
+                count=rs.getInt(1);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(rs);
+            close(pstmt);
+        }
+        return count;
+    }
+
+    public ArrayList<AttendanceVo> getFilterArticleList(Pagenation pagenation, String query) {
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        ArrayList<AttendanceVo> list = new ArrayList<>();
+
+        try{
+            pstmt = con.prepareStatement("select b.sq, m.nickname, " +
+                    "b.title,b.content," +
+                    "b.writeDate " +
+                    "from board b inner join member m on b.m_sq = m.sq where "+ query + " " +
+                    "order by sq desc " +
+                    "limit ?, ?");
+            pstmt.setInt(1,pagenation.getStartArticleNumber());
+            pstmt.setInt(2,pagenation.getSHOW_ARTICLE_COUNT());
+            rs=pstmt.executeQuery();
+            while(rs.next()){
+                AttendanceVo vo = new AttendanceVo();
+                vo.setB_sq(rs.getInt("sq"));
+                vo.setNickname(rs.getString("nickname"));
+                vo.setTitle(rs.getString("title"));
+                vo.setContent(rs.getString("content"));
+                vo.setWriteDate(rs.getString("writeDate"));
+                list.add(vo);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            close(rs);
+            close(pstmt);
+        }
+        return list;
+    }
+
+    public ArrayList<AttendanceVo> getBestFilterArticleList(Pagenation pagenation, String query) {
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        ArrayList<AttendanceVo> list = new ArrayList<>();
+
+        try{
+            pstmt = con.prepareStatement("select b.sq, m.nickname, " +
+                    "b.title,b.content," +
+                    "b.writeDate " +
+                    "from board b inner join member m on b.m_sq = m.sq where "+ query + " " +
+                    "order by likeCount desc " +
+                    "limit ?, ?");
+            pstmt.setInt(1,pagenation.getStartArticleNumber());
+            pstmt.setInt(2,pagenation.getSHOW_ARTICLE_COUNT());
+            rs=pstmt.executeQuery();
+            while(rs.next()){
+                AttendanceVo vo = new AttendanceVo();
+                vo.setB_sq(rs.getInt("sq"));
+                vo.setNickname(rs.getString("nickname"));
+                vo.setTitle(rs.getString("title"));
                 vo.setContent(rs.getString("content"));
                 vo.setWriteDate(rs.getString("writeDate"));
                 list.add(vo);

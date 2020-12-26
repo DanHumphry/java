@@ -1,6 +1,13 @@
 /* header css*/
+header{
+    z-index: 0;
+}
+body{
+    z-index: 1;
+}
 .header-area{
     position: fixed;
+    z-index: 1;
     top: 0;
     right: 0;
     left: 0;
@@ -20,7 +27,8 @@
     margin: 4px;
 }
 .header-filter{
-    display: flex;
+    display: none;
+    /*display: flex;*/
     margin-right: 2.5%;
 }
 .header-filter input{
@@ -63,3 +71,16 @@
     color: rgb(12, 167, 179);
 }
 /* header css*/
+
+
+/* enterChat */
+.enterChat svg{
+    width: 70px;
+    height: 70px;
+}
+.enterChat{
+    position: absolute;
+    bottom: 25px;
+    right: 25px;
+}
+/* enterChat */

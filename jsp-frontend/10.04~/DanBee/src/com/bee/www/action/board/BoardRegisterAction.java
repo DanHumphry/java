@@ -53,6 +53,11 @@ public class BoardRegisterAction implements Action {
         vo.setTitle(title);
         vo.setContent(content);
         vo.setM_sq(service.getMemberSequence(id));
+        vo.setNewFileName(service.getMemberImg(id));
+
+        if (vo.getNewFileName() == null){
+            vo.setNewFileName("basic.jpg");;
+        }
 
         if(!service.insertArticle(vo)){ //글 저장 service 호출
             response.setContentType("text/html;charset=UTF-8");
@@ -63,7 +68,7 @@ public class BoardRegisterAction implements Action {
         }
 
         ActionForward forward = new ActionForward();
-        forward.setPath("/board.do");
+        forward.setPath("/board.do?pn=1&val=newest&filter=&keyword=");
         forward.setRedirect(true);
         return forward;
     }

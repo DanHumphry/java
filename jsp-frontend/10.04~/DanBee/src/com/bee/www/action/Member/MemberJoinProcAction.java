@@ -23,6 +23,12 @@ public class MemberJoinProcAction implements Action {
         String email = request.getParameter("email");
         String nick = request.getParameter("nick");
 
+        System.out.println(nick);
+        System.out.println(pwd);
+        System.out.println(pwd_confirm);
+        System.out.println(email);
+        System.out.println(id);
+
         //값 비어있는지,형식(정규식) 검사
         if (id == null || id.equals("") || !RegExp.checkString(MEMBER_ID, id)
                 || pwd == null || pwd.equals("") || !RegExp.checkString(MEMBER_PWD, pwd)
